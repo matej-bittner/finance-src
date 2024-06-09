@@ -1,0 +1,106 @@
+{
+  "Navigation": {
+    "appName": "Family Finances",
+    "accountButton": "Můj Účet",
+
+    "nav-links": {
+      "about": {
+        "title": "o projektu",
+        "link": "#"
+      },
+      "demo": {
+        "title": "demo",
+        "link": "#"
+      },
+      "pricing": {
+        "title": "ceník",
+        "link": "#"
+      }
+    }
+  },
+
+  "first-section": {
+    "title": "Správujte svoje finance,",
+    "title2": "jednoduše",
+    "text1": "Jste frustrovaní aplikacemi na správu financí, které jsou přeplácané reklamou, postrádají základní funkce, nebo prostě nejsou vaším šálkem čaje?",
+    "text2": "Hledáte už dlouho tu pravou rozpočtovou aplikaci, která vám splní všechny vaše přání? Vím přesně, o čem mluvíte! I já jsem strávil hodiny hledáním aplikace, která by mi pomohla s mými financemi, ale nic nebylo ono.",
+    "text3": "A tak jsem se rozhodl vytvořit [název], aplikaci na správu financí, která je přehledná, nabitá funkcemi a pomůže vám dosáhnout vašich finančních cílů."
+  },
+
+  "potential-goals": {
+    "title": " Odemkněte svůj finanční potenciál",
+    "menu": {
+      "title": "Menu",
+      "slug": "menu",
+      "icon": "expand-right",
+      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+    },
+    "goals": {
+      "title": "Cíle",
+      "slug": "goals",
+      "icon": "goals",
+      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+    },
+    "income-expense": {
+      "title": "Příjmy a Výdaje",
+      "slug": "income-and-expenses",
+      "icon": "wallet-money",
+      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small. We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+    },
+    "subscriptions": {
+      "title": "Předplatné",
+      "slug": "subscriptions",
+      "icon": "ticket-expired",
+      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+    },
+    "statistics": {
+      "title": "Statistiky",
+      "slug": "statistics",
+      "icon": "graph",
+      "text": "Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+    },
+    "mobile-app": {
+      "title": "Mobilní Aplikace",
+      "slug": "mobile-app",
+      "icon": "mobile",
+      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+    }
+  },
+
+  "socials-title": "Podívejte se na moji práci",
+
+  "pricing": {
+    "title": "Prohlédněte si naše cenové plány.",
+    "currency": "czk",
+    "period1": "měsíc",
+    "period2": "rok",
+    "purchase-text": "Vybrat",
+    "box-1": {
+      "title": "Prémium",
+      "purchase-link": "#",
+      "price-month": "55",
+      "price-year": "150",
+      "in-price": "100"
+    },
+    "box-2": {
+      "title": "Startovací",
+      "purchase-link": "#",
+      "price-month": "22",
+      "price-year": "88",
+      "in-price": "3"
+    },
+    "points": {
+      "income": "Příjmy a Výdaje",
+      "savings": "Spoření a Investice",
+      "loans": "Přehled Úvěrů",
+      "subscription": "Předplatné",
+      "statistics": "Statistiky",
+      "support": "Rychlá podpora",
+      "family": "Rodinný Přehled / Přidání členů rodiny"
+    }
+  },
+  "demo-section": {
+    "title": "Demo",
+    "text": "Toto demo video je zde, aby vám pomohlo! Naleznete v něm vše potřebné k tomu, abyste mohli začít s naší aplikací. Pamatujte však, že neustále přidáváme nové funkce. Přestože toto video nemusí pokrýt naprosto všechny dostupné možnosti, vybaví vás základními znalostmi k tomu, abyste ještě dnes převzali kontrolu nad svými financemi."
+  }
+}
