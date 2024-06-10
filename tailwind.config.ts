@@ -23,8 +23,10 @@ const config = {
         main: {
           blue: "#000080",
           yellow: "#B2AC88",
-          white: "#F9F9F9",
+          // white: "#fff",
           bg: "#E0E0E0",
+          error: "#AC0101",
+          success: "#008A1E",
           // blue: "#507DBC",
           // yellow: "#FFE45E",
           // white: "#F9F9F9",

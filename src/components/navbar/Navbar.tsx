@@ -22,7 +22,7 @@ const Navbar = () => {
     },
   ];
   return (
-    <nav className="relative mx-auto flex size-full max-w-[1440px] items-center px-4 text-main-white md:px-6 lg:px-8">
+    <nav className="relative mx-auto flex size-full max-w-[1440px] items-center px-4 text-white md:px-6 lg:px-8">
       {/*mobile navigation*/}
       <MobileNavbar navLinksData={navLinksData} />
       {/*logo+name*/}
