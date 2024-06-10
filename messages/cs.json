@@ -102,5 +102,24 @@
   "demo-section": {
     "title": "Demo",
     "text": "Toto demo video je zde, aby vám pomohlo! Naleznete v něm vše potřebné k tomu, abyste mohli začít s naší aplikací. Pamatujte však, že neustále přidáváme nové funkce. Přestože toto video nemusí pokrýt naprosto všechny dostupné možnosti, vybaví vás základními znalostmi k tomu, abyste ještě dnes převzali kontrolu nad svými financemi."
+  },
+
+  "login-form": {
+    "title": "Přihlášení",
+    "back-text1": "Obnovit zapomenuté heslo",
+    "back-text2": "Ještě nemáte účet? Registrovat",
+    "email": "E-mail",
+    "email-placeholder": "tomas-novak@seznam.cz",
+    "password": "Heslo",
+    "submit-button": "Přihlásit"
+  },
+
+  "register-form": {
+    "title": "Registrace",
+    "back-text1": "Už jste registrovaný? Přihlásit",
+    "email": "E-mail",
+    "email-placeholder": "tomas-novak@seznam.cz",
+    "password": "Heslo",
+    "submit-button": "Registrovat"
   }
 }

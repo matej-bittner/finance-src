@@ -15,8 +15,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import CardSuccess from "@/components/auth/CardSuccess";
 import { LoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
+import { useTranslations } from "next-intl";
 
 const LoginForm = () => {
+  const t = useTranslations("login-form");
+
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -42,11 +45,11 @@ const LoginForm = () => {
   return (
     <section className="size-full flex items-center justify-center">
       <Card
-        title="Přihlášení"
+        title={t("title")}
         backLink1="/"
-        backText1="Obnovit zapomenuté heslo"
+        backText1={t("back-text1")}
         backLink2="/"
-        backText2="Ještě nemáte účet? Registrovat"
+        backText2={t("back-text2")}
         showSocials
       >
         <Form {...form}>
@@ -60,13 +63,15 @@ const LoginForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem className="space-y-[2px]">
-                    <FormLabel className="pl-3 text-base">E-mail</FormLabel>
+                    <FormLabel className="pl-3 text-base">
+                      {t("email")}
+                    </FormLabel>
                     <input
                       {...field}
                       type="text"
                       disabled={isPending}
                       className="form-inputs"
-                      placeholder="tomas-novak@seznam.cz"
+                      placeholder={t("email-placeholder")}
                     />
                     <FormMessage className="text-main-error pl-3" />
                   </FormItem>
@@ -77,7 +82,9 @@ const LoginForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem className="space-y-[2px]">
-                    <FormLabel className="pl-3 text-base">Heslo</FormLabel>
+                    <FormLabel className="pl-3 text-base">
+                      {t("password")}
+                    </FormLabel>
                     <input
                       {...field}
                       type="password"
@@ -97,7 +104,7 @@ const LoginForm = () => {
               type="submit"
               className="text-white bg-black border-2 border-white rounded-lg text-xl py-2 my-1 tracking-wide"
             >
-              Přihlásit
+              {t("submit-button")}
             </button>
           </form>
         </Form>

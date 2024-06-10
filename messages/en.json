@@ -102,5 +102,24 @@
   "demo-section": {
     "title": "Demo",
     "text": " This demo video is here to help! We've packed it with everything you need to get started with our app, but keep in mind we're constantly adding new features. So, while this video might not cover every single bell and whistle, it'll equip you with the essentials to take control of your finances today."
+  },
+
+  "login-form": {
+    "title": "Login",
+    "back-text1": "Reset password",
+    "back-text2": "Don't have account? Register",
+    "email": "E-mail",
+    "email-placeholder": "john-doe@gmail.com",
+    "password": "Password",
+    "submit-button": "Login"
+  },
+
+  "register-form": {
+    "title": "Register",
+    "back-text1": "Allready registered? Login",
+    "email": "E-mail",
+    "email-placeholder": "john-doe@gmail.com",
+    "password": "Password",
+    "submit-button": "Register"
   }
 }
