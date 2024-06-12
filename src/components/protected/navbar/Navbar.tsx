@@ -1,0 +1,126 @@
+import React from "react";
+import DropdownNav from "@/components/protected/navbar/DropdownNav";
+import Image from "next/image";
+import { signOut } from "@/auth";
+import DropdownUserMenu from "@/components/protected/navbar/DropdownUserMenu";
+import { useTranslations } from "next-intl";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import DialogContentWrapper from "@/components/protected/dialog/DialogContentWrapper";
+import EditTransactionForm from "@/components/protected/dialog/EditTransactionForm";
+import AddTransactionForm from "@/components/protected/dialog/AddTransactionForm";
+const Navbar = () => {
+  const t = useTranslations("dashboard-navigation");
+  const dropdownNavData = [
+    {
+      title: t("nav-links.dashboard.title"),
+      icon: t("nav-links.dashboard.icon"),
+      link: t("nav-links.dashboard.link"),
+    },
+    {
+      title: t("nav-links.goals.title"),
+      icon: t("nav-links.goals.icon"),
+      link: t("nav-links.goals.link"),
+    },
+    {
+      title: t("nav-links.income-expenses.title"),
+      icon: t("nav-links.income-expenses.icon"),
+      link: t("nav-links.income-expenses.link"),
+    },
+    {
+      title: t("nav-links.subscriptions.title"),
+      icon: t("nav-links.subscriptions.icon"),
+      link: t("nav-links.subscriptions.link"),
+    },
+    {
+      title: t("nav-links.statistics.title"),
+      icon: t("nav-links.statistics.icon"),
+      link: t("nav-links.statistics.link"),
+    },
+  ];
+
+  return (
+    <nav className="h-[50px] max-sm:bg-main-blue max-sm:text-white flex items-center justify-between sm:items-end  max-sm:border-b-2 border-white relative max-sm:px-4 xl:pl-16 ">
+      <DropdownNav dropdownNavData={dropdownNavData} />
+      {/*Page Name*/}
+      <div className="flex gap-2">
+        <h1 className="sm:text-xl sm:font-medium md:text-2xl">Transakce</h1>
+        <Dialog>
+          <DialogTrigger>
+            <Image
+              src="/icons/add-circle.svg"
+              alt="add"
+              width={24}
+              height={24}
+              className="nav-image"
+            />
+          </DialogTrigger>
+          <DialogContent
+            id="dialog-content"
+            className="bg-main-gray text-black rounded-md"
+          >
+            <DialogContentWrapper
+              title="Přidat transakci"
+              description="přidání nové transakce transakce"
+              buttonText="Uložit transakci"
+              titleCenter
+            >
+              <AddTransactionForm />
+            </DialogContentWrapper>
+          </DialogContent>
+        </Dialog>
+        {/*<button>*/}
+        {/*  <Image*/}
+        {/*    src="/icons/add-circle.svg"*/}
+        {/*    alt="add"*/}
+        {/*    width={24}*/}
+        {/*    height={24}*/}
+        {/*    className="nav-image"*/}
+        {/*  />*/}
+        {/*</button>*/}
+      </div>
+      {/*single user/family*/}
+      <div className="flex gap-2 sm:gap-4">
+        <Image
+          src="/icons/single-user.svg"
+          alt="single-user"
+          width={24}
+          height={24}
+          className="nav-image"
+        />
+        <Image
+          src="/icons/family.svg"
+          alt="add"
+          width={24}
+          height={24}
+          className="nav-image opacity-30"
+        />
+      </div>
+      <div className="flex gap-6 md:gap-8 xl:gap-10">
+        <form
+          className="hidden sm:block"
+          action={async () => {
+            "use server";
+            await signOut();
+          }}
+        >
+          <button
+            type="submit"
+            className="bg-main-blue text-white py-1 px-2 md:px-3 xl:px-4 rounded-lg lg:text-lg"
+          >
+            Logout
+          </button>
+        </form>
+        <DropdownUserMenu />
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

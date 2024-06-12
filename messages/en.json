@@ -105,7 +105,7 @@
   },
 
   "login-form": {
-    "title": "Login",
+    "title": "Welcome back",
     "back-text1": "Reset password",
     "back-text2": "Don't have account? Register",
     "email": "E-mail",
@@ -115,11 +115,54 @@
   },
 
   "register-form": {
-    "title": "Register",
-    "back-text1": "Allready registered? Login",
+    "title": "Create an account",
+    "back-text1": "Already registered? Login",
     "email": "E-mail",
     "email-placeholder": "john-doe@gmail.com",
     "password": "Password",
     "submit-button": "Register"
+  },
+  "action-errors": {
+    "1": "Invalid fields!",
+    "2": "Email does not exist!",
+    "3": "Invalid Credentials!",
+    "4": "Something went wrong",
+    "5": "Email already in use"
+  },
+  "action-success": {
+    "1": "Confirmation email send."
+  },
+
+  "dashboard-navigation": {
+    "appName": "Family Finances",
+    "accountButton": "My Account",
+
+    "nav-links": {
+      "dashboard": {
+        "title": "Dashboard",
+        "icon": "home",
+        "link": "/dashboard"
+      },
+      "goals": {
+        "title": "Goals",
+        "icon": "goals",
+        "link": "/dashboard/goals"
+      },
+      "income-expenses": {
+        "title": "Income/ Expenses",
+        "icon": "wallet-money",
+        "link": "/dashboard/transactions"
+      },
+      "subscriptions": {
+        "title": "Subscriptions",
+        "icon": "ticket-expired",
+        "link": "/"
+      },
+      "statistics": {
+        "title": "Statistics",
+        "icon": "graph",
+        "link": "/"
+      }
+    }
   }
 }

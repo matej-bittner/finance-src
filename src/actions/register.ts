@@ -4,11 +4,14 @@ import { RegisterSchema } from "@/schemas";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
+import { getTranslations } from "next-intl/server";
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const validatedFields = RegisterSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+    return { error: te("1") };
   }
   const { email, password } = validatedFields.data;
 
@@ -17,7 +20,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const existingUser = await getUserByEmail(email);
 
   if (existingUser) {
-    return { error: "Email already in use" };
+    return { error: te("5") };
   }
 
   await db.user.create({
@@ -27,5 +30,5 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     },
   });
 
-  return { success: "ok" };
+  return { success: ts("1") };
 };

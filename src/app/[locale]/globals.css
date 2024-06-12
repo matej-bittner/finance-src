@@ -14,21 +14,27 @@ body, html{
 #pages h1{@apply text-2xl font-medium tb:text-3xl xl:font-semibold  lg:text-4xl}
 h2{@apply text-[22px] font-medium tb:text-2xl lg:text-[28px] }
 h3{@apply underline underline-offset-4 capitalize text-lg font-medium sm:text-[20px] tb:text-[24px] xl:text-[26px] }
-h4{@apply text-lg min-[500px]:text-xl tb:text-2xl  font-medium}
+h4{@apply text-lg min-[500px]:text-xl tb:text-2xl font-medium}
 
 #auth h1{@apply text-[26px] font-medium min-[500px]:text-3xl tb:text-[32px]}
 
-.spacing-between-divs{@apply space-y-8 tb:space-y-6 lg:space-y-8 }
+.spacing-between-divs{@apply space-y-8 tb:space-y-6 lg:space-y-8}
 .spacing-in-div{@apply space-y-6 tb:space-y-5 lg:space-y-6}
 
 
 .limited-width{@apply w-full max-w-[1440px] mx-auto px-4 sm:px-6 md:px-6 lg:px-10}
+.limited-width-big{@apply w-full max-w-[2000px] mx-auto sm:px-4 md:px-6 xl:px-8 }
 
 .price-amount{@apply flex flex-col text-4xl min-[400px]:text-[42px] min-[460px]:text-5xl tb:text-[54px] lg:text-6xl font-light w-fit items-center}
 .main-text{@apply lg:text-lg leading-relaxed}
 
 .form-inputs{@apply w-full bg-white py-1.5 border-black border-2 rounded-lg pl-4 placeholder:text-[#4D4D4D] outline-none }
 .form-buttons{@apply w-full bg-white py-1.5 border-black border-2 rounded-lg flex items-center justify-center  }
+
+#protected .nav-image{@apply max-sm:invert aspect-square sm:w-[28px]}
+#dialog-content .dialog-inputs{@apply pl-3 pr-1 py-1.5 sm:py-2 rounded-lg bg-white border-none outline-none text-sm}
+#dialog-content .dialog-labels{@apply text-xs pl-2 sm:text-sm}
+
   @layer base {
     :root {
       --background: 0 0% 100%;

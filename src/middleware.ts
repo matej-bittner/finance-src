@@ -24,7 +24,7 @@ const authMiddleware = auth((req) => {
 
   // Redirect to sign-in page if not authenticated
   if (!session && !isAuthPage) {
-    return NextResponse.redirect(new URL("/auth/login", req.nextUrl));
+    return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
   // Redirect to home page if authenticated and trying to access auth pages

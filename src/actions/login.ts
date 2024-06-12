@@ -6,24 +6,27 @@ import { getUserByEmail } from "@/data/user";
 import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { getTranslations } from "next-intl/server";
 export const login = async (values: z.infer<typeof LoginSchema>) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+    return { error: te("1") };
   }
   const { email, password } = validatedFields.data;
 
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: "Email does not exist" };
+    return { error: te("2") };
   }
 
   const passwordMatch = await bcrypt.compare(password, existingUser.password);
 
   if (!passwordMatch) {
-    return { error: "Invalid Credentials" };
+    return { error: te("3") };
   }
 
   try {
@@ -36,13 +39,13 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "Invalid Credentials" };
+          return { error: te("3") };
         default:
-          return { error: "Something went wrong" };
+          return { error: te("4") };
       }
     }
     throw error;
   }
 
-  return { success: "ok" };
+  return { success: ts("1") };
 };
