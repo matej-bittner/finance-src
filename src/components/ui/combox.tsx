@@ -19,6 +19,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "./scroll-area";
+import Link from "next/link";
 
 export type ComboboxOptions = {
   value: string;
@@ -32,6 +33,7 @@ interface ComboboxProps {
   options: ComboboxOptions[];
   selected: string | string[]; // Updated to handle multiple selections
   className?: string;
+  popoverClassname?: string;
   placeholder?: string;
   onChange?: (event: string | string[]) => void; // Updated to handle multiple selections
   onCreate?: (value: string) => void;
@@ -44,11 +46,11 @@ export function Combobox({
   placeholder,
   mode = "single",
   onChange,
+  popoverClassname,
   onCreate,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState<string>("");
-
   return (
     <div className={cn("block", className)}>
       <Popover open={open} onOpenChange={setOpen}>
@@ -59,7 +61,7 @@ export function Combobox({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-full justify-between"
+            className="w-full justify-between dialog-inputs h-fit font-normal"
           >
             {selected && selected.length > 0 ? (
               <div className="relative mr-auto flex flex-grow flex-wrap items-center overflow-hidden">
@@ -82,8 +84,16 @@ export function Combobox({
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-72 max-w-sm p-0">
+        <PopoverContent
+          className={cn(
+            "w-[calc(100vw-3rem)] p-0 min-[512px]:w-[462px]",
+            popoverClassname,
+          )}
+        >
+          {/*original*/}
+          {/*<PopoverContent className="w-72 max-w-sm p-0">*/}
           <Command
+            className="rounded-none w-full"
             filter={(value, search) => {
               if (value.includes(search)) return 1;
               return 0;
@@ -95,19 +105,27 @@ export function Combobox({
               value={query}
               onValueChange={(value: string) => setQuery(value)}
             />
-            <CommandEmpty
-              onClick={() => {
-                if (onCreate) {
-                  onCreate(query);
-                  setQuery("");
-                }
-              }}
-              className="flex cursor-pointer items-center justify-center gap-1 italic"
-            >
-              <p>Create: </p>
-              <p className="block max-w-48 truncate font-semibold text-primary">
-                {query}
-              </p>
+            {/*<CommandEmpty*/}
+            {/*  onClick={() => {*/}
+            {/*    if (onCreate) {*/}
+            {/*      onCreate(query);*/}
+            {/*      setQuery("");*/}
+            {/*    }*/}
+            {/*  }}*/}
+            {/*  className="flex cursor-pointer items-center justify-center gap-1 italic"*/}
+            {/*>*/}
+            {/*  <p>Create: </p>*/}
+            {/*  <p className="block max-w-48 truncate font-semibold text-primary">*/}
+            {/*    {query}*/}
+            {/*  </p>*/}
+            {/*</CommandEmpty>*/}
+            <CommandEmpty className="h-fit text-center py-2 text-sm ">
+              <Link
+                href="/"
+                className="font-medium w-full hover:font-semibold transition "
+              >
+                Vytvořit nový účet
+              </Link>
             </CommandEmpty>
             <ScrollArea>
               <div className="max-h-80">
@@ -137,6 +155,28 @@ export function Combobox({
                           }
                         }}
                       >
+                        {/*<CommandItem*/}
+                        {/*  key={option.label}*/}
+                        {/*  value={option.label}*/}
+                        {/*  onSelect={(currentValue) => {*/}
+                        {/*    if (onChange) {*/}
+                        {/*      if (*/}
+                        {/*        mode === "multiple" &&*/}
+                        {/*        Array.isArray(selected)*/}
+                        {/*      ) {*/}
+                        {/*        onChange(*/}
+                        {/*          selected.includes(option.value)*/}
+                        {/*            ? selected.filter(*/}
+                        {/*                (item) => item !== option.value,*/}
+                        {/*              )*/}
+                        {/*            : [...selected, option.value],*/}
+                        {/*        );*/}
+                        {/*      } else {*/}
+                        {/*        onChange(option.value);*/}
+                        {/*      }*/}
+                        {/*    }*/}
+                        {/*  }}*/}
+                        {/*>*/}
                         <Check
                           className={cn(
                             "mr-2 h-4 w-4",
@@ -148,6 +188,15 @@ export function Combobox({
                         {option.label}
                       </CommandItem>
                     ))}
+                    {/*create in dropdown*/}
+                    <CommandItem>
+                      <Link
+                        href="/"
+                        className="font-medium text-center w-full hover:font-semibold transition"
+                      >
+                        Vytvořit nový účet
+                      </Link>
+                    </CommandItem>
                   </CommandList>
                 </CommandGroup>
               </div>

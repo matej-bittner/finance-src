@@ -37,9 +37,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="px-2 overflow-auto w-full">
-      <h1 className="text-lg lg:text-xl underline font-medium underline-offset-2 pl-2">
-        {title}
-      </h1>
+      <h2>{title}</h2>
       <Table style={{ borderCollapse: "separate", borderSpacing: "0px 5px" }}>
         <TableHeader className="bg-main-gray ">
           {table.getHeaderGroups().map((headerGroup) => (

@@ -19,6 +19,7 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Combobox } from "@/components/ui/combox";
 
 export const transactionType = [
   { title: "Příjmy", abbreviation: "in", id: 1 },
@@ -27,24 +28,51 @@ export const transactionType = [
   { title: "Pravidelná platba", abbreviation: "standing", id: 4 },
 ];
 
+const yourOptions: { value: string; label: string }[] = [
+  {
+    value: "next.js",
+    label: "Next.js",
+  },
+  {
+    value: "sveltekit",
+    label: "SvelteKit",
+  },
+  {
+    value: "nuxt.js",
+    label: "Nuxt.js",
+  },
+  {
+    value: "remix",
+    label: "Remix",
+  },
+  {
+    value: "astro",
+    label: "Astro",
+  },
+];
+
 const formSchema = z.object({
-  account: z.string(),
+  accountFrom: z.string(),
+  accountTo: z.string(),
   name: z.string(),
   amount: z.number().positive(),
   currency: z.string(),
   description: z.string(),
   date: z.string(),
+  frequency: z.string(),
 });
 const AddTransactionForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      account: "",
+      accountFrom: "",
+      accountTo: "",
       name: "",
       amount: 0,
       currency: "czk",
       description: "",
       date: "",
+      frequency: "7",
     },
   });
 
@@ -56,7 +84,6 @@ const AddTransactionForm = () => {
   }
 
   const [selectedType, setSelectedType] = useState(1);
-
   return (
     <Form {...form}>
       <form
@@ -64,6 +91,7 @@ const AddTransactionForm = () => {
         className="w-full space-y-1 sm:space-y-2"
         autoComplete="off"
       >
+        {/*select transaction type*/}
         <div className="h-fit w-full grid grid-cols-2 min-[432px]:grid-cols-4 gap-x-2 gap-y-1">
           {transactionType.map((item) => {
             return (
@@ -80,20 +108,53 @@ const AddTransactionForm = () => {
         </div>
         <div className="space-y-1 sm:space-y-2 min-[512px]:w-[90%] mx-auto">
           {/*to account*/}
-          <FormField
-            control={form.control}
-            name="account"
-            render={({ field }) => (
-              <FormItem className="flex flex-col space-y-0">
-                <FormLabel className="dialog-labels">Na účet:</FormLabel>
-                <FormControl>
-                  <input type="text" className="dialog-inputs" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
+          {selectedType !== 2 && selectedType != 4 && (
+            <FormField
+              control={form.control}
+              name="accountTo"
+              render={({ field }) => (
+                <FormItem className="flex flex-col space-y-0">
+                  <FormLabel className="dialog-labels">Na účet</FormLabel>
+                  <FormControl>
+                    <Combobox
+                      className="p-0 min-h-0 h-fit overflow-clip rounded-lg "
+                      popoverClassname="min-[512px]:w-[416px]"
+                      mode="single" //single or multiple
+                      options={yourOptions}
+                      placeholder="Vyberte účet"
+                      selected={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      onCreate={(value) => {}}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+          {selectedType !== 1 && (
+            <FormField
+              control={form.control}
+              name="accountFrom"
+              render={({ field }) => (
+                <FormItem className="flex flex-col space-y-0">
+                  <FormLabel className="dialog-labels">Z účtu</FormLabel>
+                  <FormControl>
+                    <Combobox
+                      className="p-0 min-h-0 h-fit overflow-clip rounded-lg "
+                      mode="single" //single or multiple
+                      options={yourOptions}
+                      placeholder="Vyberte účet"
+                      selected={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      onCreate={(value) => {}}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
           {/*name ammount currency*/}
           <div className="flex gap-1 max-[450px]:flex-col min-[450px]:gap-2">
             {/*name*/}
@@ -110,7 +171,6 @@ const AddTransactionForm = () => {
                 </FormItem>
               )}
             />
-
             {/*ammount currency*/}
             <div className="flex gap-2 max-[320px]:flex-col">
               {/*ammount*/}
@@ -191,21 +251,65 @@ const AddTransactionForm = () => {
               </FormItem>
             )}
           />
-
-          {/*date*/}
-          <FormField
-            control={form.control}
-            name="date"
-            render={({ field }) => (
-              <FormItem className="flex flex-col max-w-[200px] space-y-0">
-                <FormLabel className="dialog-labels">Datum:</FormLabel>
-                <FormControl>
-                  <input type="date" className="dialog-inputs" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+          {/*date and frequency*/}
+          <div className="w-full flex max-[280px]:flex-col justify-between">
+            {/*date*/}
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem className="flex flex-col min-[280px]:max-w-[200px] space-y-0">
+                  <FormLabel className="dialog-labels">Datum:</FormLabel>
+                  <FormControl>
+                    <input type="date" className="dialog-inputs" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {selectedType === 4 && (
+              <FormField
+                control={form.control}
+                name="frequency"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col space-y-0">
+                    <FormLabel className="dialog-labels">Frekvence:</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="min-w-0">
+                          <SelectItem
+                            className="px-0 py-1 justify-center items-center"
+                            value="7"
+                          >
+                            7
+                          </SelectItem>
+                          <SelectItem
+                            className="px-0 py-1 justify-center items-center"
+                            value="14"
+                          >
+                            14
+                          </SelectItem>
+                          <SelectItem
+                            className="px-0 py-1 justify-center items-center"
+                            value="30"
+                          >
+                            30
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             )}
-          />
+          </div>
 
           <div>
             <button className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3">

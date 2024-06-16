@@ -12,9 +12,9 @@ body, html{
 }
 
 #pages h1{@apply text-2xl font-medium tb:text-3xl xl:font-semibold  lg:text-4xl}
-h2{@apply text-[22px] font-medium tb:text-2xl lg:text-[28px] }
-h3{@apply underline underline-offset-4 capitalize text-lg font-medium sm:text-[20px] tb:text-[24px] xl:text-[26px] }
-h4{@apply text-lg min-[500px]:text-xl tb:text-2xl font-medium}
+#pages h2{@apply text-[22px] font-medium tb:text-2xl lg:text-[28px] }
+#pages h3{@apply underline underline-offset-4 capitalize text-lg font-medium sm:text-[20px] tb:text-[24px] xl:text-[26px] }
+#pages h4{@apply text-lg min-[500px]:text-xl tb:text-2xl font-medium}
 
 #auth h1{@apply text-[26px] font-medium min-[500px]:text-3xl tb:text-[32px]}
 
@@ -35,6 +35,8 @@ h4{@apply text-lg min-[500px]:text-xl tb:text-2xl font-medium}
 #dialog-content .dialog-inputs{@apply pl-3 pr-1 py-1.5 sm:py-2 rounded-lg bg-white border-none outline-none text-sm}
 #dialog-content .dialog-labels{@apply text-xs pl-2 sm:text-sm}
 
+#protected h2{@apply text-lg lg:text-xl underline font-medium underline-offset-2 pl-2}
+#protected #dashboard .box {@apply rounded-xl min-[450px]:rounded-2xl px-3 py-2 bg-main-gray min-[450px]:py-3 min-[450px]:px-4 }
   @layer base {
     :root {
       --background: 0 0% 100%;

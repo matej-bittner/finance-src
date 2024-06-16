@@ -19,6 +19,7 @@ import {
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Combobox } from "@/components/ui/combox";
 
 const formSchema = z.object({
   account: z.string(),
@@ -28,6 +29,29 @@ const formSchema = z.object({
   description: z.string(),
   date: z.string(),
 });
+
+const yourOptions: { value: string; label: string }[] = [
+  {
+    value: "next.js",
+    label: "Next.js",
+  },
+  {
+    value: "sveltekit",
+    label: "SvelteKit",
+  },
+  {
+    value: "nuxt.js",
+    label: "Nuxt.js",
+  },
+  {
+    value: "remix",
+    label: "Remix",
+  },
+  {
+    value: "astro",
+    label: "Astro",
+  },
+];
 const EditTransactionForm = ({ data }: any) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,15 +78,22 @@ const EditTransactionForm = ({ data }: any) => {
         className="w-full space-y-1 sm:space-y-2"
         autoComplete="off"
       >
-        {/*to account*/}
         <FormField
           control={form.control}
           name="account"
           render={({ field }) => (
             <FormItem className="flex flex-col space-y-0">
-              <FormLabel className="dialog-labels">Na účet:</FormLabel>
+              <FormLabel className="dialog-labels">Na účet</FormLabel>
               <FormControl>
-                <input type="text" className="dialog-inputs" {...field} />
+                <Combobox
+                  className="p-0 min-h-0 h-fit overflow-clip rounded-lg "
+                  mode="single" //single or multiple
+                  options={yourOptions}
+                  placeholder="Vyberte účet"
+                  selected={field.value}
+                  onChange={(value) => field.onChange(value)}
+                  onCreate={(value) => {}}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
