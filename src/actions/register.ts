@@ -5,6 +5,9 @@ import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 import { getTranslations } from "next-intl/server";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
+
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const te = await getTranslations("action-errors");
   const ts = await getTranslations("action-success");
@@ -29,6 +32,9 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       password: hashedPw,
     },
   });
+
+  const verificationToken = await generateVerificationToken(email);
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
   return { success: ts("1") };
 };

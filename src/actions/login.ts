@@ -7,6 +7,8 @@ import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { getTranslations } from "next-intl/server";
+import { generateVerificationToken } from "@/lib/tokens";
+import { sendVerificationEmail } from "@/lib/mail";
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const te = await getTranslations("action-errors");
   const ts = await getTranslations("action-success");
@@ -27,6 +29,17 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   if (!passwordMatch) {
     return { error: te("3") };
+  }
+
+  if (!existingUser.emailVerified) {
+    const verificationToken = await generateVerificationToken(
+      existingUser.email,
+    );
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token,
+    );
+    return { success: ts("1") };
   }
 
   try {

@@ -4,6 +4,9 @@ import "./globals.css";
 import React from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
+
 const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,13 +22,16 @@ export default async function RootLayout({
   params: { locale: string };
 }>) {
   const messages = await getMessages();
+  const session = await auth();
   return (
-    <html lang={locale}>
-      <body className={`${manrope.className}`}>
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <SessionProvider session={session}>
+      <html lang={locale}>
+        <body className={`${manrope.className}`}>
+          <NextIntlClientProvider messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </SessionProvider>
   );
 }

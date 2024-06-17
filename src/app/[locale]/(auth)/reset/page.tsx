@@ -1,7 +1,8 @@
 import React from "react";
+import ResetForm from "@/components/auth/ResetForm";
 
-const ResetPage = () => {
-  return <div>reset</div>;
+const ResetPasswordPage = () => {
+  return <ResetForm />;
 };
 
-export default ResetPage;
+export default ResetPasswordPage;

@@ -37,6 +37,7 @@ body, html{
 
 #protected h2{@apply text-lg lg:text-xl underline font-medium underline-offset-2 pl-2}
 #protected #dashboard .box {@apply rounded-xl min-[450px]:rounded-2xl px-3 py-2 bg-main-gray min-[450px]:py-3 min-[450px]:px-4 }
+ .settings-select-link {@apply relative flex w-full cursor-default select-none items-center rounded-sm p-2 hover:bg-main-bg hover:text-accent-foreground font-medium text-sm}
   @layer base {
     :root {
       --background: 0 0% 100%;

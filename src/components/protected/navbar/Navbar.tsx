@@ -9,6 +9,7 @@ import DialogContentWrapper from "@/components/protected/dialog/DialogContentWra
 import AddTransactionForm from "@/components/protected/dialog/AddTransactionForm";
 import { usePathname } from "next/navigation";
 import AddGoalForm from "@/components/protected/dialog/AddGoalForm";
+import { signOut } from "next-auth/react";
 
 const Navbar = () => {
   const t = useTranslations("dashboard-navigation");
@@ -55,9 +56,15 @@ const Navbar = () => {
     title = "Přidat transakci";
     description = "přidání nové transakce transakce";
     form = <AddTransactionForm />;
-  } else {
+  } else if (pathname.includes("dashboard")) {
     pageName = "Family Finances";
+  } else if (pathname.includes("settings")) {
+    pageName = "Nastavení";
   }
+
+  const logOut = () => {
+    signOut();
+  };
 
   return (
     <nav className="h-[50px] max-sm:bg-main-blue max-sm:text-white flex items-center justify-between sm:items-end  max-sm:border-b-2 border-white relative max-sm:px-4 xl:pl-16 ">
@@ -111,20 +118,13 @@ const Navbar = () => {
         />
       </div>
       <div className="flex gap-6 md:gap-8 xl:gap-10">
-        <form
-          className="hidden sm:block"
-          // action={async () => {
-          //   "use server";
-          //   await signOut();
-          // }}
+        <button
+          onClick={logOut}
+          className="bg-main-blue text-white py-1 px-2 md:px-3 xl:px-4 rounded-lg lg:text-lg hidden sm:block"
         >
-          <button
-            type="submit"
-            className="bg-main-blue text-white py-1 px-2 md:px-3 xl:px-4 rounded-lg lg:text-lg"
-          >
-            Logout
-          </button>
-        </form>
+          Logout
+        </button>
+
         <DropdownUserMenu />
       </div>
     </nav>

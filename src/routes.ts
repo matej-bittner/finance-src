@@ -2,7 +2,7 @@
  * all routes that are accessible to public
  * @type{string[]}
  **/
-export const publicRoutes = ["/"];
+export const publicRoutes = ["/", "/new-verification"];
 
 /**
  * routes used for authentication
@@ -12,8 +12,9 @@ export const publicRoutes = ["/"];
 export const authRoutes = [
   "/login",
   "/register",
+  "/reset",
   "/error",
-  "/new-verification",
+  "/new-password",
 ];
 
 /**

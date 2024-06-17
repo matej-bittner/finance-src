@@ -13,52 +13,39 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CardSuccess from "@/components/auth/CardSuccess";
-import { LoginSchema } from "@/schemas";
+import { ResetSchema } from "@/schemas";
 import { login } from "@/actions/login";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
+import { reset } from "@/actions/reset";
 
-const LoginForm = () => {
+const ResetForm = () => {
   const t = useTranslations("login-form");
-
-  const searchParams = useSearchParams();
-  const urlError =
-    searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email in use with different provider"
-      : "";
 
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof ResetSchema>>({
+    resolver: zodResolver(ResetSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof LoginSchema>) {
+  const onSubmit = (values: z.infer<typeof ResetSchema>) => {
     setError("");
     setSuccess("");
+
     startTransition(() => {
-      login(values).then((data) => {
+      reset(values).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
       });
     });
-  }
+  };
   return (
     <section className="size-full flex items-center justify-center">
-      <Card
-        title={t("title")}
-        backLink1="/"
-        backText1={t("back-text1")}
-        backLink2="/"
-        backText2={t("back-text2")}
-        showSocials
-      >
+      <Card title="zapomenuté heslo" backLink1="/" backText1="back to login">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -84,34 +71,15 @@ const LoginForm = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="space-y-[2px]">
-                    <FormLabel className="pl-3 text-base">
-                      {t("password")}
-                    </FormLabel>
-                    <input
-                      {...field}
-                      type="password"
-                      disabled={isPending}
-                      className="form-inputs"
-                      placeholder="***********"
-                    />
-                    <FormMessage className="text-main-error pl-3" />
-                  </FormItem>
-                )}
-              />
             </div>
-            <CardError message={error || urlError} />
+            <CardError message={error} />
             <CardSuccess message={success} />
             <button
               disabled={isPending}
               type="submit"
               className="text-white bg-black border-2 border-white rounded-lg text-xl py-2 my-1 tracking-wide"
             >
-              {t("submit-button")}
+              reset Email
             </button>
           </form>
         </Form>
@@ -120,4 +88,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default ResetForm;

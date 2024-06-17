@@ -38,3 +38,54 @@ model Account {
 
   @@id([provider, providerAccountId])
 }
+
+model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@map("verification_tokens")
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+// model PaymentAccounts {
+//   id       String  @id @default(cuid())
+//   type     String
+//   name     String
+//   number   String?
+//   balance  Int
+//   currency String
+// }
+//
+// model Goal {
+//   id         String   @id @default(cuid())
+//   name       String
+//   finishDate DateTime
+//   color      String
+//   icon       String
+//   ammount    Int
+// }
+//
+// model Transaction {
+//   id          String   @id @default(cuid())
+//   type        String
+//   name        String
+//   description String?
+//   ammount     Int
+//   currcency   String
+//   date        DateTime
+//   accountTo   String?
+//   accountFrom String?
+//   frequency   Int?
+//   category    String
+// }
