@@ -10,8 +10,28 @@ import AddTransactionForm from "@/components/protected/dialog/AddTransactionForm
 import { usePathname } from "next/navigation";
 import AddGoalForm from "@/components/protected/dialog/AddGoalForm";
 import { signOut } from "next-auth/react";
+import { UserAccount } from "@/types";
 
-const Navbar = () => {
+const Navbar = ({
+  userAccounts,
+  defaultCurrency,
+}: {
+  userAccounts: UserAccount;
+  defaultCurrency?: string;
+}) => {
+  const userAccountsFormatted = userAccounts.map((item) => ({
+    value: item.id,
+    label: item.name,
+    // Keep other properties if needed
+    type: item.type,
+    number: item.number,
+    balance: item.balance,
+    currency: item.currency,
+    userId: item.userId,
+    blockedForGoals: item.blockedForGoals,
+    wantToBlock: 0,
+  }));
+
   const t = useTranslations("dashboard-navigation");
   const dropdownNavData = [
     {
@@ -50,12 +70,22 @@ const Navbar = () => {
     pageName = "Goly";
     title = "Přidat Goal";
     description = "přidání nového cíle";
-    form = <AddGoalForm />;
+    form = (
+      <AddGoalForm
+        userAccounts={userAccountsFormatted}
+        defaultCurrency={defaultCurrency}
+      />
+    );
   } else if (pathname.includes("transactions")) {
     pageName = "Transakce";
     title = "Přidat transakci";
     description = "přidání nové transakce transakce";
-    form = <AddTransactionForm />;
+    form = (
+      <AddTransactionForm
+        userAccounts={userAccountsFormatted}
+        defaultCurrency={defaultCurrency}
+      />
+    );
   } else if (pathname.includes("dashboard")) {
     pageName = "Family Finances";
   } else if (pathname.includes("settings")) {

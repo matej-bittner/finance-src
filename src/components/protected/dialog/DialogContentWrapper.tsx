@@ -4,7 +4,7 @@ interface TableDialogWrapperProps {
   children: React.ReactNode;
   title: string;
   description: string;
-  buttonText: string;
+  buttonText?: string;
   showDeleteButton?: boolean;
   titleCenter?: boolean;
 }

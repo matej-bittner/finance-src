@@ -1,121 +1,91 @@
-export const navigationData = [
+export const colors = [
   {
-    title: "about",
-    link: "#",
+    id: 1,
+    color: "red",
+    background: "bg-[#E90000]",
+    stroke: "stroke-[#E90000]",
+    fill: "fill-[#E90000]",
   },
   {
-    title: "demo",
-    link: "#",
+    id: 2,
+    color: "blue",
+    background: "bg-[#007BFF]",
+    stroke: "stroke-[#007BFF]",
+    fill: "fill-[#007BFF]",
   },
   {
-    title: "pricing",
-    link: "#",
-  },
-];
-
-export const firstSectionData = [
-  "Are you tired of money management apps overflowing with ads, lacking essential features, or just not your cup of tea?",
-  "If you've ever searched for a budgeting app that truly meets all your needs, you know the struggle is real.  I spent countless hours searching for an app to help me take control of my finances, but nothing seemed to fit the bill.",
-  "That's when I decided to create [name], a financial management app designed to be clear, powerful, and help you achieve your financial goals.",
-];
-
-export const secondSectionData = [
-  {
-    title: "Menu",
-    slug: "menu",
-    icon: "expand-right",
-    text: "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality.",
+    id: 3,
+    color: "green",
+    background: "bg-[#28A745]",
+    stroke: "stroke-[#28A745]",
+    fill: "fill-[#28A745]",
   },
   {
-    title: "Goals",
-    slug: "goals",
-    icon: "goals",
-    text: "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality.",
+    id: 4,
+    color: "yellow",
+    background: "bg-[#ffc107]",
+    stroke: "stroke-[#ffc107]",
+    fill: "fill-[#ffc107]",
   },
   {
-    title: "Income and Expenses",
-    slug: "income-and-expenses",
-    icon: "wallet-money",
-    text: "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small. We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality.",
+    id: 5,
+    color: "purple",
+    background: "bg-[#6F42C1]",
+    stroke: "stroke-[#6F42C1]",
+    fill: "fill-[#6F42C1]",
   },
   {
-    title: "Subscriptions",
-    slug: "subscriptions",
-    icon: "ticket-expired",
-    text: "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality.",
+    id: 6,
+    color: "orange",
+    background: "bg-[#fd7e14]",
+    stroke: "stroke-[#fd7e14]",
+    fill: "fill-[#fd7e14]",
   },
   {
-    title: "Statistics",
-    slug: "statistics",
-    icon: "graph",
-    text: "Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality.",
+    id: 7,
+    color: "pink",
+    background: "bg-[#ffc0cb]",
+    stroke: "stroke-[#ffc0cb]",
+    fill: "fill-[#ffc0cb]",
   },
   {
-    title: "Mobile App",
-    slug: "mobile-app",
-    icon: "mobile",
-    text: "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality.",
-  },
-];
-export const pricingData = [
-  {
-    location: [
-      {
-        language: "us",
-        title: "premium",
-        link_text: "Select Now",
-      },
-    ],
-
-    link: "#",
-    in_price: [1, 2, 3, 4, 5, 6],
-    billing: [
-      {
-        language: "us",
-
-        currency: "usd",
-        plans: [
-          { price: 55, period: "month" },
-          { price: 150, period: "year" },
-        ],
-      },
-    ],
+    id: 8,
+    color: "teal",
+    background: "bg-[#00BDBE]",
+    stroke: "stroke-[#00BDBE]",
+    fill: "fill-[#00BDBE]",
   },
   {
-    location: [
-      {
-        language: "us",
-        title: "premium",
-        link_text: "Select Now",
-      },
-    ],
-    link: "#",
-    in_price: [1, 2, 3],
-    billing: [
-      {
-        language: "us",
-        currency: "usd",
-        plans: [
-          { price: 22, period: "month" },
-          { price: 88, period: "year" },
-        ],
-      },
-    ],
+    id: 9,
+    color: "gray",
+    background: "bg-[#808080]",
+    stroke: "stroke-[#808080]",
+    fill: "fill-[#808080]",
   },
 ];
+export const icons = [
+  "brush",
+  "building",
+  "cake",
+  "calendar",
+  "car",
+  "game",
+  "gameboy",
+  "gift",
+  "holiday",
+  "hospital",
+  "house",
+  "mobile",
+  "snow",
+  "teacher",
+  "truck",
+];
 
-export const pricingDataPoints = [
-  {
-    language: "us",
-    points: [
-      "Income and Expenses",
-      "Savings and Investments",
-      "Loans Overview",
-      "Subscriptions",
-      "Fast Support",
-      "Family Overview / Add family member",
-    ],
-  },
+export const transactionType = [
+  { title: "Příjmy", abbreviation: "in", id: 1 },
+  { title: "Výdaje", abbreviation: "out", id: 2 },
+  { title: "Mezi účty", abbreviation: "between", id: 3 },
+  { title: "Pravidelná platba", abbreviation: "standing", id: 4 },
 ];
 
 export const socialsData = [
@@ -135,4 +105,22 @@ export const socialsData = [
     link: "#",
   },
   { title: "E-mail", icon: "", link: "", address: "finacialfreedom@gmail.com" },
+];
+
+export const currencies = [
+  {
+    id: 1,
+    value: "czk",
+    symbol: "Kč",
+  },
+  {
+    id: 2,
+    value: "eur",
+    symbol: "€",
+  },
+  {
+    id: 3,
+    value: "usd",
+    symbol: "$",
+  },
 ];

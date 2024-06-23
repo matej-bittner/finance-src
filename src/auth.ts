@@ -4,6 +4,7 @@ import authConfig from "@/auth.config";
 import { db } from "@/lib/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getUserById } from "@/data/user";
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: "/login",
@@ -34,6 +35,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.id = token.sub;
       }
 
+      if (token.mainCurrency && session.user) {
+        session.user.mainCurrency = token.mainCurrency;
+      }
+
+      if (token.mainLanguage && session.user) {
+        session.user.mainLanguage = token.mainLanguage;
+      }
+
       return session;
     },
     async jwt({ token }) {
@@ -42,6 +51,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const existingUser = await getUserById(token.sub);
 
       if (!existingUser) return token;
+
+      token.mainCurrency = existingUser.mainCurrency;
+      token.mainLanguage = existingUser.mainLanguage;
 
       return token;
     },

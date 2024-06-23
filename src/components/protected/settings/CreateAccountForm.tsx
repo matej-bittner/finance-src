@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useTransition } from "react";
 import {
   Form,
   FormControl,
@@ -15,63 +15,53 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Combobox } from "@/components/ui/combox";
+import { createPaymentAccount } from "@/actions/create-payment-account";
+import { useToast } from "@/components/ui/use-toast";
+import { currencies } from "@/constants";
 
 const formSchema = z.object({
-  account: z.string(),
-
+  number: z.string().optional(),
   name: z.string().min(1),
-  amount: z.number().positive().min(1),
-  currency: z.string().min(1),
-  description: z.string().optional(),
-  date: z.string().min(1),
-  frequency: z.string(),
+  balance: z.number(),
+  currency: z.string(),
+  type: z.string().optional(),
 });
 
-const yourOptions: { value: string; label: string }[] = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
-const EditTransactionForm = ({ data }: any) => {
+const CreateAccountForm = ({
+  defaultCurrency,
+}: {
+  defaultCurrency?: string;
+}) => {
+  const [isPending, startTransition] = useTransition();
+  const { toast } = useToast();
+  const defaultValues = {
+    number: "",
+    name: "",
+    balance: 0,
+    currency: defaultCurrency,
+    type: "",
+  };
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      account: "",
-      name: "",
-      amount: 0,
-      currency: "czk",
-      description: "",
-      date: "",
-    },
+    defaultValues: defaultValues,
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    startTransition(() => {
+      createPaymentAccount(values).then((data) => {
+        toast({
+          variant: `${data?.error ? "destructive" : "default"}`,
+          title: data?.error || data?.success,
+          description: "Friday, February 10, 2023 at 5:57 PM",
+        });
+        if (data?.success) {
+          form.reset(defaultValues);
+        }
+      });
+    });
   }
   return (
     <Form {...form}>
@@ -82,20 +72,12 @@ const EditTransactionForm = ({ data }: any) => {
       >
         <FormField
           control={form.control}
-          name="account"
+          name="number"
           render={({ field }) => (
-            <FormItem className="flex flex-col space-y-0">
-              <FormLabel className="dialog-labels">Na účet</FormLabel>
+            <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
+              <FormLabel className="dialog-labels"> Číslo:</FormLabel>
               <FormControl>
-                <Combobox
-                  className="p-0 min-h-0 h-fit overflow-clip rounded-lg "
-                  mode="single" //single or multiple
-                  options={yourOptions}
-                  placeholder="Vyberte účet"
-                  selected={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  onCreate={(value) => {}}
-                />
+                <input type="text" className="dialog-inputs" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -118,16 +100,31 @@ const EditTransactionForm = ({ data }: any) => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
+                <FormLabel className="dialog-labels"> Typ účtu:</FormLabel>
+                <FormControl>
+                  <input type="text" className="dialog-inputs" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           {/*ammount currency*/}
           <div className="flex gap-2 max-[320px]:flex-col">
             {/*ammount*/}
             <FormField
               control={form.control}
-              name="amount"
+              name="balance"
               render={({ field }) => (
                 <FormItem className="flex flex-col max-[450px]:flex-1 space-y-0">
-                  <FormLabel className="dialog-labels">Částka:</FormLabel>
+                  <FormLabel className="dialog-labels">
+                    Momentální zůstatek:
+                  </FormLabel>
                   <FormControl>
                     <input
                       type="number"
@@ -157,24 +154,15 @@ const EditTransactionForm = ({ data }: any) => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="min-w-0">
-                        <SelectItem
-                          className="px-0 py-1 justify-center items-center"
-                          value="czk"
-                        >
-                          CZK
-                        </SelectItem>
-                        <SelectItem
-                          className="px-0 py-1 justify-center items-center"
-                          value="eur"
-                        >
-                          EUR
-                        </SelectItem>
-                        <SelectItem
-                          className="px-0 py-1 justify-center items-center"
-                          value="gpb"
-                        >
-                          GBP
-                        </SelectItem>
+                        {currencies.map((currency) => (
+                          <SelectItem
+                            key={currency.id}
+                            className="px-0 py-1 justify-center items-center"
+                            value={currency.value}
+                          >
+                            {currency.value.toUpperCase()}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -185,34 +173,6 @@ const EditTransactionForm = ({ data }: any) => {
           </div>
         </div>
         {/*desc*/}
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem className="flex flex-col space-y-0">
-              <FormLabel className="dialog-labels">Popis:</FormLabel>
-              <FormControl>
-                <input type="text" className="dialog-inputs" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/*date*/}
-        <FormField
-          control={form.control}
-          name="date"
-          render={({ field }) => (
-            <FormItem className="flex flex-col max-w-[200px] space-y-0">
-              <FormLabel className="dialog-labels">Datum:</FormLabel>
-              <FormControl>
-                <input type="date" className="dialog-inputs" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <div>
           <button className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3">
@@ -224,4 +184,4 @@ const EditTransactionForm = ({ data }: any) => {
   );
 };
 
-export default EditTransactionForm;
+export default CreateAccountForm;

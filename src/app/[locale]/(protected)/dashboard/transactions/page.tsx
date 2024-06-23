@@ -1,6 +1,7 @@
 import React from "react";
 import { columns, Transaction } from "./columns";
 import { DataTable } from "@/components/protected/table/DataTable";
+import { userTransactions } from "@/helpers/current-user";
 
 const data: Transaction[] = [
   {
@@ -45,10 +46,12 @@ const data: Transaction[] = [
   },
 ];
 
-const Page = () => {
+const Page = async () => {
+  const allTransaction = await userTransactions(1);
   return (
-    <div className="flex">
+    <div className="flex flex-col">
       <DataTable columns={columns} data={data} title="Příjmy" />
+      <DataTable columns={columns} data={data} title="Výdaje" />
     </div>
   );
 };

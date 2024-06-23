@@ -8,14 +8,19 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  accounts      Account[]
-  createdAt     DateTime  @default(now())
+  id              String           @id @default(cuid())
+  name            String?
+  email           String           @unique
+  emailVerified   DateTime?
+  image           String?
+  password        String?
+  accounts        Account[]
+  createdAt       DateTime         @default(now())
+  mainCurrency    String
+  mainLanguage    String
+  paymentAccounts PaymentAccount[]
+  goals           Goal[]
+  transactions    Transaction[]
 }
 
 model Account {
@@ -58,34 +63,54 @@ model PasswordResetToken {
   @@unique([email, token])
 }
 
-// model PaymentAccounts {
-//   id       String  @id @default(cuid())
-//   type     String
-//   name     String
-//   number   String?
-//   balance  Int
-//   currency String
-// }
-//
-// model Goal {
-//   id         String   @id @default(cuid())
-//   name       String
-//   finishDate DateTime
-//   color      String
-//   icon       String
-//   ammount    Int
-// }
-//
-// model Transaction {
-//   id          String   @id @default(cuid())
-//   type        String
-//   name        String
-//   description String?
-//   ammount     Int
-//   currcency   String
-//   date        DateTime
-//   accountTo   String?
-//   accountFrom String?
-//   frequency   Int?
-//   category    String
-// }
+model PaymentAccount {
+  id              String        @id @default(cuid())
+  type            String?
+  name            String
+  number          String?
+  balance         Int
+  currency        String
+  user            User?         @relation(fields: [userId], references: [id])
+  userId          String?
+  goal            Goal[]
+  blockedForGoals Int           @default(0)
+  transactionOut  Transaction[] @relation("AccountFrom")
+  transactionIn   Transaction[] @relation("AccountTo")
+}
+
+model Goal {
+  id             String           @id @default(cuid())
+  name           String
+  finishDate     DateTime         @db.Date
+  color          String
+  icon           String
+  amount         Int
+  user           User             @relation(fields: [userId], references: [id])
+  userId         String
+  paymentAccount PaymentAccount[]
+}
+
+model Transaction {
+  id              String          @id @default(cuid())
+  transactionType Int
+  name            String
+  description     String?
+  amount          Int
+  currency        String
+  date            DateTime
+  frequency       Int?
+  category        String?
+  user            User?           @relation(fields: [userId], references: [id])
+  userId          String?
+  accountTo       PaymentAccount? @relation("AccountTo", fields: [accountToId], references: [id])
+  accountToId     String?
+  accountFrom     PaymentAccount? @relation("AccountFrom", fields: [accountFromId], references: [id])
+  accountFromId   String?
+}
+
+model goalTransactions {
+  id String @id @default(cuid())
+  // goal Goal
+  // paymentAccount
+  // amount
+}

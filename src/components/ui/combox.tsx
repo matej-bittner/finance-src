@@ -37,6 +37,7 @@ interface ComboboxProps {
   placeholder?: string;
   onChange?: (event: string | string[]) => void; // Updated to handle multiple selections
   onCreate?: (value: string) => void;
+  message?: string;
 }
 
 export function Combobox({
@@ -48,6 +49,7 @@ export function Combobox({
   onChange,
   popoverClassname,
   onCreate,
+  message,
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState<string>("");
@@ -189,7 +191,12 @@ export function Combobox({
                       </CommandItem>
                     ))}
                     {/*create in dropdown*/}
-                    <CommandItem>
+                    <CommandItem className="flex flex-col gap-1">
+                      {message && (
+                        <p className="text-xs text-center italic py-1 border-black/10 border-y-[1px]">
+                          {message}
+                        </p>
+                      )}
                       <Link
                         href="/"
                         className="font-medium text-center w-full hover:font-semibold transition"

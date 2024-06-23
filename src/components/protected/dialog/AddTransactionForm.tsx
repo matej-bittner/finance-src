@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import {
   Form,
   FormControl,
@@ -20,70 +20,71 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Combobox } from "@/components/ui/combox";
-
-export const transactionType = [
-  { title: "Příjmy", abbreviation: "in", id: 1 },
-  { title: "Výdaje", abbreviation: "out", id: 2 },
-  { title: "Mezi účty", abbreviation: "between", id: 3 },
-  { title: "Pravidelná platba", abbreviation: "standing", id: 4 },
-];
-
-const yourOptions: { value: string; label: string }[] = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+import { UserAccountFormatted } from "@/types";
+import { useToast } from "@/components/ui/use-toast";
+import { currencies, transactionType } from "@/constants";
+import { removeEmptyStrings } from "@/helpers/generalFunctions";
+import { createTransaction } from "@/actions/create-transaction";
 
 const formSchema = z.object({
   accountFrom: z.string(),
   accountTo: z.string(),
-  name: z.string(),
-  amount: z.number().positive(),
-  currency: z.string(),
-  description: z.string(),
-  date: z.string(),
+  name: z.string().min(1),
+  amount: z.number().positive().min(1),
+  currency: z.string().min(1),
+  description: z.string().optional(),
+  date: z.string().min(1),
   frequency: z.string(),
 });
-const AddTransactionForm = () => {
+const AddTransactionForm = ({
+  userAccounts,
+  defaultCurrency,
+}: {
+  userAccounts: UserAccountFormatted;
+  defaultCurrency?: string;
+}) => {
+  const [selectedType, setSelectedType] = useState(1);
+
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [selectedType]);
+
+  const defaultValues = {
+    accountFrom: "",
+    accountTo: "",
+    name: "",
+    amount: 0,
+    currency: defaultCurrency,
+    description: "",
+    date: "",
+    frequency: "",
+  };
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      accountFrom: "",
-      accountTo: "",
-      name: "",
-      amount: 0,
-      currency: "czk",
-      description: "",
-      date: "",
-      frequency: "7",
-    },
+    defaultValues: defaultValues,
   });
+  const [isPending, startTransition] = useTransition();
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    const allValues = Object.assign(values, { transactionType: selectedType });
+
+    const cleanedData = removeEmptyStrings(allValues);
+
+    startTransition(() => {
+      createTransaction(cleanedData).then((data) => {
+        toast({
+          variant: `${data?.error ? "destructive" : "default"}`,
+          title: data?.error || data?.success,
+          description: "Friday, February 10, 2023 at 5:57 PM",
+        });
+        if (data?.success) {
+          form.reset(defaultValues);
+        }
+      });
+    });
   }
 
-  const [selectedType, setSelectedType] = useState(1);
   return (
     <Form {...form}>
       <form
@@ -120,11 +121,11 @@ const AddTransactionForm = () => {
                       className="p-0 min-h-0 h-fit overflow-clip rounded-lg "
                       popoverClassname="min-[512px]:w-[416px]"
                       mode="single" //single or multiple
-                      options={yourOptions}
+                      options={userAccounts}
                       placeholder="Vyberte účet"
                       selected={field.value}
                       onChange={(value) => field.onChange(value)}
-                      onCreate={(value) => {}}
+                      // onCreate={(value) => {}}
                     />
                   </FormControl>
                   <FormMessage />
@@ -143,11 +144,11 @@ const AddTransactionForm = () => {
                     <Combobox
                       className="p-0 min-h-0 h-fit overflow-clip rounded-lg "
                       mode="single" //single or multiple
-                      options={yourOptions}
+                      options={userAccounts}
                       placeholder="Vyberte účet"
                       selected={field.value}
                       onChange={(value) => field.onChange(value)}
-                      onCreate={(value) => {}}
+                      // onCreate={(value) => {}}
                     />
                   </FormControl>
                   <FormMessage />
@@ -182,7 +183,8 @@ const AddTransactionForm = () => {
                     <FormLabel className="dialog-labels">Částka:</FormLabel>
                     <FormControl>
                       <input
-                        type="text"
+                        type="number"
+                        value={field.value === 0 ? "" : field.value}
                         className="dialog-inputs min-[450px]:w-[120px]"
                         onChange={(event) =>
                           field.onChange(+event.target.value)
@@ -210,24 +212,15 @@ const AddTransactionForm = () => {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="min-w-0">
-                          <SelectItem
-                            className="px-0 py-1 justify-center items-center"
-                            value="czk"
-                          >
-                            CZK
-                          </SelectItem>
-                          <SelectItem
-                            className="px-0 py-1 justify-center items-center"
-                            value="eur"
-                          >
-                            EUR
-                          </SelectItem>
-                          <SelectItem
-                            className="px-0 py-1 justify-center items-center"
-                            value="gpb"
-                          >
-                            GBP
-                          </SelectItem>
+                          {currencies.map((currency) => (
+                            <SelectItem
+                              key={currency.id}
+                              className="px-0 py-1 justify-center items-center"
+                              value={currency.value}
+                            >
+                              {currency.value.toUpperCase()}
+                            </SelectItem>
+                          ))}
                         </SelectContent>
                       </Select>
                     </FormControl>

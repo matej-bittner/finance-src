@@ -6,9 +6,8 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DialogContentWrapper from "@/components/protected/dialog/DialogContentWrapper";
 import EditTransactionForm from "@/components/protected/dialog/EditTransactionForm";
 import Image from "next/image";
+import { TransactionData } from "@/types";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Transaction = {
   id: string;
   date: string;
@@ -18,6 +17,7 @@ export type Transaction = {
   name: string;
 };
 
+// export const columns: ColumnDef<Transaction>[] = [
 export const columns: ColumnDef<Transaction>[] = [
   {
     accessorKey: "date",

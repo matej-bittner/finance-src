@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import Image from "next/image";
-import { UserAccountFormatted } from "@/types";
+import { GoalData, UserAccountFormatted } from "@/types";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,28 +41,30 @@ interface State {
   accountData: UserAccountFormatted;
 }
 
-const AddGoalForm = ({
+const EditGoalForm = ({
   defaultCurrency,
   userAccounts,
+  goalData,
 }: {
   userAccounts: UserAccountFormatted;
   defaultCurrency?: string;
+  goalData: GoalData;
 }) => {
   const { toast } = useToast();
-
   const filteredAccounts = userAccounts.filter(
     (account) =>
       account.blockedForGoals < account.balance &&
       account.blockedForGoals !== -1,
   );
-
+  console.log(goalData.finishDate.toISOString().slice(0, 10));
   const defaultValues = {
-    name: "",
-    amount: 0,
-    date: "",
-    color: "red",
-    icon: "house",
+    name: goalData.name,
+    amount: goalData.amount,
+    date: goalData.finishDate.toISOString().slice(0, 10),
+    color: goalData.color,
+    icon: goalData.icon,
   };
+  console.log(goalData);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
@@ -71,7 +73,6 @@ const AddGoalForm = ({
     ids: [],
     accountData: [],
   });
-  console.log(selectedAccount);
   const [isPending, startTransition] = useTransition();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -343,7 +344,7 @@ const AddGoalForm = ({
             disabled={isPending}
             className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3"
           >
-            Přidat Cíl
+            Editovat Goal
           </button>
         </div>
       </form>
@@ -351,4 +352,4 @@ const AddGoalForm = ({
   );
 };
 
-export default AddGoalForm;
+export default EditGoalForm;
