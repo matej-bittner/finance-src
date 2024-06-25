@@ -32,7 +32,7 @@ body, html{
 .form-buttons{@apply w-full bg-white py-1.5 border-black border-2 rounded-lg flex items-center justify-center  }
 
 #protected .nav-image{@apply max-sm:invert aspect-square sm:w-[28px]}
-#dialog-content .dialog-inputs{@apply pl-3 pr-1 py-1.5 sm:py-2 rounded-lg bg-white border-none outline-none text-sm}
+#dialog-content .dialog-inputs{@apply pl-3 pr-1 py-1.5 sm:py-2 rounded-lg bg-white border-none outline-none text-sm disabled:bg-[#f0f0f0]  disabled:text-[#6c757d] disabled:cursor-not-allowed}
 #dialog-content .dialog-labels{@apply text-xs pl-2 sm:text-sm}
 
 #protected h2{@apply text-lg lg:text-xl underline font-medium underline-offset-2 pl-2}

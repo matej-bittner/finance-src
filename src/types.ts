@@ -1,24 +1,12 @@
 export type UserAccount = {
-  id: string;
-  type: string | null;
-  name: string;
-  number: string | null;
-  balance: number;
-  currency: string;
-  blockedForGoals: number;
-  userId: string | null;
-}[];
-
-export type UserAccountFormatted = {
   value: string;
-  type: string | null;
   label: string;
+  type: string | null;
   number: string | null;
   balance: number;
   currency: string;
-  blockedForGoals: number;
   userId: string | null;
-  wantToBlock: number;
+  blockedForGoals: boolean;
 }[];
 
 export type GoalData = {
@@ -49,13 +37,29 @@ export type TransactionData = {
   id: string;
   transactionType: number;
   name: string;
-  description?: string;
+  description: string | null;
   amount: number;
   currency: string;
   date: Date;
-  frequency?: number;
-  category?: string;
-  userId: string;
-  accountToId?: string;
-  accountFromId?: string;
+  frequency: number | null;
+  category: null | string;
+  userId: string | null;
+  accountToId: string | null;
+  accountFromId: string | null;
+  accountFrom: { name: string } | null;
+  accountTo: { name: string } | null;
+  user: { mainCurrency: string } | null;
 };
+// export type TransactionData = {
+//   id: string;
+//   transactionType: number;
+//   name: string;
+//   description?: string;
+//   amount: number;
+//   currency: string;
+//   date: Date;
+//   frequency: number | null;
+//   userId: string;
+//   accountToId: string | null;
+//   accountFromId: string | null;
+// };

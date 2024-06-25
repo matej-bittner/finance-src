@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useTransition } from "react";
 import Image from "next/image";
-import { UserAccountFormatted } from "@/types";
+import { UserAccount } from "@/types";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/select";
 import { colors, icons } from "@/constants";
 import { removeEmptyStrings } from "@/helpers/generalFunctions";
-import { Checkbox } from "@/components/ui/checkbox";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   account: z.any(),
@@ -36,24 +36,17 @@ const formSchema = z.object({
   icon: z.string().min(1),
 });
 
-interface State {
-  ids: string | string[];
-  accountData: UserAccountFormatted;
-}
-
 const AddGoalForm = ({
   defaultCurrency,
   userAccounts,
 }: {
-  userAccounts: UserAccountFormatted;
+  userAccounts: UserAccount;
   defaultCurrency?: string;
 }) => {
+  const router = useRouter();
   const { toast } = useToast();
-
   const filteredAccounts = userAccounts.filter(
-    (account) =>
-      account.blockedForGoals < account.balance &&
-      account.blockedForGoals !== -1,
+    (account) => !account.blockedForGoals,
   );
 
   const defaultValues = {
@@ -67,17 +60,13 @@ const AddGoalForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
   });
-  const [selectedAccount, setSelectedAccount] = useState<State>({
-    ids: [],
-    accountData: [],
-  });
-  console.log(selectedAccount);
+  const [selectedAccount, setSelectedAccount] = useState<string[] | string>([]);
   const [isPending, startTransition] = useTransition();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const allValues = Object.assign(values, { accounts: selectedAccount });
-    const cleanedData = removeEmptyStrings(allValues);
     startTransition(() => {
+      const allValues = Object.assign(values, { accounts: selectedAccount });
+      const cleanedData = removeEmptyStrings(allValues);
       createGoal(cleanedData).then((data) => {
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
@@ -85,8 +74,9 @@ const AddGoalForm = ({
           description: "Friday, February 10, 2023 at 5:57 PM",
         });
         if (data?.success) {
+          router.refresh();
           form.reset(defaultValues);
-          setSelectedAccount({ ids: [], accountData: [] });
+          setSelectedAccount([]);
         }
       });
     });
@@ -114,17 +104,9 @@ const AddGoalForm = ({
                   message="Pokud se účet některý nezobrazuje, je pravděpodobně
                         přiřazený v plné hodnotě k jinému účtu."
                   // selected={field.value}
-                  selected={selectedAccount.ids}
+                  selected={selectedAccount}
                   // selected={selectedAccount}
-                  // onChange={(value) => setSelectedAccount(value)}
-                  onChange={(value) =>
-                    setSelectedAccount({
-                      ids: value,
-                      accountData: filteredAccounts.filter((item) =>
-                        value.includes(item.value),
-                      ),
-                    })
-                  }
+                  onChange={(value) => setSelectedAccount(value)}
                   // onChange={field.onChange}
                   onCreate={() => {}}
                   // onCreate={(value) => {}}
@@ -134,73 +116,6 @@ const AddGoalForm = ({
             </FormItem>
           )}
         />
-        {selectedAccount.ids.length > 0 && (
-          <div className="bg-blue-300 w-full grid grid-cols-2 gap-x-4 gap-y-2 px-2">
-            {selectedAccount.accountData.map((account, i) => {
-              // @ts-ignore
-              const originalGoalLimit = userAccounts.find(
-                (acc) => acc.value === account.value,
-              ).blockedForGoals;
-              const handleInputChange = (index: any, event: any) => {
-                const newInputNumber = Math.min(
-                  parseInt(event.target.value, 10) || 1,
-                  account.balance - originalGoalLimit,
-                );
-
-                setSelectedAccount((prevState) => {
-                  const updatedAccountData = [...prevState.accountData];
-                  updatedAccountData[index] = {
-                    ...updatedAccountData[index],
-                    wantToBlock: newInputNumber,
-                  };
-                  return { ...prevState, accountData: updatedAccountData };
-                });
-              };
-
-              return (
-                <div key={i} className="flex flex-col gap-1">
-                  <label
-                    className="dialog-labels pl-1"
-                    htmlFor={`account-${i}`}
-                  >
-                    účet &quot;{account.label}&quot;
-                  </label>
-                  <div className="flex pl-2">
-                    <Checkbox
-                      id="terms"
-                      checked={account.wantToBlock === -1}
-                      onCheckedChange={(checked: boolean) =>
-                        setSelectedAccount((prevState) => {
-                          const updatedAccountData = [...prevState.accountData];
-                          updatedAccountData[i] = {
-                            ...updatedAccountData[i],
-                            wantToBlock: checked ? -1 : 0,
-                          };
-                          return {
-                            ...prevState,
-                            accountData: updatedAccountData,
-                          };
-                        })
-                      }
-                    />
-                    <p className="dialog-labels">Max</p>
-                  </div>
-                  <input
-                    disabled={account.wantToBlock === -1}
-                    placeholder={account.currency.toUpperCase()}
-                    type="number"
-                    onChange={(event) => handleInputChange(i, event)}
-                    value={account.wantToBlock <= 0 ? "" : account.wantToBlock}
-                    min={1}
-                    max={account.balance - originalGoalLimit}
-                    id={`account-${i}`}
-                    className="disabled:bg-red-300 placeholder:text-right dialog-inputs "
-                  />
-                </div>
-              );
-            })}
-          </div>
-        )}
 
         {/*name ammount currency*/}
         <div className="flex gap-1 max-[400px]:flex-col min-[450px]:gap-2">

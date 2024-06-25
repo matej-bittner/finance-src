@@ -4,16 +4,12 @@ interface TableDialogWrapperProps {
   children: React.ReactNode;
   title: string;
   description: string;
-  buttonText?: string;
-  showDeleteButton?: boolean;
   titleCenter?: boolean;
 }
 const DialogContentWrapper = ({
   children,
   title,
   description,
-  showDeleteButton,
-  buttonText,
   titleCenter,
 }: TableDialogWrapperProps) => {
   return (
@@ -23,11 +19,6 @@ const DialogContentWrapper = ({
         <p className="max-lg:text-sm">{description}</p>
       </div>
       {children}
-      {showDeleteButton && (
-        <button className="py-1 px-2 bg-black text-white rounded-lg mt-2">
-          {buttonText}
-        </button>
-      )}
     </div>
   );
 };

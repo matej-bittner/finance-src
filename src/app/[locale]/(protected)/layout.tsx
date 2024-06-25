@@ -10,8 +10,8 @@ export default async function ProtectedLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const allUserAccounts: UserAccount = await userAccounts();
   const user = await currentUser();
+  const allUserAccounts: UserAccount = await userAccounts();
 
   return (
     <main id="protected" className="flex  relative w-full ">
@@ -21,7 +21,6 @@ export default async function ProtectedLayout({
           userAccounts={allUserAccounts}
           defaultCurrency={user?.mainCurrency}
         />
-
         {children}
         <Toaster />
       </div>

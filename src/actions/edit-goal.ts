@@ -3,52 +3,37 @@
 import { currentUser } from "@/helpers/current-user";
 import { db } from "@/lib/db";
 
-export const createGoal = async (values: any) => {
+export const editGoal = async (values: any) => {
   const session = await currentUser();
 
   if (!session?.id) return { error: "něco se nepovedlo" };
 
-  const { name, amount, date, color, icon, accounts } = values;
+  const { name, amount, date, color, icon, accounts, id } = values;
 
   if (accounts.length === 0) {
     return { error: "alespon jeden účet musí být vybrán" };
   }
 
-  const existingGoal = await db.goal.findFirst({
-    where: {
-      userId: session.id,
-      name,
-    },
-  });
-  //
-  if (existingGoal) {
-    return { error: "název už je používán" };
-  }
-
-  for (const account of accounts) {
-    const selectedAccount = await db.paymentAccount.findUnique({
-      where: {
-        id: account,
-      },
-    });
-
-    if (!selectedAccount) {
-      return { error: "účet nebyl nalezen" };
-    }
-    if (selectedAccount.blockedForGoal) {
-      return { error: "celý účet je již přiřazený k jinému goalu" };
-    }
-  }
-
   const dateISO = new Date(date).toISOString();
 
   await db.$transaction(async (db) => {
+    await db.paymentAccount.updateMany({
+      where: {
+        goalId: id,
+        userId: session.id,
+      },
+      data: {
+        goalId: null,
+        blockedForGoal: false,
+      },
+    });
     // Aktualizace všech účtů na "blocked: true"
     await db.paymentAccount.updateMany({
       where: {
         id: {
           in: accounts,
         },
+        userId: session.id,
       },
       data: {
         blockedForGoal: true,
@@ -56,17 +41,14 @@ export const createGoal = async (values: any) => {
     });
 
     // Vytvoření nového cíle
-    await db.goal.create({
+    await db.goal.update({
+      where: { id, userId: session.id },
       data: {
         name,
         color,
         icon,
         amount,
-        user: {
-          connect: {
-            id: session.id,
-          },
-        },
+
         finishDate: dateISO,
         paymentAccount: {
           connect: accounts.map((c: string) => ({ id: c })) || [],

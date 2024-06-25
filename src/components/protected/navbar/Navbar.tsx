@@ -15,22 +15,24 @@ import { UserAccount } from "@/types";
 const Navbar = ({
   userAccounts,
   defaultCurrency,
+  // userAccountNew,
 }: {
+  // userAccountNew: UserAccountNew;
   userAccounts: UserAccount;
-  defaultCurrency?: string;
+  defaultCurrency?: string | undefined;
 }) => {
-  const userAccountsFormatted = userAccounts.map((item) => ({
-    value: item.id,
-    label: item.name,
-    // Keep other properties if needed
-    type: item.type,
-    number: item.number,
-    balance: item.balance,
-    currency: item.currency,
-    userId: item.userId,
-    blockedForGoals: item.blockedForGoals,
-    wantToBlock: 0,
-  }));
+  // const userAccountsFormatted = userAccounts.map((item) => ({
+  //   value: item.id,
+  //   label: item.name,
+  //   // Keep other properties if needed
+  //   type: item.type,
+  //   number: item.number,
+  //   balance: item.balance,
+  //   currency: item.currency,
+  //   userId: item.userId,
+  //   blockedForGoals: item.blockedForGoals,
+  //   wantToBlock: 0,
+  // }));
 
   const t = useTranslations("dashboard-navigation");
   const dropdownNavData = [
@@ -72,7 +74,7 @@ const Navbar = ({
     description = "přidání nového cíle";
     form = (
       <AddGoalForm
-        userAccounts={userAccountsFormatted}
+        userAccounts={userAccounts}
         defaultCurrency={defaultCurrency}
       />
     );
@@ -82,7 +84,7 @@ const Navbar = ({
     description = "přidání nové transakce transakce";
     form = (
       <AddTransactionForm
-        userAccounts={userAccountsFormatted}
+        userAccounts={userAccounts}
         defaultCurrency={defaultCurrency}
       />
     );

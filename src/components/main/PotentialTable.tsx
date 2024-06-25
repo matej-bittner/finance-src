@@ -62,11 +62,11 @@ const PotentialTable = () => {
           : t(`title`)}
       </h1>
       <div className="flex w-full max-lg:flex-col sm:max-lg:gap-3 lg:justify-center ">
-        {/*choose goal bar*/}
+        {/*choose createGoal bar*/}
         <div
           className={`left-0 flex w-fit gap-5 rounded-r-xl max-sm:absolute max-sm:h-[200px] max-sm:pl-3  sm:max-lg:mx-auto ${goal.open ? "max-sm:translate-x-0 bg-[#F0F0F0]" : "max-sm:translate-x-[-165px]"}`}
         >
-          {/*goal title sm+hidden*/}
+          {/*createGoal title sm+hidden*/}
           <div className="flex flex-col items-end justify-between py-[6px] sm:hidden">
             {potentialGoalsData.map((item, i) => {
               return (

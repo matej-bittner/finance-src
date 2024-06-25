@@ -2,6 +2,8 @@ import React from "react";
 import { columns, Transaction } from "./columns";
 import { DataTable } from "@/components/protected/table/DataTable";
 import { userTransactions } from "@/helpers/current-user";
+import { columnsnew } from "@/app/[locale]/(protected)/dashboard/transactions/columnsnew";
+import { TransactionData } from "@/types";
 
 const data: Transaction[] = [
   {
@@ -46,14 +48,15 @@ const data: Transaction[] = [
   },
 ];
 
-const Page = async () => {
-  const allTransaction = await userTransactions(1);
+const TransactionPage = async () => {
+  const allTransaction: TransactionData[] = await userTransactions(3);
+  // console.log(allTransaction);
   return (
     <div className="flex flex-col">
-      <DataTable columns={columns} data={data} title="Příjmy" />
+      <DataTable columns={columnsnew} data={allTransaction} title="Příjmy" />
       <DataTable columns={columns} data={data} title="Výdaje" />
     </div>
   );
 };
 
-export default Page;
+export default TransactionPage;

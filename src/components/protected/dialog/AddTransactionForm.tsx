@@ -20,11 +20,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Combobox } from "@/components/ui/combox";
-import { UserAccountFormatted } from "@/types";
 import { useToast } from "@/components/ui/use-toast";
-import { currencies, transactionType } from "@/constants";
+import { transactionType } from "@/constants";
 import { removeEmptyStrings } from "@/helpers/generalFunctions";
 import { createTransaction } from "@/actions/create-transaction";
+import { UserAccount } from "@/types";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   accountFrom: z.string(),
@@ -40,7 +41,7 @@ const AddTransactionForm = ({
   userAccounts,
   defaultCurrency,
 }: {
-  userAccounts: UserAccountFormatted;
+  userAccounts: UserAccount;
   defaultCurrency?: string;
 }) => {
   const [selectedType, setSelectedType] = useState(1);
@@ -59,6 +60,7 @@ const AddTransactionForm = ({
     date: "",
     frequency: "",
   };
+  const router = useRouter();
   const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -67,11 +69,11 @@ const AddTransactionForm = ({
   const [isPending, startTransition] = useTransition();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const allValues = Object.assign(values, { transactionType: selectedType });
-
-    const cleanedData = removeEmptyStrings(allValues);
-
     startTransition(() => {
+      const allValues = Object.assign(values, {
+        transactionType: selectedType,
+      });
+      const cleanedData = removeEmptyStrings(allValues);
       createTransaction(cleanedData).then((data) => {
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
@@ -79,6 +81,7 @@ const AddTransactionForm = ({
           description: "Friday, February 10, 2023 at 5:57 PM",
         });
         if (data?.success) {
+          router.refresh();
           form.reset(defaultValues);
         }
       });
@@ -124,7 +127,17 @@ const AddTransactionForm = ({
                       options={userAccounts}
                       placeholder="Vyberte účet"
                       selected={field.value}
-                      onChange={(value) => field.onChange(value)}
+                      onChange={(value) => {
+                        field.onChange(value);
+                        if (selectedType === 1) {
+                          const account = userAccounts.find(
+                            (item) => item.value === value,
+                          );
+                          if (account?.currency) {
+                            form.setValue("currency", account.currency);
+                          }
+                        }
+                      }}
                       // onCreate={(value) => {}}
                     />
                   </FormControl>
@@ -143,11 +156,22 @@ const AddTransactionForm = ({
                   <FormControl>
                     <Combobox
                       className="p-0 min-h-0 h-fit overflow-clip rounded-lg "
+                      popoverClassname="min-[512px]:w-[416px]"
                       mode="single" //single or multiple
                       options={userAccounts}
                       placeholder="Vyberte účet"
                       selected={field.value}
-                      onChange={(value) => field.onChange(value)}
+                      onChange={(value) => {
+                        field.onChange(value);
+                        if (selectedType !== 1) {
+                          const account = userAccounts.find(
+                            (item) => item.value === value,
+                          );
+                          if (account?.currency) {
+                            form.setValue("currency", account.currency);
+                          }
+                        }
+                      }}
                       // onCreate={(value) => {}}
                     />
                   </FormControl>
@@ -204,25 +228,32 @@ const AddTransactionForm = ({
                   <FormItem className="flex flex-col space-y-0">
                     <FormLabel className="dialog-labels">Měna:</FormLabel>
                     <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="min-w-0">
-                          {currencies.map((currency) => (
-                            <SelectItem
-                              key={currency.id}
-                              className="px-0 py-1 justify-center items-center"
-                              value={currency.value}
-                            >
-                              {currency.value.toUpperCase()}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <input
+                        type="text"
+                        className="dialog-inputs min-[320px]:w-[100px] min-[450px]:max-w-[80px]"
+                        value={field.value.toUpperCase()}
+                        onChange={field.onChange}
+                        disabled
+                      />
+                      {/*<Select*/}
+                      {/*  onValueChange={field.onChange}*/}
+                      {/*  value={field.value}*/}
+                      {/*>*/}
+                      {/*  <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">*/}
+                      {/*    <SelectValue />*/}
+                      {/*  </SelectTrigger>*/}
+                      {/*  <SelectContent className="min-w-0">*/}
+                      {/*    {currencies.map((currency) => (*/}
+                      {/*      <SelectItem*/}
+                      {/*        key={currency.id}*/}
+                      {/*        className="px-0 py-1 justify-center items-center"*/}
+                      {/*        value={currency.value}*/}
+                      {/*      >*/}
+                      {/*        {currency.value.toUpperCase()}*/}
+                      {/*      </SelectItem>*/}
+                      {/*    ))}*/}
+                      {/*  </SelectContent>*/}
+                      {/*</Select>*/}
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -64,18 +64,19 @@ model PasswordResetToken {
 }
 
 model PaymentAccount {
-  id              String        @id @default(cuid())
-  type            String?
-  name            String
-  number          String?
-  balance         Int
-  currency        String
-  user            User?         @relation(fields: [userId], references: [id])
-  userId          String?
-  goal            Goal[]
-  blockedForGoals Int           @default(0)
-  transactionOut  Transaction[] @relation("AccountFrom")
-  transactionIn   Transaction[] @relation("AccountTo")
+  id             String        @id @default(cuid())
+  type           String?
+  name           String
+  number         String?
+  balance        Int           @default(0)
+  currency       String
+  user           User?         @relation(fields: [userId], references: [id])
+  userId         String?
+  goal           Goal?         @relation(fields: [goalId], references: [id])
+  blockedForGoal Boolean       @default(false)
+  transactionOut Transaction[] @relation("AccountFrom")
+  transactionIn  Transaction[] @relation("AccountTo")
+  goalId         String?
 }
 
 model Goal {
@@ -99,18 +100,21 @@ model Transaction {
   currency        String
   date            DateTime
   frequency       Int?
-  category        String?
   user            User?           @relation(fields: [userId], references: [id])
   userId          String?
   accountTo       PaymentAccount? @relation("AccountTo", fields: [accountToId], references: [id])
   accountToId     String?
   accountFrom     PaymentAccount? @relation("AccountFrom", fields: [accountFromId], references: [id])
   accountFromId   String?
+  category        String?
+  // Category        Category?       @relation(fields: [categoryId], references: [id])
+  // categoryId      String?
 }
 
-model goalTransactions {
-  id String @id @default(cuid())
-  // goal Goal
-  // paymentAccount
-  // amount
-}
+// model Category {
+//   id          String        @id @default(cuid())
+//   name        String
+//   slug        String?
+//   icon        String
+//   transaction Transaction[]
+// }

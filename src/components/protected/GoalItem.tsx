@@ -2,17 +2,18 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-import { GoalData, UserAccountFormatted } from "@/types";
+import { GoalData, UserAccount } from "@/types";
 import { colors, currencies } from "@/constants";
 import CircleProgressBar from "@/components/ui/circle-progress-bar";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DialogContentWrapper from "@/components/protected/dialog/DialogContentWrapper";
 import EditGoalForm from "@/components/protected/dialog/EditGoalForm";
+import { deleteGoal } from "@/actions/delete";
 
 interface GoalItemProps {
   goalData: GoalData[];
   userCurrencyConvert: any;
-  userAccounts: UserAccountFormatted;
+  userAccounts: UserAccount;
 }
 
 const GoalItem = ({
