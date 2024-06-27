@@ -83,11 +83,11 @@ const GoalItem = ({
                 />
                 <p className="text-main-success">
                   {wasConverted}
-                  {totalBalance.toLocaleString("fr")}{" "}
+                  {Intl.NumberFormat().format(totalBalance)}{" "}
                   {currencySymbol && currencySymbol.symbol}
                 </p>
                 <p className="leading-tight text-sm">z</p>
-                <p>{goal.amount.toLocaleString("fr")}</p>
+                <p>{Intl.NumberFormat().format(goal.amount)}</p>
                 <p className="absolute bottom-5 font-normal">
                   ({percentage > 100 ? ">100" : percentage}%)
                 </p>
@@ -118,8 +118,7 @@ const GoalItem = ({
                   />
                 </div>
               </div>
-              <div className="flex flex-col items-center  w-full">
-                <p className="text-sm underline">připojit účet</p>
+              <div className="flex flex-col items-center min-h-10 w-full">
                 <Dialog>
                   <DialogTrigger>
                     <p className="text-sm underline">editovat</p>

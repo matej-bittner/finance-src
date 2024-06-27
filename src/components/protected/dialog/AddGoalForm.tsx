@@ -165,7 +165,11 @@ const AddGoalForm = ({
               <FormItem className="flex flex-col max-w-[200px] space-y-0">
                 <FormLabel className="dialog-labels">Splnit do:</FormLabel>
                 <FormControl>
-                  <input type="date" className="dialog-inputs" {...field} />
+                  <input
+                    type="date"
+                    className="dialog-inputs py-[5px] sm:py-[7px]"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -185,7 +189,7 @@ const AddGoalForm = ({
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="w-[60px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
+                      <SelectTrigger className="w-[60px]  h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="min-w-0  w-[calc(100vw-3rem)] p-0 min-[512px]:w-[462px]">

@@ -1,6 +1,7 @@
 export type UserAccount = {
   value: string;
   label: string;
+  name: string;
   type: string | null;
   number: string | null;
   balance: number;
@@ -42,7 +43,7 @@ export type TransactionData = {
   currency: string;
   date: Date;
   frequency: number | null;
-  category: null | string;
+  category: null | number;
   userId: string | null;
   accountToId: string | null;
   accountFromId: string | null;
@@ -50,16 +51,3 @@ export type TransactionData = {
   accountTo: { name: string } | null;
   user: { mainCurrency: string } | null;
 };
-// export type TransactionData = {
-//   id: string;
-//   transactionType: number;
-//   name: string;
-//   description?: string;
-//   amount: number;
-//   currency: string;
-//   date: Date;
-//   frequency: number | null;
-//   userId: string;
-//   accountToId: string | null;
-//   accountFromId: string | null;
-// };

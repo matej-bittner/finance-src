@@ -1,32 +1,74 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
+import { GoalData, UserAccount } from "@/types";
+import { findCurrencyByValue } from "@/helpers/generalFunctions";
 
 interface AccountInfoDisplayProps {
-  data: {
-    id: number;
-    name: string;
-    type: string;
-    number?: string;
-    balance: number;
-  }[];
+  // data: {
+  //   id: number;
+  //   name: string;
+  //   type: string;
+  //   number?: string;
+  //   balance: number;
+  // }[];
+  currency: string;
+  data: UserAccount;
   type: "account" | "debt" | "payments";
+  userCurrencyConvert: any;
 }
-const AccountInfoDisplay = ({ data, type }: AccountInfoDisplayProps) => {
+const AccountInfoDisplay = ({
+  data,
+  type,
+  currency,
+  userCurrencyConvert,
+}: AccountInfoDisplayProps) => {
   const [selectedAccount, setSelectedAccount] = useState(0);
   if (data.length === 0) {
     return null;
   }
-  const allAccountBalance = data.reduce(
-    (total, data) => total + data.balance,
-    0,
-  );
+
+  let wasConverted = "";
+  const extractAndSumBalances = (data: UserAccount) => {
+    // Check if paymentAccount exists and has elements
+    if (data.length > 0) {
+      // Sum balances within paymentAccount array
+      const accountBalances = data.map((account) => {
+        if (account.currency === currency) {
+          return account.balance;
+        } else if (
+          userCurrencyConvert.hasOwnProperty(account.currency.toUpperCase())
+        ) {
+          const value = 1 / userCurrencyConvert[account.currency.toUpperCase()];
+          wasConverted = "~";
+          return Math.round(value * account.balance);
+        } else {
+          return account.balance;
+        }
+      });
+      const accountSum = accountBalances.reduce(
+        (innerAcc, value) => innerAcc + value,
+        0,
+      );
+      return accountSum;
+    }
+    return 0; // Return accumulator if no paymentAccount or empty
+  };
+
+  // };
+  const totalBalance = extractAndSumBalances(data);
+
+  const currencyTypes = findCurrencyByValue(data[selectedAccount].currency);
+  const mainCurrency = findCurrencyByValue(currency);
   return (
     <div className="box flex flex-col gap-2 min-[450px]:gap-3 w-full max-w-[380px] shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
       {/*top */}
       <div className="flex flex-col">
         <div className="flex justify-between">
-          <p className="md:text-lg">{allAccountBalance} CZK</p>
+          <p className="md:text-lg">
+            {wasConverted}
+            {Intl.NumberFormat().format(totalBalance)} {mainCurrency?.symbol}
+          </p>
           <p>Všechny účty</p>
         </div>
         <hr className="border-black w-[90%] mx-auto" />
@@ -53,7 +95,10 @@ const AccountInfoDisplay = ({ data, type }: AccountInfoDisplayProps) => {
         </div>
         {/*right*/}
         <div className="md:border-l-2 max-md:border-t-2 w-[80%] max-md:mx-auto max-md:pt-2 border-black flex flex-col items-center justify-center md:w-2/5 max-md:flex-1 ">
-          <p>{data[selectedAccount].balance} CZK</p>
+          <p>
+            {Intl.NumberFormat().format(data[selectedAccount].balance)}{" "}
+            {currencyTypes?.symbol || ""}
+          </p>
           <div className="flex md:flex-col items-center max-md:gap-2">
             <div className="flex gap-1 ">
               <Image

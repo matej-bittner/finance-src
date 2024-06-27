@@ -9,20 +9,36 @@ import Image from "next/image";
 import { TransactionData } from "@/types";
 import { currencies } from "@/constants";
 
-// export const columns: ColumnDef<Transaction>[] = [
-
 export const columnsnew: ColumnDef<TransactionData>[] = [
   {
     accessorKey: "date",
     header: "Datum",
     cell: ({ row }) => {
       const date = new Date(row.getValue("date"));
-      return <p className="">{date.toLocaleDateString()}</p>;
+      return <p>{date.toLocaleDateString()}</p>;
     },
   },
   {
-    accessorKey: "accountTo.name",
+    // accessorKey: "accountTo.name",
+
     header: "Účet",
+    cell: (info) => {
+      const row = info.row.original;
+      if (row.accountTo?.name && row.accountFrom?.name) {
+        return (
+          <div className="flex flex-col">
+            <p className="font-medium">
+              z: <span className="font-normal">{row.accountFrom.name}</span>
+            </p>
+            <p className="font-medium">
+              na: <span className="font-normal">{row.accountTo.name}</span>
+            </p>
+          </div>
+        );
+      } else {
+        return row.accountTo?.name || row.accountFrom?.name || "No Account";
+      }
+    },
   },
   {
     accessorKey: "amount",

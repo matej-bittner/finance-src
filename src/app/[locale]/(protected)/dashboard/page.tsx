@@ -5,9 +5,14 @@ import AccountInfoDisplay from "@/components/protected/dashboard/AccountInfoDisp
 import UpcomingPayments from "@/components/protected/dashboard/UpcomingPayments";
 import ExpensesByCategory from "@/components/protected/dashboard/ExpensesByCategory";
 import Image from "next/image";
+import { currentUser, userAccounts } from "@/helpers/current-user";
+import { convertCurrency } from "@/app/api/convert-currency/route";
 
-const DashboardPage = () => {
-  const t = useTranslations("dashboard-navigation");
+const DashboardPage = async () => {
+  const accountsNew = await userAccounts();
+  const user = await currentUser();
+  const mainCurrency = user?.mainCurrency;
+  const userCurrencyConvert = await convertCurrency(user?.mainCurrency);
   const accounts = [
     {
       id: 1,
@@ -114,14 +119,30 @@ const DashboardPage = () => {
         <div className="flex flex-col w-full sm:col-span-2 space-y-2  xl:space-y-4">
           <h2 className="max-sm:text-center lg:text-center">Celková hodnota</h2>
           <div className="grid grid-cols-1 w-full place-items-center sm:grid-cols-2 lg:grid-cols-1 sm:gap-x-2 gap-y-3 sm:gap-y-4 2xl:gap-y-8">
-            <AccountInfoDisplay data={accounts} type="account" />
-            <AccountInfoDisplay data={accounts} type="account" />
+            <AccountInfoDisplay
+              data={accountsNew}
+              type="account"
+              currency={mainCurrency}
+              userCurrencyConvert={userCurrencyConvert}
+            />
+            <AccountInfoDisplay
+              data={accountsNew}
+              type="account"
+              currency={mainCurrency}
+              userCurrencyConvert={userCurrencyConvert}
+            />
+            <AccountInfoDisplay
+              data={accountsNew}
+              type="account"
+              currency={mainCurrency}
+              userCurrencyConvert={userCurrencyConvert}
+            />
           </div>
         </div>
         {/*debt*/}
         <div className="flex flex-col w-full items-center space-y-2  xl:space-y-4">
           <h2 className="sm:text-left sm:w-full lg:text-center ">Úvěry </h2>
-          <AccountInfoDisplay data={accounts} type="debt" />
+          {/*<AccountInfoDisplay data={accounts} type="debt" />*/}
         </div>
         {/*upcoming payments*/}
         <div className="lg:hidden w-full flex flex-col items-center justify-center place-self-start space-y-2  xl:space-y-4">

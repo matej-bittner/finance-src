@@ -19,6 +19,7 @@ export const userAccounts = async () => {
     value: item.id,
     label: `${item.name}` + `(${item.currency})`,
     type: item.type,
+    name: item.name,
     number: item.number,
     balance: item.balance,
     currency: item.currency,
@@ -56,14 +57,29 @@ export const userGoals = async () => {
   return allGoals;
 };
 
-export const userTransactions = async (transactionType: number) => {
+// export const userTransactions = async (transactionType: number) => {
+export const userTransactions = async (monthToQuery: string) => {
   const session = await auth();
-
+  const month = parseInt(monthToQuery as string, 10);
+  let year = new Date().getFullYear();
+  if (month > new Date().getMonth() + 1) {
+    year -= 1; // If the specified month is greater than the current month, it means we're looking at the previous year
+  }
+  const startDate = new Date(year, month - 1, 1); // Months are 0-based in JavaScript Date
+  const endDate = new Date(year, month, 0, 23, 59, 59); // Last day of the month, 23:59:59
   const allTransactions = await db.transaction.findMany({
     where: {
       userId: session?.user?.id,
-      transactionType,
+      date: {
+        gte: startDate,
+        lte: endDate,
+      },
     },
+    orderBy: [
+      {
+        date: "asc",
+      },
+    ],
     include: {
       accountFrom: {
         select: {
@@ -82,23 +98,6 @@ export const userTransactions = async (transactionType: number) => {
       },
     },
   });
-
-  // if (transactionType === 1) {
-  //   return allTransactions.map((transaction) => {
-  //     const modifiedTransaction = { ...transaction };
-  //     // @ts-ignore
-  //     modifiedTransaction.acc = transaction.accountTo?.name;
-  //     return modifiedTransaction;
-  //   });
-  // }
-  // if (transactionType === 2 || transactionType === 4) {
-  //   return allTransactions.map((transaction) => {
-  //     const modifiedTransaction = { ...transaction };
-  //     // @ts-ignore
-  //     modifiedTransaction.acc = transaction.accountFrom?.name;
-  //     return modifiedTransaction;
-  //   });
-  // }
 
   return allTransactions;
 };

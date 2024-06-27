@@ -62,10 +62,10 @@ export const columns: ColumnDef<Transaction>[] = [
             <DialogContentWrapper
               title="Transakce"
               description="upravení transakce"
-              buttonText="Odtranit transakci"
-              showDeleteButton
+              // showDeleteButton
             >
-              <EditTransactionForm data={data} />
+              <p>asd</p>
+              {/*<EditTransactionForm data={data} />*/}
             </DialogContentWrapper>
           </DialogContent>
         </Dialog>

@@ -8,7 +8,7 @@ export const editTransaction = async (values: any) => {
 
   if (!session?.id) return { error: "něco se nepovedlo" };
 
-  const { name, amount, date, description, id, frequency } = values;
+  const { name, amount, date, description, id, frequency, category } = values;
 
   const dateISO = new Date(date).toISOString();
   let frequencyNumber = null;
@@ -36,6 +36,7 @@ export const editTransaction = async (values: any) => {
           date: dateISO,
           description,
           frequency: frequencyNumber,
+          category,
         },
       });
       return { success: "ok" };

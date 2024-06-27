@@ -27,6 +27,7 @@ import { removeEmptyStrings } from "@/helpers/generalFunctions";
 import { deleteGoal, deleteTransaction } from "@/actions/delete";
 import { editGoal } from "@/actions/edit-goal";
 import { editTransaction } from "@/actions/edit-transaction";
+import { categories } from "@/constants";
 
 const formSchema = z.object({
   accountFrom: z.string(),
@@ -37,6 +38,7 @@ const formSchema = z.object({
   description: z.string().optional(),
   date: z.string().min(1),
   frequency: z.string(),
+  category: z.string().optional(),
 });
 
 interface EditTransactionFormProps {
@@ -45,6 +47,7 @@ interface EditTransactionFormProps {
 
 const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
   const [selectedType, setSelectedType] = useState(1);
+
   useEffect(() => {
     setSelectedType(data.transactionType);
   }, []);
@@ -57,6 +60,9 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
     description: data.description || "",
     date: data.date.toISOString().slice(0, 10),
     frequency: data.frequency?.toString() || "",
+    category: data.category
+      ? categories.find((cat) => cat.id === data.category)?.value
+      : "",
   };
   const router = useRouter();
   const { toast } = useToast();
@@ -83,7 +89,13 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(() => {
-      const allValues = Object.assign(values, { id: data.id });
+      const category = categories.find((cat) => cat.value === values.category);
+
+      const allValues = Object.assign(
+        values,
+        { id: data.id },
+        category ? { category: category?.id } : null,
+      );
       const cleanedData = removeEmptyStrings(allValues);
       editTransaction(cleanedData).then((data) => {
         toast({
@@ -281,55 +293,107 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
             )}
           />
           {/*date and frequency*/}
-          <div className="w-full flex max-[280px]:flex-col justify-between">
-            {/*date*/}
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem className="flex flex-col min-[280px]:max-w-[200px] space-y-0">
-                  <FormLabel className="dialog-labels">Datum:</FormLabel>
-                  <FormControl>
-                    <input type="date" className="dialog-inputs" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {selectedType === 4 && (
+          <div
+            className={`w-full flex  justify-between gap-x-2 ${selectedType !== 4 ? "max-[370px]:flex-col" : "max-[470px]:flex-col"}`}
+          >
+            <div className="flex justify-between w-full">
+              {/*date*/}
               <FormField
                 control={form.control}
-                name="frequency"
+                name="date"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col min-[280px]:max-w-[200px] space-y-0">
+                    <FormLabel className="dialog-labels">Datum:</FormLabel>
+                    <FormControl>
+                      <input
+                        type="date"
+                        className="dialog-inputs py-[5px] sm:py-[7px]"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {selectedType === 4 && (
+                <FormField
+                  control={form.control}
+                  name="frequency"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-0">
+                      <FormLabel className="dialog-labels">
+                        Frekvence:
+                      </FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit min-h-[32px] sm:min-h-[36px] focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="min-w-0">
+                            <SelectItem
+                              className="px-0 py-1 justify-center items-center"
+                              value="7"
+                            >
+                              7
+                            </SelectItem>
+                            <SelectItem
+                              className="px-0 py-1 justify-center items-center"
+                              value="14"
+                            >
+                              14
+                            </SelectItem>
+                            <SelectItem
+                              className="px-0 py-1 justify-center items-center"
+                              value="30"
+                            >
+                              30
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+            </div>
+            {selectedType === 2 || selectedType === 4 ? (
+              <FormField
+                control={form.control}
+                name="category"
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-0">
-                    <FormLabel className="dialog-labels">Frekvence:</FormLabel>
+                    <FormLabel className="dialog-labels">Kategorie:</FormLabel>
                     <FormControl>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
-                        <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
-                          <SelectValue />
+                        <SelectTrigger className="w-[180px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
+                          <SelectValue placeholder="Vyber Kategorii" />
                         </SelectTrigger>
                         <SelectContent className="min-w-0">
-                          <SelectItem
-                            className="px-0 py-1 justify-center items-center"
-                            value="7"
+                          {categories.map((category) => (
+                            <SelectItem
+                              key={category.id}
+                              className="px-0 py-1 justify-center items-center"
+                              value={category.value}
+                            >
+                              {category.value}
+                            </SelectItem>
+                          ))}
+                          <button
+                            className="px-0 py-1 justify-center items-center  text-sm outline-none focus:bg-accent focus:text-accent-foreground  w-full font-semibold"
+                            onClick={() => {
+                              form.setValue("category", "");
+                            }}
                           >
-                            7
-                          </SelectItem>
-                          <SelectItem
-                            className="px-0 py-1 justify-center items-center"
-                            value="14"
-                          >
-                            14
-                          </SelectItem>
-                          <SelectItem
-                            className="px-0 py-1 justify-center items-center"
-                            value="30"
-                          >
-                            30
-                          </SelectItem>
+                            clear
+                          </button>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -337,7 +401,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                   </FormItem>
                 )}
               />
-            )}
+            ) : null}
           </div>
 
           <div>

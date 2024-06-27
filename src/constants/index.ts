@@ -82,10 +82,19 @@ export const icons = [
 ];
 
 export const transactionType = [
-  { title: "Příjmy", abbreviation: "in", id: 1 },
-  { title: "Výdaje", abbreviation: "out", id: 2 },
+  { title: "Příjmy", transaction: "Příchozí", abbreviation: "in", id: 1 },
+  { title: "Výdaje", transaction: "Odchozí", abbreviation: "out", id: 2 },
   { title: "Mezi účty", abbreviation: "between", id: 3 },
   { title: "Pravidelná platba", abbreviation: "standing", id: 4 },
+];
+
+export const categories = [
+  { id: 1, value: "travel", icon: "car" },
+  { id: 2, value: "housing", icon: "building" },
+  { id: 3, value: "entertainment", icon: "entertainment" },
+  { id: 4, value: "food", icon: "food" },
+  { id: 5, value: "shopping", icon: "shop" },
+  { id: 6, value: "other", icon: "other" },
 ];
 
 export const socialsData = [

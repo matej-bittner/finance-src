@@ -19,6 +19,7 @@ export const createTransaction = async (values: any) => {
     date,
     frequency,
     transactionType,
+    category,
   } = values;
 
   if (accountFrom === "" && accountTo === "") {
@@ -76,6 +77,7 @@ export const createTransaction = async (values: any) => {
         currency,
         date: dateISO,
         frequency: frequencyNumber,
+        category,
         user: {
           connect: {
             id: session.id,

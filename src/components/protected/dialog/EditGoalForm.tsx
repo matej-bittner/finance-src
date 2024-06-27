@@ -195,7 +195,11 @@ const EditGoalForm = ({
                 <FormItem className="flex flex-col max-w-[200px] space-y-0">
                   <FormLabel className="dialog-labels">Splnit do:</FormLabel>
                   <FormControl>
-                    <input type="date" className="dialog-inputs" {...field} />
+                    <input
+                      type="date"
+                      className="dialog-inputs py-[5px] sm:py-[7px]"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

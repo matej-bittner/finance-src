@@ -106,7 +106,7 @@ model Transaction {
   accountToId     String?
   accountFrom     PaymentAccount? @relation("AccountFrom", fields: [accountFromId], references: [id])
   accountFromId   String?
-  category        String?
+  category        Int?
   // Category        Category?       @relation(fields: [categoryId], references: [id])
   // categoryId      String?
 }
