@@ -8,19 +8,20 @@ datasource db {
 }
 
 model User {
-  id              String           @id @default(cuid())
+  id              String            @id @default(cuid())
   name            String?
-  email           String           @unique
+  email           String            @unique
   emailVerified   DateTime?
   image           String?
   password        String?
   accounts        Account[]
-  createdAt       DateTime         @default(now())
+  createdAt       DateTime          @default(now())
   mainCurrency    String
   mainLanguage    String
   paymentAccounts PaymentAccount[]
   goals           Goal[]
   transactions    Transaction[]
+  PeriodicPayment PeriodicPayment[]
 }
 
 model Account {
@@ -63,20 +64,49 @@ model PasswordResetToken {
   @@unique([email, token])
 }
 
+// model PaymentAccount {
+//   id              String            @id @default(cuid())
+//   type            String?
+//   name            String
+//   number          String?
+//   balance         Int               @default(0)
+//   currency        String
+//   user            User?             @relation(fields: [userId], references: [id])
+//   userId          String?
+//   goal            Goal?             @relation(fields: [goalId], references: [id])
+//   blockedForGoal  Boolean           @default(false)
+//   transactionOut  Transaction[]     @relation("AccountFrom")
+//   transactionIn   Transaction[]     @relation("AccountTo")
+//   periodicPayment PeriodicPayment[]
+//   goalId          String?
+// }
+
 model PaymentAccount {
-  id             String        @id @default(cuid())
-  type           String?
-  name           String
-  number         String?
-  balance        Int           @default(0)
-  currency       String
-  user           User?         @relation(fields: [userId], references: [id])
-  userId         String?
-  goal           Goal?         @relation(fields: [goalId], references: [id])
-  blockedForGoal Boolean       @default(false)
-  transactionOut Transaction[] @relation("AccountFrom")
-  transactionIn  Transaction[] @relation("AccountTo")
-  goalId         String?
+  id              String            @id @default(cuid())
+  type            Int
+  name            String
+  number          String?
+  balance         Int               @default(0)
+  currency        String
+  user            User?             @relation(fields: [userId], references: [id])
+  userId          String?
+  goal            Goal?             @relation(fields: [goalId], references: [id])
+  blockedForGoal  Boolean           @default(false)
+  transactionOut  Transaction[]     @relation("AccountFrom")
+  transactionIn   Transaction[]     @relation("AccountTo")
+  periodicPayment PeriodicPayment[]
+  goalId          String?
+  updateBalance   UpdateBalance[]
+}
+
+model UpdateBalance {
+  id               String          @id @default(cuid())
+  date             DateTime
+  amount           Int
+  paymentAccount   PaymentAccount? @relation(fields: [paymentAccountId], references: [id])
+  paymentAccountId String?
+  currency         String
+  firstBalance     Boolean?
 }
 
 model Goal {
@@ -107,14 +137,26 @@ model Transaction {
   accountFrom     PaymentAccount? @relation("AccountFrom", fields: [accountFromId], references: [id])
   accountFromId   String?
   category        Int?
-  // Category        Category?       @relation(fields: [categoryId], references: [id])
-  // categoryId      String?
 }
 
-// model Category {
-//   id          String        @id @default(cuid())
-//   name        String
-//   slug        String?
-//   icon        String
-//   transaction Transaction[]
-// }
+model PeriodicPayment {
+  id              String @id @default(cuid())
+  transactionType Int
+
+  firstPayment  DateTime
+  endOfPayment  DateTime?
+  // on create == firstPayment, then + frequency
+  toProcess     DateTime
+  // when was lat time created transaction and decresed amount on account
+  lastProcessed DateTime?
+  name          String
+  description   String?
+  amount        Int
+  currency      String
+  frequency     Int
+  user          User           @relation(fields: [userId], references: [id])
+  userId        String
+  category      Int?
+  accountFrom   PaymentAccount @relation(fields: [accountFromId], references: [id])
+  accountFromId String
+}

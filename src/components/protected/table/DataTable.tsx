@@ -16,21 +16,40 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useColumns } from "@/app/[locale]/(protected)/dashboard/transactions/columns";
+import { PeriodicPaymentData, TransactionData } from "@/types";
+import { useColumnsPeriodicPayments } from "@/app/[locale]/(protected)/dashboard/transactions/columnsPeriodicPayments";
+import { useTranslations } from "next-intl";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+type ColumnData = TransactionData | PeriodicPaymentData;
+// interface DataTableProps<TData, TValue> {
+interface DataTableProps {
+  // columns: ColumnDef<TData, TValue>[];
+  // data: TData[];
+  data: ColumnData[];
   title: string;
+  type: number;
 }
-
-export function DataTable<TData, TValue>({
+export function DataTable({
+  // export function DataTable<TData, TValue>({
   title,
-  columns,
+  // columns,
   data,
-}: DataTableProps<TData, TValue>) {
+  type,
+  // }: DataTableProps<TData, TValue>) {
+}: DataTableProps) {
+  const transactionColumns = useColumns() as ColumnDef<ColumnData>[];
+  const periodicPaymentColumns =
+    useColumnsPeriodicPayments() as ColumnDef<ColumnData>[];
+
+  const defaultColumns: ColumnDef<ColumnData>[] = [];
+  const finalColumns: ColumnDef<ColumnData>[] =
+    type === 1 ? transactionColumns : periodicPaymentColumns || defaultColumns;
+
   const table = useReactTable({
     data,
-    columns,
+    // @ts-ignore
+    columns: finalColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
@@ -40,10 +59,10 @@ export function DataTable<TData, TValue>({
       },
     },
   });
-
+  const t = useTranslations("data-table");
   return (
-    <div className="px-2 overflow-auto w-full">
-      <h2>{title}</h2>
+    <div className="px-2 overflow-auto w-full 2xl:max-w-[720px] ">
+      <h2 className="max-tb:text-center pb-1 2xl:pb-6">{title}</h2>
       <Table style={{ borderCollapse: "separate", borderSpacing: "0px 5px" }}>
         <TableHeader className="bg-main-gray ">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -86,29 +105,35 @@ export function DataTable<TData, TValue>({
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+              <TableCell
+                colSpan={finalColumns.length}
+                className="h-24 text-center"
+              >
+                {/*<TableCell colSpan={columns.length} className="h-24 text-center">*/}
+                {t(`no-result`)}
               </TableCell>
             </TableRow>
           )}
         </TableBody>
       </Table>
-      <div className="flex justify-between px-2 text-sm pt-1">
-        <button
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-          className="font-medium underline underline-offset-2 disabled:text-black/40"
-        >
-          Předchozí
-        </button>
-        <button
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-          className="font-medium underline underline-offset-2 disabled:text-black/40"
-        >
-          Další
-        </button>
-      </div>
+      {table.getCanPreviousPage() || table.getCanNextPage() ? (
+        <div className="flex justify-between px-2 text-sm pt-1">
+          <button
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+            className="font-medium underline underline-offset-2 disabled:text-black/40"
+          >
+            {t(`previous`)}
+          </button>
+          <button
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+            className="font-medium underline underline-offset-2 disabled:text-black/40"
+          >
+            {t(`next`)}
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }

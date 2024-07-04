@@ -11,7 +11,7 @@ export default async function ProtectedLayout({
   children: React.ReactNode;
 }>) {
   const user = await currentUser();
-  const allUserAccounts: UserAccount = await userAccounts();
+  const allUserAccounts: UserAccount[] = await userAccounts();
 
   return (
     <main id="protected" className="flex  relative w-full ">

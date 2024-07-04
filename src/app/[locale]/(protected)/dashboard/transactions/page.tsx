@@ -1,8 +1,7 @@
 import React from "react";
 import { DataTable } from "@/components/protected/table/DataTable";
-import { userTransactions } from "@/helpers/current-user";
-import { columnsnew } from "@/app/[locale]/(protected)/dashboard/transactions/columnsnew";
-import { TransactionData } from "@/types";
+import { userPeriodicPayments, userTransactions } from "@/helpers/current-user";
+import { PeriodicPaymentData, TransactionData } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -11,13 +10,44 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { currencies, transactionType } from "@/constants";
+import { currencies } from "@/constants";
+import { getTranslations } from "next-intl/server";
 
 const TransactionPage = async ({
   searchParams,
 }: {
   searchParams: { month: string };
 }) => {
+  const t = await getTranslations("transaction-page");
+
+  const t1 = await getTranslations("transaction-types");
+  const transactionTypes = [
+    {
+      title: t1(`income`),
+      transaction: t1(`income-transaction`),
+      abbreviation: "in",
+      id: 1,
+    },
+    {
+      title: t1(`expenses`),
+      transaction: t1(`expenses-transaction`),
+      abbreviation: "out",
+      id: 2,
+    },
+    {
+      title: t1(`between`),
+      transaction: t1(`between-transaction`),
+      abbreviation: "between",
+      id: 3,
+    },
+    {
+      title: t1(`standing`),
+      transaction: t1(`standing-transaction`),
+      abbreviation: "standing",
+      id: 4,
+    },
+  ];
+
   const getLast12Months = (): string[] => {
     const months = [];
     const currentDate = new Date();
@@ -47,9 +77,8 @@ const TransactionPage = async ({
   const transactionBetween = allTransactions.filter(
     (transaction) => transaction.transactionType === 3,
   );
-  const transactionStanding = allTransactions.filter(
-    (transaction) => transaction.transactionType === 4,
-  );
+  const periodicPayment: PeriodicPaymentData[] = await userPeriodicPayments(4);
+  // console.log(periodicPayment);
   let listSumArray;
 
   if (allTransactions.length > 0) {
@@ -109,14 +138,14 @@ const TransactionPage = async ({
           href="/dashboard/transactions"
           className={`min-[300px]:text-lg  ${!searchParams.month && "underline"}`}
         >
-          Tento Měsíc
+          {t(`this-month`)}
         </Link>
         <p>|</p>
         <Link
           href={`?month=${months[1]}`}
           className={`min-[300px]:text-lg ${monthToFilter === months[1] && "underline"}`}
         >
-          Minulý Měsíc
+          {t(`last-month`)}
         </Link>
         <p>|</p>
         <DropdownMenu>
@@ -140,91 +169,264 @@ const TransactionPage = async ({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="w-full flex max-xl:flex-col items-center xl:items-start xl:justify-center xl:gap-4">
-        {transactionOut.length > 0 ||
-        transactionIn.length > 0 ||
-        transactionBetween.length > 0 ? (
-          <div className="flex flex-col w-full items-center xl:order-2 xl:w-[300px]  gap-2">
-            <h2>Shrnutí</h2>
-            {/*transaction count*/}
-            <div className="flex max-sm:flex-col xl:flex-col sm:gap-1 md:gap-4 w-full items-start justify-center ">
-              <div className="bg-main-gray rounded-xl px-4 py-2  max-sm:w-[80%] w-full  max-w-[300px] flex flex-col items-center gap-1">
-                <p className="font-medium underline">Počet Transakcí</p>
-                <div className="text-[15px] w-full flex flex-col items-center gap-1">
-                  {filteredTransactionTypes.map((tran, i) => {
-                    let data =
-                      tran === "in"
-                        ? transactionIn
-                        : tran === "out"
-                          ? transactionOut
-                          : transactionBetween;
-                    const name = transactionType.find(
-                      (name) => name.abbreviation === tran,
-                    );
-                    return (
-                      <p
-                        key={i}
-                        className="w-full  flex justify-between max-w-[220px]"
-                      >
-                        {name?.transaction || name?.title || ""}
-                        <span className="pr-5">{data.length}</span>
-                      </p>
-                    );
-                  })}
-                </div>
-              </div>
-              {/*transaction amounts*/}
-              {listSumArray && (
-                <div className="bg-main-gray rounded-xl px-4 py-2  max-sm:w-[80%] w-full max-w-[300px] flex flex-col items-center  gap-1 max-h-[120px] xl:max-h-[300px] overflow-auto ">
-                  <p className="font-medium underline">Transakce</p>
-                  <div className="text-[15px] w-full flex flex-col items-center gap-1 ">
-                    {listSumArray.map((item, i) => {
-                      const findNames = transactionType.find(
-                        (type) => type.abbreviation === item.transaction,
-                      );
+      <div className="w-full flex flex-col items-center xl:items-start xl:justify-center xl:gap-4 pt-2 2xl:pt-8 ">
+        {/*<div className="w-full flex max-xl:flex-col items-center xl:items-start xl:justify-center xl:gap-4">*/}
+        {/*{transactionOut.length > 0 ||*/}
+        {/*transactionIn.length > 0 ||*/}
+        {/*transactionBetween.length > 0 ? (*/}
+        {/*  <div className="flex flex-col w-full items-center  xl:w-[900px]  gap-2 xl:mx-auto order-2 pt-2 2xl:pt-8">*/}
+        {/*    /!*<div className="flex flex-col w-full items-center xl:order-2 xl:w-[300px]  gap-2">*!/*/}
+        {/*    <h2>{t(`summary`)}</h2>*/}
+        {/*    /!*transaction count*!/*/}
+        {/*    <div className="flex max-sm:flex-col  sm:gap-1 md:gap-4 w-full  justify-center sm:items-start ">*/}
+        {/*      /!*<div className="flex max-sm:flex-col xl:flex-col sm:gap-1 md:gap-4 w-full items-start justify-center ">*!/*/}
+        {/*      <div className="bg-main-gray rounded-xl px-4 py-2  max-sm:w-[80%] w-full  max-w-[300px] flex flex-col items-center gap-1">*/}
+        {/*        <p className="font-medium underline">*/}
+        {/*          {t(`transaction-count`)}*/}
+        {/*        </p>*/}
+        {/*        <div className="text-[15px] w-full flex flex-col items-center gap-1">*/}
+        {/*          {filteredTransactionTypes.map((tran, i) => {*/}
+        {/*            let data =*/}
+        {/*              tran === "in"*/}
+        {/*                ? transactionIn*/}
+        {/*                : tran === "out"*/}
+        {/*                  ? transactionOut*/}
+        {/*                  : transactionBetween;*/}
+        {/*            const name = transactionTypes.find(*/}
+        {/*              (name) => name.abbreviation === tran,*/}
+        {/*            );*/}
+        {/*            return (*/}
+        {/*              <p*/}
+        {/*                key={i}*/}
+        {/*                className="w-full  flex justify-between max-w-[220px]"*/}
+        {/*              >*/}
+        {/*                {name?.transaction || name?.title || ""}*/}
+        {/*                <span className="pr-5">{data.length}</span>*/}
+        {/*              </p>*/}
+        {/*            );*/}
+        {/*          })}*/}
+        {/*        </div>*/}
+        {/*      </div>*/}
+        {/*      /!*transaction amounts*!/*/}
+        {/*      {listSumArray && (*/}
+        {/*        <div className="bg-main-gray rounded-xl px-4 py-2  max-sm:w-[80%] w-full max-w-[300px] flex flex-col items-center  gap-1 max-h-[120px] xl:max-h-[300px] overflow-auto ">*/}
+        {/*          <p className="font-medium underline">{t(`transaction`)}</p>*/}
+        {/*          <div className="text-[15px] w-full flex flex-col items-center gap-1 ">*/}
+        {/*            {listSumArray.map((item, i) => {*/}
+        {/*              const findNames = transactionTypes.find(*/}
+        {/*                (type) => type.abbreviation === item.transaction,*/}
+        {/*              );*/}
 
+        {/*              return (*/}
+        {/*                <div*/}
+        {/*                  key={i}*/}
+        {/*                  className="w-full  flex justify-between max-w-[220px]"*/}
+        {/*                >*/}
+        {/*                  <p>{findNames?.transaction}</p>*/}
+        {/*                  <div className="flex flex-col items-center">*/}
+        {/*                    {item.byCurrency.map((curr, i) => (*/}
+        {/*                      <p key={i}>*/}
+        {/*                        {new Intl.NumberFormat().format(curr.totalSum)}{" "}*/}
+        {/*                        {*/}
+        {/*                          currencies.find(*/}
+        {/*                            (currency) =>*/}
+        {/*                              currency.value === curr.currency,*/}
+        {/*                          )?.symbol*/}
+        {/*                        }*/}
+        {/*                      </p>*/}
+        {/*                    ))}*/}
+        {/*                  </div>*/}
+        {/*                </div>*/}
+        {/*              );*/}
+        {/*            })}*/}
+        {/*          </div>*/}
+        {/*        </div>*/}
+        {/*      )}*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*) : null}*/}
+        <div className="max-2xl:flex max-2xl:flex-col max-2xl:max-w-[800px] gap-5 w-full 2xl:grid 2xl:grid-cols-2 2xl:justify-items-center 2xl:max-w-[1560px] mx-auto 2xl:gap-y-8">
+          {/*<div className="flex flex-col gap-4 max-w-[800px] w-full ">*/}
+          {/*<DataTable columns={columns} data={transactionIn} title="Příjmy" />*/}
+          {transactionIn.length > 0 && (
+            <DataTable data={transactionIn} title={t1(`income`)} type={1} />
+          )}
+          {/*<DataTable data={transactionIn} title="Příjmy" type={1} />*/}
+          {transactionOut.length > 0 && (
+            <DataTable data={transactionOut} title={t1(`expenses`)} type={1} />
+          )}
+          {transactionBetween.length > 0 && (
+            <DataTable
+              data={transactionBetween}
+              title={t1(`between`)}
+              type={1}
+            />
+          )}
+          {periodicPayment.length > 0 && (
+            <DataTable data={periodicPayment} title={t1(`standing`)} type={2} />
+          )}
+          {transactionOut.length > 0 ||
+          transactionIn.length > 0 ||
+          transactionBetween.length > 0 ? (
+            <div className="flex flex-col w-full items-center gap-2 xl:mx-auto order-2  2xl:max-w-[720px] h-fit ">
+              {/*<div className="flex flex-col w-full items-center xl:order-2 xl:w-[300px]  gap-2">*/}
+              <h2 className="w-full max-sm:text-center pb-1 2xl:pb-6">
+                {t(`summary`)}
+              </h2>
+              {/*transaction count*/}
+              <div className="flex max-sm:flex-col  sm:gap-1 md:gap-4 w-full  justify-center sm:items-start items-center">
+                {/*<div className="flex max-sm:flex-col xl:flex-col sm:gap-1 md:gap-4 w-full items-start justify-center ">*/}
+                <div className="bg-main-gray rounded-t-xl sm:rounded-b-xl px-4 py-2  max-sm:w-[80%] w-full  max-w-[300px] flex flex-col items-center gap-1 ">
+                  <p className="font-medium underline">
+                    {t(`transaction-count`)}
+                  </p>
+                  <div className="text-[15px] w-full flex flex-col items-center gap-1">
+                    {filteredTransactionTypes.map((tran, i) => {
+                      let data =
+                        tran === "in"
+                          ? transactionIn
+                          : tran === "out"
+                            ? transactionOut
+                            : transactionBetween;
+                      const name = transactionTypes.find(
+                        (name) => name.abbreviation === tran,
+                      );
                       return (
-                        <div
+                        <p
                           key={i}
                           className="w-full  flex justify-between max-w-[220px]"
                         >
-                          <p>{findNames?.transaction}</p>
-                          <div className="flex flex-col items-center">
-                            {item.byCurrency.map((curr, i) => (
-                              <p key={i}>
-                                {new Intl.NumberFormat().format(curr.totalSum)}{" "}
-                                {
-                                  currencies.find(
-                                    (currency) =>
-                                      currency.value === curr.currency,
-                                  )?.symbol
-                                }
-                              </p>
-                            ))}
-                          </div>
-                        </div>
+                          {name?.transaction || name?.title || ""}
+                          <span className="pr-5">{data.length}</span>
+                        </p>
                       );
                     })}
                   </div>
                 </div>
-              )}
+                {/*transaction amounts*/}
+                {listSumArray && (
+                  <div className="bg-main-gray  px-4 py-2  max-sm:w-[80%] w-full max-w-[300px] flex flex-col items-center  gap-1 max-h-[120px] xl:max-h-[300px] overflow-auto rounded-b-xl sm:rounded-t-xl">
+                    <p className="font-medium underline">{t(`transaction`)}</p>
+                    <div className="text-[15px] w-full flex flex-col items-center gap-1 ">
+                      {listSumArray.map((item, i) => {
+                        const findNames = transactionTypes.find(
+                          (type) => type.abbreviation === item.transaction,
+                        );
+
+                        return (
+                          <div
+                            key={i}
+                            className="w-full  flex justify-between max-w-[220px]"
+                          >
+                            <p>{findNames?.transaction}</p>
+                            <div className="flex flex-col items-center">
+                              {item.byCurrency.map((curr, i) => (
+                                <p key={i}>
+                                  {new Intl.NumberFormat().format(
+                                    curr.totalSum,
+                                  )}{" "}
+                                  {
+                                    currencies.find(
+                                      (currency) =>
+                                        currency.value === curr.currency,
+                                    )?.symbol
+                                  }
+                                </p>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ) : null}
-        <div className="flex flex-col gap-4 max-w-[800px] w-full ">
-          <DataTable columns={columnsnew} data={transactionIn} title="Příjmy" />
-          <DataTable
-            columns={columnsnew}
-            data={transactionOut}
-            title="Výdaje"
-          />
-          <DataTable
-            columns={columnsnew}
-            data={transactionBetween}
-            title="Mezi účty"
-          />
+          ) : null}
         </div>
       </div>
+      {/*<div className="w-full flex max-xl:flex-col items-center xl:items-start xl:justify-center xl:gap-4">*/}
+      {/*  {transactionOut.length > 0 ||*/}
+      {/*  transactionIn.length > 0 ||*/}
+      {/*  transactionBetween.length > 0 ? (*/}
+      {/*    <div className="flex flex-col w-full items-center xl:order-2 xl:w-[300px]  gap-2">*/}
+      {/*      <h2>{t(`summary`)}</h2>*/}
+      {/*      /!*transaction count*!/*/}
+      {/*      <div className="flex max-sm:flex-col xl:flex-col sm:gap-1 md:gap-4 w-full items-start justify-center ">*/}
+      {/*        <div className="bg-main-gray rounded-xl px-4 py-2  max-sm:w-[80%] w-full  max-w-[300px] flex flex-col items-center gap-1">*/}
+      {/*          <p className="font-medium underline">*/}
+      {/*            {t(`transaction-count`)}*/}
+      {/*          </p>*/}
+      {/*          <div className="text-[15px] w-full flex flex-col items-center gap-1">*/}
+      {/*            {filteredTransactionTypes.map((tran, i) => {*/}
+      {/*              let data =*/}
+      {/*                tran === "in"*/}
+      {/*                  ? transactionIn*/}
+      {/*                  : tran === "out"*/}
+      {/*                    ? transactionOut*/}
+      {/*                    : transactionBetween;*/}
+      {/*              const name = transactionTypes.find(*/}
+      {/*                (name) => name.abbreviation === tran,*/}
+      {/*              );*/}
+      {/*              return (*/}
+      {/*                <p*/}
+      {/*                  key={i}*/}
+      {/*                  className="w-full  flex justify-between max-w-[220px]"*/}
+      {/*                >*/}
+      {/*                  {name?.transaction || name?.title || ""}*/}
+      {/*                  <span className="pr-5">{data.length}</span>*/}
+      {/*                </p>*/}
+      {/*              );*/}
+      {/*            })}*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*        /!*transaction amounts*!/*/}
+      {/*        {listSumArray && (*/}
+      {/*          <div className="bg-main-gray rounded-xl px-4 py-2  max-sm:w-[80%] w-full max-w-[300px] flex flex-col items-center  gap-1 max-h-[120px] xl:max-h-[300px] overflow-auto ">*/}
+      {/*            <p className="font-medium underline">{t(`transaction`)}</p>*/}
+      {/*            <div className="text-[15px] w-full flex flex-col items-center gap-1 ">*/}
+      {/*              {listSumArray.map((item, i) => {*/}
+      {/*                const findNames = transactionTypes.find(*/}
+      {/*                  (type) => type.abbreviation === item.transaction,*/}
+      {/*                );*/}
+
+      {/*                return (*/}
+      {/*                  <div*/}
+      {/*                    key={i}*/}
+      {/*                    className="w-full  flex justify-between max-w-[220px]"*/}
+      {/*                  >*/}
+      {/*                    <p>{findNames?.transaction}</p>*/}
+      {/*                    <div className="flex flex-col items-center">*/}
+      {/*                      {item.byCurrency.map((curr, i) => (*/}
+      {/*                        <p key={i}>*/}
+      {/*                          {new Intl.NumberFormat().format(curr.totalSum)}{" "}*/}
+      {/*                          {*/}
+      {/*                            currencies.find(*/}
+      {/*                              (currency) =>*/}
+      {/*                                currency.value === curr.currency,*/}
+      {/*                            )?.symbol*/}
+      {/*                          }*/}
+      {/*                        </p>*/}
+      {/*                      ))}*/}
+      {/*                    </div>*/}
+      {/*                  </div>*/}
+      {/*                );*/}
+      {/*              })}*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        )}*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  ) : null}*/}
+      {/*  <div className="flex flex-col gap-4 max-w-[800px] w-full ">*/}
+      {/*    /!*<DataTable columns={columns} data={transactionIn} title="Příjmy" />*!/*/}
+      {/*    <DataTable data={transactionIn} title={t1(`income`)} type={1} />*/}
+      {/*    /!*<DataTable data={transactionIn} title="Příjmy" type={1} />*!/*/}
+      {/*    <DataTable data={transactionOut} title={t1(`expenses`)} type={1} />*/}
+      {/*    <DataTable data={transactionBetween} title={t1(`between`)} type={1} />*/}
+      {/*    <DataTable data={periodicPayment} title={t1(`standing`)} type={2} />*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </div>
   );
 };

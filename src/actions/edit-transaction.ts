@@ -8,14 +8,45 @@ export const editTransaction = async (values: any) => {
 
   if (!session?.id) return { error: "něco se nepovedlo" };
 
-  const { name, amount, date, description, id, frequency, category } = values;
+  const {
+    name,
+    amount,
+    date,
+    description,
+    id,
+    frequency,
+    category,
+    transactionType,
+    endOfPayment,
+  } = values;
 
   const dateISO = new Date(date).toISOString();
-  let frequencyNumber = null;
-  if (frequency) {
-    frequencyNumber = Number(frequency);
+  // let frequencyNumber = null;
+  // if (frequency) {
+  //   frequencyNumber = Number(frequency);
+  // }
+
+  if (transactionType === 4 || transactionType === 5) {
+    const frequencyNumber = Number(frequency);
+    let endOfPaymentISO = null;
+
+    if (endOfPayment) {
+      endOfPaymentISO = new Date(endOfPayment).toISOString();
+    }
+    await db.periodicPayment.update({
+      where: { id, userId: session.id },
+      data: {
+        amount,
+        frequency: frequencyNumber,
+        endOfPayment: endOfPaymentISO,
+
+        name,
+        description,
+        category,
+      },
+    });
   }
-  console.log(values);
+
   await db.$transaction(async (db) => {
     const originalTransaction = await db.transaction.findUnique({
       where: { id, userId: session.id },
@@ -35,7 +66,6 @@ export const editTransaction = async (values: any) => {
           amount,
           date: dateISO,
           description,
-          frequency: frequencyNumber,
           category,
         },
       });
@@ -54,7 +84,6 @@ export const editTransaction = async (values: any) => {
         amount,
         date: dateISO,
         description,
-        frequency: frequencyNumber,
       },
     });
 

@@ -9,11 +9,13 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DialogContentWrapper from "@/components/protected/dialog/DialogContentWrapper";
 import EditGoalForm from "@/components/protected/dialog/EditGoalForm";
 import { deleteGoal } from "@/actions/delete";
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
 interface GoalItemProps {
   goalData: GoalData[];
   userCurrencyConvert: any;
-  userAccounts: UserAccount;
+  userAccounts: UserAccount[];
 }
 
 const GoalItem = ({
@@ -21,6 +23,8 @@ const GoalItem = ({
   userCurrencyConvert,
   userAccounts,
 }: GoalItemProps) => {
+  const t = useTranslations("protected-dialog");
+
   const [openBalance, setOpenBalance] = useState("");
   const currencySymbol = currencies.find(
     (currency) => currency.value === goalData[0].user.mainCurrency,
@@ -86,7 +90,7 @@ const GoalItem = ({
                   {Intl.NumberFormat().format(totalBalance)}{" "}
                   {currencySymbol && currencySymbol.symbol}
                 </p>
-                <p className="leading-tight text-sm">z</p>
+                <p className="leading-tight text-sm">{t(`out-of`)}</p>
                 <p>{Intl.NumberFormat().format(goal.amount)}</p>
                 <p className="absolute bottom-5 font-normal">
                   ({percentage > 100 ? ">100" : percentage}%)
@@ -103,7 +107,7 @@ const GoalItem = ({
                   </p>
                   <Image
                     src={`/goal-icons/${goal.icon}.svg`}
-                    alt="house"
+                    alt={goal.icon}
                     width={45}
                     height={45}
                     className="hidden cursor-pointer min-[500px]:flex sm:w-[55px] lg:w-[60px] aspect-square"
@@ -121,15 +125,15 @@ const GoalItem = ({
               <div className="flex flex-col items-center min-h-10 w-full">
                 <Dialog>
                   <DialogTrigger>
-                    <p className="text-sm underline">editovat</p>
+                    <p className="text-sm underline">{t(`edit`)}</p>
                   </DialogTrigger>
                   <DialogContent
                     id="dialog-content"
                     className="bg-main-gray text-black rounded-md"
                   >
                     <DialogContentWrapper
-                      title="Editovat Goal"
-                      description="editace golu"
+                      title={t(`edit-goal`)}
+                      description={t(`edit-goal-desc`)}
                       titleCenter
                     >
                       <EditGoalForm

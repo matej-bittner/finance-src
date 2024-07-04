@@ -1,20 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { GoalData, UserAccount } from "@/types";
+import { UserAccount } from "@/types";
 import { findCurrencyByValue } from "@/helpers/generalFunctions";
+import { useTranslations } from "next-intl";
+import { currencies } from "@/constants";
 
 interface AccountInfoDisplayProps {
-  // data: {
-  //   id: number;
-  //   name: string;
-  //   type: string;
-  //   number?: string;
-  //   balance: number;
-  // }[];
   currency: string;
-  data: UserAccount;
-  type: "account" | "debt" | "payments";
+  data: UserAccount[];
+  // data: any;
+  type: "account" | "debt" | "investment";
   userCurrencyConvert: any;
 }
 const AccountInfoDisplay = ({
@@ -23,13 +19,15 @@ const AccountInfoDisplay = ({
   currency,
   userCurrencyConvert,
 }: AccountInfoDisplayProps) => {
+  const t = useTranslations("dashboard.account-info");
+  const t1 = useTranslations("dashboard");
   const [selectedAccount, setSelectedAccount] = useState(0);
   if (data.length === 0) {
     return null;
   }
 
   let wasConverted = "";
-  const extractAndSumBalances = (data: UserAccount) => {
+  const extractAndSumBalances = (data: UserAccount[]) => {
     // Check if paymentAccount exists and has elements
     if (data.length > 0) {
       // Sum balances within paymentAccount array
@@ -69,19 +67,25 @@ const AccountInfoDisplay = ({
             {wasConverted}
             {Intl.NumberFormat().format(totalBalance)} {mainCurrency?.symbol}
           </p>
-          <p>Všechny účty</p>
+          <p>
+            {type === "account"
+              ? t(`all-accounts`)
+              : type === "debt"
+                ? t(`all-debts`)
+                : t(`all-investments`)}
+          </p>
         </div>
         <hr className="border-black w-[90%] mx-auto" />
       </div>
       {/*account info*/}
       <div
-        className={`${type === "account" ? "bg-main-blue" : type === "debt" && "bg-main-error"} relative min-h-[130px] md:min-h-[110px] text-white flex max-md:flex-col rounded-xl min-[450px]:rounded-2xl py-2 gap-2 px-1 `}
+        className={`${type === "account" ? "bg-main-blue" : type === "debt" ? "bg-main-error" : type === "investment" && "bg-main-blue"} relative min-h-[130px] md:min-h-[110px] text-white flex max-md:flex-col rounded-xl min-[450px]:rounded-2xl py-2 gap-2 px-1 `}
       >
         {/*left*/}
         <div className="flex flex-col items-center md:items-start md:pl-2 justify-center max-md:flex-1  md:w-3/5">
           <div className="flex gap-2 items-center">
             <p className="md:text-lg font-medium">
-              {data[selectedAccount].type}
+              {data[selectedAccount].name}
             </p>
             <Image
               src="/icons/line-arrow-up.svg"
@@ -100,19 +104,27 @@ const AccountInfoDisplay = ({
             {currencyTypes?.symbol || ""}
           </p>
           <div className="flex md:flex-col items-center max-md:gap-2">
-            <div className="flex gap-1 ">
-              <Image
-                src="/icons/arrow-up-succes.svg"
-                alt="arrow"
-                width={18}
-                height={18}
-              />
-              <p className="text-main-success">10%</p>
-            </div>
+            {type === "debt" ? (
+              <p className="text-white/60">
+                {/*@ts-ignore*/}
+                {data[selectedAccount]?.periodicPayment[0].amount}{" "}
+                {currencyTypes?.symbol || ""}
+              </p>
+            ) : (
+              <div className="flex gap-1 ">
+                <Image
+                  src="/icons/arrow-up-succes.svg"
+                  alt="arrow"
+                  width={18}
+                  height={18}
+                />
+                <p className="text-main-success">10%</p>
+              </div>
+            )}
             <p className="text-sm text-[#ABABAB]">
               {type === "account"
-                ? "za minulý měsíc"
-                : type === "debt" && "příští splátka"}
+                ? t1(`since-last-month`)
+                : type === "debt" && t1(`next-payment`)}
             </p>
           </div>
         </div>
@@ -127,7 +139,7 @@ const AccountInfoDisplay = ({
               )
             }
           >
-            Předchozí
+            {t1(`previous`)}
           </p>
           <div className="flex items-center gap-1">
             {Array.from({ length: data.length }).map((_, i) => (
@@ -145,7 +157,7 @@ const AccountInfoDisplay = ({
               )
             }
           >
-            Následující
+            {t1(`next`)}
           </p>
         </div>
       )}

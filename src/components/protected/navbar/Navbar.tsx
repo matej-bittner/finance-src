@@ -11,6 +11,8 @@ import { usePathname } from "next/navigation";
 import AddGoalForm from "@/components/protected/dialog/AddGoalForm";
 import { signOut } from "next-auth/react";
 import { UserAccount } from "@/types";
+import AddSubscriptionForm from "@/components/protected/dialog/AddSubscriptionForm";
+import AddAccountForm from "@/components/protected/dialog/AddAccountForm";
 
 const Navbar = ({
   userAccounts,
@@ -18,80 +20,102 @@ const Navbar = ({
   // userAccountNew,
 }: {
   // userAccountNew: UserAccountNew;
-  userAccounts: UserAccount;
+  userAccounts: UserAccount[];
   defaultCurrency?: string | undefined;
 }) => {
-  // const userAccountsFormatted = userAccounts.map((item) => ({
-  //   value: item.id,
-  //   label: item.name,
-  //   // Keep other properties if needed
-  //   type: item.type,
-  //   number: item.number,
-  //   balance: item.balance,
-  //   currency: item.currency,
-  //   userId: item.userId,
-  //   blockedForGoals: item.blockedForGoals,
-  //   wantToBlock: 0,
-  // }));
+  const removedLoanType = userAccounts.filter((item) => item.type !== 2);
 
   const t = useTranslations("dashboard-navigation");
+
   const dropdownNavData = [
     {
       title: t("nav-links.dashboard.title"),
       icon: t("nav-links.dashboard.icon"),
       link: t("nav-links.dashboard.link"),
+      formTitle: t("nav-links.dashboard.form-title"),
+      formDesc: t("nav-links.dashboard.form-desc"),
     },
     {
       title: t("nav-links.goals.title"),
       icon: t("nav-links.goals.icon"),
       link: t("nav-links.goals.link"),
+      formTitle: t("nav-links.goals.form-title"),
+      formDesc: t("nav-links.goals.form-desc"),
     },
     {
       title: t("nav-links.income-expenses.title"),
       icon: t("nav-links.income-expenses.icon"),
       link: t("nav-links.income-expenses.link"),
+      formTitle: t("nav-links.income-expenses.form-title"),
+      formDesc: t("nav-links.income-expenses.form-desc"),
     },
     {
       title: t("nav-links.subscriptions.title"),
       icon: t("nav-links.subscriptions.icon"),
       link: t("nav-links.subscriptions.link"),
+      formTitle: t("nav-links.subscriptions.form-title"),
+      formDesc: t("nav-links.subscriptions.form-desc"),
     },
     {
       title: t("nav-links.statistics.title"),
       icon: t("nav-links.statistics.icon"),
       link: t("nav-links.statistics.link"),
+      formTitle: t("nav-links.statistics.form-title"),
+      formDesc: t("nav-links.statistics.form-desc"),
+    },
+    {
+      title: t("nav-links.accounts.title"),
+      icon: t("nav-links.accounts.icon"),
+      link: t("nav-links.accounts.link"),
+      formTitle: t("nav-links.accounts.form-title"),
+      formDesc: t("nav-links.accounts.form-desc"),
     },
   ];
+
   const pathname = usePathname();
   let pageName;
   let form;
   let title = "";
-  let buttonText = "";
   let description = "";
   if (pathname.includes("goals")) {
-    pageName = "Goly";
-    title = "Přidat Goal";
-    description = "přidání nového cíle";
+    pageName = dropdownNavData[1].title;
+    title = dropdownNavData[1].formTitle;
+    description = dropdownNavData[1].formDesc;
     form = (
       <AddGoalForm
-        userAccounts={userAccounts}
+        userAccounts={removedLoanType}
         defaultCurrency={defaultCurrency}
       />
     );
   } else if (pathname.includes("transactions")) {
-    pageName = "Transakce";
-    title = "Přidat transakci";
-    description = "přidání nové transakce transakce";
+    pageName = dropdownNavData[2].title;
+    title = dropdownNavData[2].formTitle;
+    description = dropdownNavData[2].formDesc;
     form = (
       <AddTransactionForm
         userAccounts={userAccounts}
         defaultCurrency={defaultCurrency}
       />
     );
+  } else if (pathname.includes("subscriptions")) {
+    pageName = dropdownNavData[3].title;
+    title = dropdownNavData[3].formTitle;
+    description = dropdownNavData[3].formDesc;
+    form = (
+      <AddSubscriptionForm
+        userAccounts={removedLoanType}
+        defaultCurrency={defaultCurrency}
+      />
+    );
+  } else if (pathname.includes("accounts")) {
+    pageName = dropdownNavData[5].title;
+    title = dropdownNavData[5].formTitle;
+    description = dropdownNavData[5].formDesc;
+    form = <AddAccountForm defaultCurrency={defaultCurrency} />;
   } else if (pathname.includes("dashboard")) {
-    pageName = "Family Finances";
+    pageName = t(`appName`);
   } else if (pathname.includes("settings")) {
-    pageName = "Nastavení";
+    pageName = t(`settings`);
   }
 
   const logOut = () => {
@@ -122,10 +146,8 @@ const Navbar = ({
               <DialogContentWrapper
                 title={title}
                 description={description}
-                buttonText={buttonText}
                 titleCenter
               >
-                {/*<AddTransactionForm />*/}
                 {form}
               </DialogContentWrapper>
             </DialogContent>
@@ -154,7 +176,7 @@ const Navbar = ({
           onClick={logOut}
           className="bg-main-blue text-white py-1 px-2 md:px-3 xl:px-4 rounded-lg lg:text-lg hidden sm:block"
         >
-          Logout
+          {t(`logOut`)}
         </button>
 
         <DropdownUserMenu />

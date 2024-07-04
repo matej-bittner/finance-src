@@ -20,6 +20,8 @@ export const createTransaction = async (values: any) => {
     frequency,
     transactionType,
     category,
+
+    endOfPayment,
   } = values;
 
   if (accountFrom === "" && accountTo === "") {
@@ -34,6 +36,9 @@ export const createTransaction = async (values: any) => {
   }
   if (transactionType === 4 && !frequency) {
     return { error: "nebyla vabrána frequence" };
+  }
+  if (transactionType === 4 || (transactionType === 5 && !accountFrom)) {
+    return { error: "nebyl vybrán účet" };
   }
 
   if (transactionType === 3) {
@@ -63,10 +68,46 @@ export const createTransaction = async (values: any) => {
 
   const dateISO = new Date(date).toISOString();
 
-  let frequencyNumber = null;
-  if (frequency) {
-    frequencyNumber = Number(frequency);
+  // let frequencyNumber = null;
+  // if (frequency) {
+  //   const frequencyNumber = Number(frequency);
+  // }
+
+  if (transactionType === 4 || transactionType === 5) {
+    const frequencyNumber = Number(frequency);
+    let endOfPaymentISO = null;
+
+    if (endOfPayment) {
+      endOfPaymentISO = new Date(endOfPayment).toISOString();
+    }
+
+    await db.periodicPayment.create({
+      data: {
+        transactionType,
+        name,
+        description,
+        amount,
+        currency,
+        category,
+        firstPayment: dateISO,
+        endOfPayment: endOfPaymentISO,
+        toProcess: dateISO,
+        frequency: frequencyNumber,
+        user: {
+          connect: {
+            id: session.id,
+          },
+        },
+        accountFrom: {
+          connect: {
+            id: accountFrom,
+          },
+        },
+      },
+    });
+    return { success: "Příkaz OK" };
   }
+
   await db.$transaction(async (db) => {
     await db.transaction.create({
       data: {
@@ -76,7 +117,7 @@ export const createTransaction = async (values: any) => {
         amount,
         currency,
         date: dateISO,
-        frequency: frequencyNumber,
+
         category,
         user: {
           connect: {

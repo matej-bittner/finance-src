@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 export const colors = [
   {
     id: 1,
@@ -133,3 +135,61 @@ export const currencies = [
     symbol: "$",
   },
 ];
+
+export const frequencies = [
+  {
+    value: "7",
+    selectText: "7",
+    title: "Každý týden",
+  },
+  {
+    value: "14",
+    selectText: "14",
+    title: "Každé dva týdny",
+  },
+  {
+    value: "30",
+    selectText: "1M",
+    title: "Každý měsíc",
+  },
+  {
+    value: "60",
+    selectText: "2M",
+    title: "Každé dva měíce",
+  },
+  {
+    value: "360",
+    selectText: "1R",
+    title: "Jednou ročně",
+  },
+];
+
+export const accountType = [
+  { title: "Běžný", id: 1 },
+  { title: "Úvěrový", id: 2 },
+  { title: "Spočící", id: 3 },
+  { title: "Investiční", id: 4 },
+];
+
+// export const interestPayments = [
+//   {
+//     value: "1",
+//     selectText: "daily",
+//     title: "Každý týden",
+//   },
+//   {
+//     value: "30",
+//     selectText: "p.m.",
+//     title: "Každý měsíc",
+//   },
+//   {
+//     value: "90",
+//     selectText: "p.q.",
+//     title: "Každé dva měíce",
+//   },
+//   {
+//     value: "360",
+//     selectText: "p.a.",
+//     title: "Jednou ročně",
+//   },
+// ];

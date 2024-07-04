@@ -1,6 +1,6 @@
 import React from "react";
 import GoalItem from "@/components/protected/GoalItem";
-import { userAccounts, userGoals } from "@/helpers/current-user";
+import { test, userAccounts, userGoals } from "@/helpers/current-user";
 import { convertCurrency } from "@/app/api/convert-currency/route";
 
 const GoalsPage = async () => {

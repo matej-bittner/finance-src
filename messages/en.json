@@ -136,33 +136,153 @@
   "dashboard-navigation": {
     "appName": "Family Finances",
     "accountButton": "My Account",
-
+    "settings": "Settings",
+    "logOut": "LogOut",
     "nav-links": {
       "dashboard": {
         "title": "Dashboard",
         "icon": "home",
-        "link": "/dashboard"
+        "link": "/dashboard",
+        "form-title": "",
+        "form-desc": ""
       },
       "goals": {
         "title": "Goals",
         "icon": "goals",
-        "link": "/dashboard/goals"
+        "link": "/dashboard/goals",
+
+        "form-title": "Add Goal",
+        "form-desc": "Here you can add new personal goal."
       },
       "income-expenses": {
-        "title": "Income/ Expenses",
+        "title": "Transactions",
         "icon": "wallet-money",
-        "link": "/dashboard/transactions"
+        "link": "/dashboard/transactions",
+
+        "form-title": "Add Transaction",
+        "form-desc": "Here you can add new account transaction."
       },
       "subscriptions": {
         "title": "Subscriptions",
         "icon": "ticket-expired",
-        "link": "/"
+        "link": "/dashboard/subscriptions",
+        "form-title": "Add Subscription",
+        "form-desc": "Here you can add new subscription."
       },
       "statistics": {
         "title": "Statistics",
         "icon": "graph",
-        "link": "/"
+        "link": "/",
+        "form-title": "",
+        "form-desc": ""
+      },
+      "accounts": {
+        "title": "Accounts",
+        "icon": "account",
+        "link": "/dashboard/accounts",
+        "form-title": "Add Account",
+        "form-desc": "Here you can add new account."
       }
     }
+  },
+
+  "dashboard": {
+    "show-more": "Show more",
+    "next": "Next",
+    "previous": "Previous",
+    "last-transaction": "Last Transactions",
+    "total-value": "Total Value",
+    "loan": "Loans",
+    "upcoming-payment": "Upcoming Payments",
+    "category": "Categories",
+    "graph": "Graph",
+    "since-last-month": "since last month",
+    "next-payment": "next payment",
+    "last-payment": "Last payment",
+    "account-info": {
+      "all-accounts": "All Accounts",
+      "all-debts": "All Debts",
+      "all-investments": "All Investments"
+    }
+  },
+
+  "data-table": {
+    "next": "Next",
+    "previous": "Previous",
+    "no-result": "No results"
+  },
+
+  "transaction-types": {
+    "income": "Income",
+    "income-transaction": "Incoming",
+    "expenses": "Expenses",
+    "expenses-transaction": "Out Coming ",
+    "between": "Between Accounts",
+    "between-transaction": "Between Accounts",
+    "standing": "Standing Payment",
+    "standing-transaction": "Standing Payment"
+  },
+  "account-types": {
+    "current": "Current",
+    "credit": "Credit",
+    "saving": "Saving",
+    "investment": "Investment"
+  },
+
+  "transaction-page": {
+    "summary": "Summary",
+    "transaction-count": "Transaction Count",
+    "transaction": "Transaction",
+    "this-month": "This Month",
+    "last-month": "Last Month"
+  },
+
+  "protected-dialog": {
+    "edit-goal": "Edit Goal",
+    "edit-subscription": "Edit subscription",
+    "edit-transaction": "Edit transaction",
+
+    "edit-goal-desc": "Here you can edit goal",
+    "edit-subscription-desc": "Here you can edit subscription",
+    "edit-transaction-desc": "Here you can edit transaction",
+
+    "delete-subscription": "Delete subscription",
+    "delete-transaction": "Delete transaction",
+    "delete-goal": "Delete goal",
+
+    "add-goal": "Add Goal",
+    "add-subscription": "Add subscription",
+    "add-transaction": "Add transaction",
+
+    "edit": "edit",
+    "out-of": "out of",
+
+    "choose-account-placeholder": "Choose account",
+    "connected-accounts": "Connected accounts",
+    "form-account-placeholder": "If you don't see an account, it probably is assigned to another goal.",
+    "name": "Name",
+    "amount": "Amount",
+    "number-contract": "Number/Contract number",
+    "balance": "Balance",
+
+    "goal-finish-date": "Meet the goal by",
+    "color": "Color",
+    "icon": "Icon",
+    "date": "Date",
+
+    "from-account": "From account",
+    "to-account": "To account",
+    "account": "Account",
+    "currency": "Currency",
+    "description": "Description",
+    "since": "Since",
+    "until": "Until",
+    "first-payment": "First Payment",
+    "last-payment": "Last payment",
+    "end-date": "End date",
+    "frequency": "Frequency",
+    "category": "Category",
+    "category-placeholder": "Choose category",
+    "clear-input": "Clear"
   }
 }

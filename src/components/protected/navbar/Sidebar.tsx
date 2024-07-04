@@ -33,6 +33,11 @@ const Sidebar = () => {
       icon: t("nav-links.statistics.icon"),
       link: t("nav-links.statistics.link"),
     },
+    {
+      title: t("nav-links.accounts.title"),
+      icon: t("nav-links.accounts.icon"),
+      link: t("nav-links.accounts.link"),
+    },
   ];
 
   const [openSidebar, setOpenSidebar] = useState(false);

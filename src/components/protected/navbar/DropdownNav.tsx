@@ -9,6 +9,8 @@ interface DropdownNavProps {
     title: string;
     icon: string;
     link: string;
+    formTitle: string;
+    formDesc: string;
   }[];
 }
 const DropdownNav = ({ dropdownNavData }: DropdownNavProps) => {

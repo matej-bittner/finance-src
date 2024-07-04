@@ -26,6 +26,7 @@ import {
 import { colors, icons } from "@/constants";
 import { removeEmptyStrings } from "@/helpers/generalFunctions";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const formSchema = z.object({
   account: z.any(),
@@ -40,9 +41,10 @@ const AddGoalForm = ({
   defaultCurrency,
   userAccounts,
 }: {
-  userAccounts: UserAccount;
+  userAccounts: UserAccount[];
   defaultCurrency?: string;
 }) => {
+  const t = useTranslations("protected-dialog");
   const router = useRouter();
   const { toast } = useToast();
   const filteredAccounts = userAccounts.filter(
@@ -94,15 +96,16 @@ const AddGoalForm = ({
           name="account"
           render={({ field }) => (
             <FormItem className="flex flex-col space-y-0">
-              <FormLabel className="dialog-labels">Připojené účty</FormLabel>
+              <FormLabel className="dialog-labels">
+                {t(`connected-accounts`)}
+              </FormLabel>
               <FormControl>
                 <Combobox
                   className="p-0 min-h-0 h-fit overflow-clip rounded-lg "
                   mode="multiple" //single or multiple
                   options={filteredAccounts}
-                  placeholder="Vyberte účet"
-                  message="Pokud se účet některý nezobrazuje, je pravděpodobně
-                        přiřazený v plné hodnotě k jinému účtu."
+                  placeholder={t(`choose-account-placeholder`)}
+                  message={t(`form-account-placeholder`)}
                   // selected={field.value}
                   selected={selectedAccount}
                   // selected={selectedAccount}
@@ -125,7 +128,7 @@ const AddGoalForm = ({
             name="name"
             render={({ field }) => (
               <FormItem className="flex flex-col flex-1 space-y-0">
-                <FormLabel className="dialog-labels"> Název:</FormLabel>
+                <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
                 <FormControl>
                   <input type="text" className="dialog-inputs" {...field} />
                 </FormControl>
@@ -140,7 +143,7 @@ const AddGoalForm = ({
             name="amount"
             render={({ field }) => (
               <FormItem className="flex flex-col  space-y-0">
-                <FormLabel className="dialog-labels">Částka:</FormLabel>
+                <FormLabel className="dialog-labels">{t(`amount`)}</FormLabel>
                 <FormControl>
                   <input
                     type="number"
@@ -163,7 +166,9 @@ const AddGoalForm = ({
             name="date"
             render={({ field }) => (
               <FormItem className="flex flex-col max-w-[200px] space-y-0">
-                <FormLabel className="dialog-labels">Splnit do:</FormLabel>
+                <FormLabel className="dialog-labels">
+                  {t(`goal-finish-date`)}
+                </FormLabel>
                 <FormControl>
                   <input
                     type="date"
@@ -183,7 +188,7 @@ const AddGoalForm = ({
               name="color"
               render={({ field }) => (
                 <FormItem className="flex flex-col space-y-0">
-                  <FormLabel className="dialog-labels">Barva:</FormLabel>
+                  <FormLabel className="dialog-labels">{t(`color`)}</FormLabel>
                   <FormControl>
                     <Select
                       onValueChange={field.onChange}
@@ -220,7 +225,7 @@ const AddGoalForm = ({
               name="icon"
               render={({ field }) => (
                 <FormItem className="flex flex-col space-y-0">
-                  <FormLabel className="dialog-labels">Ikona:</FormLabel>
+                  <FormLabel className="dialog-labels">{t(`icon`)}</FormLabel>
                   <FormControl>
                     <Select
                       onValueChange={field.onChange}
@@ -262,7 +267,7 @@ const AddGoalForm = ({
             disabled={isPending}
             className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3"
           >
-            Přidat Cíl
+            {t(`add-goal`)}
           </button>
         </div>
       </form>
