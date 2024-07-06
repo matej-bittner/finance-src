@@ -21,13 +21,16 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Combobox } from "@/components/ui/combox";
 import { useToast } from "@/components/ui/use-toast";
-import { categories, frequencies, transactionType } from "@/constants";
-import { removeEmptyStrings } from "@/helpers/generalFunctions";
+import { categories, frequencies } from "@/constants";
+import {
+  convertFrequencyToDate,
+  getTomorrowDate,
+  removeEmptyStrings,
+} from "@/helpers/generalFunctions";
 import { createTransaction } from "@/actions/create-transaction";
 import { UserAccount } from "@/types";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { getTranslations } from "next-intl/server";
 
 const formSchema = z.object({
   accountFrom: z.string(),
@@ -48,62 +51,16 @@ const AddTransactionForm = ({
   userAccounts: UserAccount[];
   defaultCurrency?: string;
 }) => {
+  const [isPending, startTransition] = useTransition();
   const [selectedType, setSelectedType] = useState(1);
-  const t = useTranslations("protected-dialog");
-
   useEffect(() => {
     form.reset(defaultValues);
   }, [selectedType]);
 
-  const defaultValues = {
-    accountFrom: "",
-    accountTo: "",
-    name: "",
-    amount: 0,
-    currency: defaultCurrency,
-    description: "",
-    date: "",
-    frequency: "",
-    category: "",
-    endOfPayment: "",
-  };
   const router = useRouter();
   const { toast } = useToast();
-  const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1))
-    .toISOString()
-    .slice(0, 10);
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: defaultValues,
-  });
-  const [isPending, startTransition] = useTransition();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    const category = categories.find((cat) => cat.value === values.category);
-    startTransition(() => {
-      const allValues = Object.assign(
-        values,
-        {
-          transactionType: selectedType,
-        },
-        category ? { category: category?.id } : null,
-      );
-      const cleanedData = removeEmptyStrings(allValues);
-
-      createTransaction(cleanedData).then((data) => {
-        toast({
-          variant: `${data?.error ? "destructive" : "default"}`,
-          title: data?.error || data?.success,
-          description: "Friday, February 10, 2023 at 5:57 PM",
-        });
-        if (data?.success) {
-          router.refresh();
-          form.reset(defaultValues);
-        }
-      });
-    });
-  }
-
+  const t = useTranslations("protected-dialog");
   const t1 = useTranslations("transaction-types");
   const transactionTypes = [
     {
@@ -131,6 +88,74 @@ const AddTransactionForm = ({
       id: 4,
     },
   ];
+
+  const defaultValues = {
+    accountFrom: "",
+    accountTo: "",
+    name: "",
+    amount: 0,
+    currency: defaultCurrency,
+    description: "",
+    date: "",
+    frequency: "",
+    category: "",
+    endOfPayment: "",
+  };
+
+  const tomorrowDate = getTomorrowDate();
+
+  const [dateLimit, setDateLimit] = useState({
+    firstPaymentDate: tomorrowDate,
+    endPaymentDate: tomorrowDate,
+    frequency: 0,
+  });
+
+  useEffect(() => {
+    if (dateLimit.frequency != 0) {
+      let date = convertFrequencyToDate(
+        dateLimit.frequency,
+        dateLimit.firstPaymentDate,
+      );
+
+      date.setDate(date.getDate() + 1);
+      setDateLimit({
+        ...dateLimit,
+        endPaymentDate: date.toISOString().slice(0, 10),
+      });
+    }
+  }, [dateLimit.firstPaymentDate, dateLimit.frequency]);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: defaultValues,
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    const category = categories.find((cat) => cat.value === values.category);
+
+    startTransition(() => {
+      const allValues = Object.assign(
+        values,
+        {
+          transactionType: selectedType,
+        },
+        category ? { category: category?.id } : null,
+      );
+      const cleanedData = removeEmptyStrings(allValues);
+
+      createTransaction(cleanedData).then((data) => {
+        toast({
+          variant: `${data?.error ? "destructive" : "default"}`,
+          title: data?.error || data?.success,
+          description: "Friday, February 10, 2023 at 5:57 PM",
+        });
+        if (data?.success) {
+          router.refresh();
+          form.reset(defaultValues);
+        }
+      });
+    });
+  }
 
   return (
     <Form {...form}>
@@ -184,7 +209,6 @@ const AddTransactionForm = ({
                           }
                         }
                       }}
-                      // onCreate={(value) => {}}
                     />
                   </FormControl>
                   <FormMessage />
@@ -220,7 +244,6 @@ const AddTransactionForm = ({
                           }
                         }
                       }}
-                      // onCreate={(value) => {}}
                     />
                   </FormControl>
                   <FormMessage />
@@ -270,7 +293,6 @@ const AddTransactionForm = ({
                   </FormItem>
                 )}
               />
-
               {/*currency*/}
               <FormField
                 control={form.control}
@@ -332,7 +354,6 @@ const AddTransactionForm = ({
           />
           {/*date and frequency category*/}
           <div
-            // className={`w-full flex  justify-between gap-x-2 gap-y-1 min-[450px]:gap-2 ${selectedType !== 4 ? "max-[370px]:flex-col" : "max-[470px]:flex-col"}`}
             className={`w-full flex  justify-between gap-x-2 gap-y-1 min-[450px]:gap-2 ${selectedType !== 4 ? "max-[370px]:flex-col" : "flex-col"}`}
           >
             <div className="flex justify-between w-full">
@@ -349,11 +370,23 @@ const AddTransactionForm = ({
                         {selectedType !== 4 ? t(`date`) : t(`first-payment`)}
                       </FormLabel>
                       <FormControl>
+                        {/*{...field}*/}
                         <input
-                          min={selectedType === 4 ? tomorrowDate : undefined}
+                          min={
+                            selectedType === 4
+                              ? dateLimit.firstPaymentDate
+                              : undefined
+                          }
                           type="date"
                           className="dialog-inputs py-[5px] sm:py-[7px]"
-                          {...field}
+                          value={field.value}
+                          onChange={(event) => {
+                            field.onChange(event.target.value);
+                            setDateLimit({
+                              ...dateLimit,
+                              firstPaymentDate: event.target.value,
+                            });
+                          }}
                         />
                       </FormControl>
                       <FormMessage />
@@ -371,7 +404,11 @@ const AddTransactionForm = ({
                         </FormLabel>
                         <FormControl>
                           <input
-                            min={selectedType === 4 ? tomorrowDate : undefined}
+                            min={
+                              selectedType === 4
+                                ? dateLimit.endPaymentDate
+                                : undefined
+                            }
                             type="date"
                             className="dialog-inputs py-[5px] sm:py-[7px]"
                             {...field}
@@ -383,51 +420,6 @@ const AddTransactionForm = ({
                   />
                 </div>
               </div>
-
-              {/*{selectedType === 4 && (*/}
-              {/*  <FormField*/}
-              {/*    control={form.control}*/}
-              {/*    name="frequency"*/}
-              {/*    render={({ field }) => (*/}
-              {/*      <FormItem className="flex flex-col space-y-0">*/}
-              {/*        <FormLabel className="dialog-labels">*/}
-              {/*          Frekvence:*/}
-              {/*        </FormLabel>*/}
-              {/*        <FormControl>*/}
-              {/*          <Select*/}
-              {/*            onValueChange={field.onChange}*/}
-              {/*            defaultValue={field.value}*/}
-              {/*          >*/}
-              {/*            <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit min-h-[32px] sm:min-h-[36px] focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">*/}
-              {/*              <SelectValue />*/}
-              {/*            </SelectTrigger>*/}
-              {/*            <SelectContent className="min-w-0">*/}
-              {/*              <SelectItem*/}
-              {/*                className="px-0 py-1 justify-center items-center"*/}
-              {/*                value="7"*/}
-              {/*              >*/}
-              {/*                7*/}
-              {/*              </SelectItem>*/}
-              {/*              <SelectItem*/}
-              {/*                className="px-0 py-1 justify-center items-center"*/}
-              {/*                value="14"*/}
-              {/*              >*/}
-              {/*                14*/}
-              {/*              </SelectItem>*/}
-              {/*              <SelectItem*/}
-              {/*                className="px-0 py-1 justify-center items-center"*/}
-              {/*                value="30"*/}
-              {/*              >*/}
-              {/*                30*/}
-              {/*              </SelectItem>*/}
-              {/*            </SelectContent>*/}
-              {/*          </Select>*/}
-              {/*        </FormControl>*/}
-              {/*        <FormMessage />*/}
-              {/*      </FormItem>*/}
-              {/*    )}*/}
-              {/*  />*/}
-              {/*)}*/}
             </div>
             {selectedType === 2 || selectedType === 4 ? (
               <div
@@ -444,8 +436,14 @@ const AddTransactionForm = ({
                         </FormLabel>
                         <FormControl>
                           <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
+                            value={field.value}
+                            onValueChange={(value) => {
+                              field.onChange(value);
+                              setDateLimit({
+                                ...dateLimit,
+                                frequency: Number(value),
+                              });
+                            }}
                           >
                             <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit min-h-[32px] sm:min-h-[36px] focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                               <SelectValue />

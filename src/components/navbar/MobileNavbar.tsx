@@ -35,7 +35,7 @@ const MobileNavbar = ({ navLinksData }: MobileNavbarProps) => {
               );
             })}
           </div>
-          <div className="">
+          <div>
             <LanguageSwitchButton />
           </div>
         </div>

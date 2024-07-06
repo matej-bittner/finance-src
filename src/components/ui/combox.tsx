@@ -123,7 +123,7 @@ export function Combobox({
             {/*</CommandEmpty>*/}
             <CommandEmpty className="h-fit text-center py-2 text-sm ">
               <Link
-                href="/"
+                href="/dashboard/accounts"
                 className="font-medium w-full hover:font-semibold transition "
               >
                 Vytvořit nový účet

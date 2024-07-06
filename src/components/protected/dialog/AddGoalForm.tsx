@@ -44,9 +44,14 @@ const AddGoalForm = ({
   userAccounts: UserAccount[];
   defaultCurrency?: string;
 }) => {
-  const t = useTranslations("protected-dialog");
+  const [selectedAccount, setSelectedAccount] = useState<string[] | string>([]);
+  const [isPending, startTransition] = useTransition();
+
   const router = useRouter();
   const { toast } = useToast();
+
+  const t = useTranslations("protected-dialog");
+
   const filteredAccounts = userAccounts.filter(
     (account) => !account.blockedForGoals,
   );
@@ -58,17 +63,17 @@ const AddGoalForm = ({
     color: "red",
     icon: "house",
   };
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
   });
-  const [selectedAccount, setSelectedAccount] = useState<string[] | string>([]);
-  const [isPending, startTransition] = useTransition();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     startTransition(() => {
       const allValues = Object.assign(values, { accounts: selectedAccount });
       const cleanedData = removeEmptyStrings(allValues);
+
       createGoal(cleanedData).then((data) => {
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
@@ -91,6 +96,7 @@ const AddGoalForm = ({
         className="w-full space-y-1 sm:space-y-2"
         autoComplete="off"
       >
+        {/*select account to connect goal to*/}
         <FormField
           control={form.control}
           name="account"
@@ -106,13 +112,9 @@ const AddGoalForm = ({
                   options={filteredAccounts}
                   placeholder={t(`choose-account-placeholder`)}
                   message={t(`form-account-placeholder`)}
-                  // selected={field.value}
                   selected={selectedAccount}
-                  // selected={selectedAccount}
                   onChange={(value) => setSelectedAccount(value)}
-                  // onChange={field.onChange}
                   onCreate={() => {}}
-                  // onCreate={(value) => {}}
                 />
               </FormControl>
               <FormMessage />
@@ -120,7 +122,7 @@ const AddGoalForm = ({
           )}
         />
 
-        {/*name ammount currency*/}
+        {/*name, amount*/}
         <div className="flex gap-1 max-[400px]:flex-col min-[450px]:gap-2">
           {/*name*/}
           <FormField
@@ -137,7 +139,7 @@ const AddGoalForm = ({
             )}
           />
 
-          {/*ammount*/}
+          {/*amount*/}
           <FormField
             control={form.control}
             name="amount"

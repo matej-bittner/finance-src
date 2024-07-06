@@ -19,13 +19,13 @@ const config = {
     //   },
     // },
     extend: {
-      screens: { tb: "700px" },
+      screens: { tb: "700px", mg: "950px", xlb: "1350px" },
       colors: {
         main: {
           blue: "#000080",
           yellow: "#B2AC88",
-          bg: "#7E7E7E",
-          // bg: "#E0E0E0",
+          // bg: "#7E7E7E",
+          bg: "#E0E0E0",
           error: "#AC0101",
           success: "#008A1E",
           gray: "#D9D9D9",

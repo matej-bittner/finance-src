@@ -50,10 +50,15 @@ const EditGoalForm = ({
   useEffect(() => {
     setSelectedAccount(goalData.paymentAccount.map((acc) => acc.id));
   }, []);
-  const t = useTranslations("protected-dialog");
+
+  const [isPending, startTransition] = useTransition();
+  const [selectedAccount, setSelectedAccount] = useState<string | string[]>([]);
 
   const { toast } = useToast();
   const router = useRouter();
+
+  const t = useTranslations("protected-dialog");
+
   const matchingAccounts = userAccounts.filter((account) =>
     goalData.paymentAccount.some((target) => target.id === account.value),
   );
@@ -72,8 +77,6 @@ const EditGoalForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
   });
-  const [selectedAccount, setSelectedAccount] = useState<string | string[]>([]);
-  const [isPending, startTransition] = useTransition();
 
   function onDelete() {
     startTransition(() => {
@@ -136,13 +139,9 @@ const EditGoalForm = ({
                     options={filteredAccounts}
                     placeholder={t(`choose-account`)}
                     message={t(`choose-account-placeholder`)}
-                    // selected={field.value}
                     selected={selectedAccount}
-                    // selected={selectedAccount}
                     onChange={(value) => setSelectedAccount(value)}
-                    // onChange={field.onChange}
                     onCreate={() => {}}
-                    // onCreate={(value) => {}}
                   />
                 </FormControl>
                 <FormMessage />

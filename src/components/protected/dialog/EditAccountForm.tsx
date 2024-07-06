@@ -17,15 +17,17 @@ import {
 } from "@/components/ui/select";
 
 import { useForm } from "react-hook-form";
-import { number, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { EditTransactionProps, UserAccount } from "@/types";
-import { removeEmptyStrings } from "@/helpers/generalFunctions";
-import { deleteAccount, deleteTransaction } from "@/actions/delete";
-import { editTransaction } from "@/actions/edit-transaction";
-import { categories, currencies, frequencies } from "@/constants";
+import { UserAccount } from "@/types";
+import {
+  getTomorrowDate,
+  removeEmptyStrings,
+} from "@/helpers/generalFunctions";
+import { deleteAccount } from "@/actions/delete";
+import { categories, frequencies } from "@/constants";
 import { useTranslations } from "next-intl";
 import { editPaymentAccount } from "@/actions/edit-payment-account";
 
@@ -41,16 +43,18 @@ const formSchema = z.object({
 });
 
 interface EditAccountFormProps {
-  // data: TransactionData;
   data: UserAccount;
 }
 
 const EditAccountForm = ({ data }: EditAccountFormProps) => {
-  console.log(data);
+  const [isPending, startTransition] = useTransition();
   const [selectedType, setSelectedType] = useState(1);
   useEffect(() => {
     setSelectedType(data.type);
   }, []);
+  const router = useRouter();
+  const { toast } = useToast();
+
   const t = useTranslations("protected-dialog");
 
   const defaultValues = {
@@ -76,17 +80,11 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
     payment: data?.periodicPayment ? data.periodicPayment[0].amount : 0,
   };
 
-  const router = useRouter();
-  const { toast } = useToast();
-  const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1))
-    .toISOString()
-    .slice(0, 10);
-
+  const tomorrowDate = getTomorrowDate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
   });
-  const [isPending, startTransition] = useTransition();
 
   function onDelete() {
     startTransition(() => {
@@ -143,7 +141,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
           className="w-full space-y-1 sm:space-y-2"
           autoComplete="off"
         >
-          {/*to account*/}
+          {/*account number*/}
           <FormField
             control={form.control}
             name="number"
@@ -176,9 +174,9 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                 </FormItem>
               )}
             />
-            {/*ammount currency*/}
+            {/*balance currency*/}
             <div className="flex gap-2 max-[320px]:flex-col">
-              {/*ammount*/}
+              {/*balance*/}
               <FormField
                 control={form.control}
                 name="balance"
@@ -220,25 +218,6 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                         onChange={field.onChange}
                         disabled
                       />
-                      {/*<Select*/}
-                      {/*  onValueChange={field.onChange}*/}
-                      {/*  value={field.value}*/}
-                      {/*>*/}
-                      {/*  <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">*/}
-                      {/*    <SelectValue />*/}
-                      {/*  </SelectTrigger>*/}
-                      {/*  <SelectContent className="min-w-0">*/}
-                      {/*    {currencies.map((currency) => (*/}
-                      {/*      <SelectItem*/}
-                      {/*        key={currency.id}*/}
-                      {/*        className="px-0 py-1 justify-center items-center"*/}
-                      {/*        value={currency.value}*/}
-                      {/*      >*/}
-                      {/*        {currency.value.toUpperCase()}*/}
-                      {/*      </SelectItem>*/}
-                      {/*    ))}*/}
-                      {/*  </SelectContent>*/}
-                      {/*</Select>*/}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -246,7 +225,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
               />
             </div>
           </div>
-          {/*payment date ftrequency*/}
+          {/*payment date frequency*/}
           {selectedType === 2 && (
             <div className="flex flex-col space-y- sm:space-y-2">
               <div className="flex gap-1 max-[450px]:flex-col min-[450px]:gap-2">
@@ -258,7 +237,6 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                     <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
                       <FormLabel className="dialog-labels">Splátka</FormLabel>
                       <FormControl>
-                        {/*<input type="text" className="dialog-inputs" {...field} />*/}
                         <input
                           type="number"
                           value={field.value === 0 ? "" : field.value}

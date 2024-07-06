@@ -1,6 +1,6 @@
 "use client";
 import React, { useTransition } from "react";
-import { accountType, categories, currencies } from "@/constants";
+import { accountType } from "@/constants";
 import { UserAccount } from "@/types";
 import { number, z } from "zod";
 import {
@@ -8,13 +8,11 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { removeEmptyStrings } from "@/helpers/generalFunctions";
-import { createTransaction } from "@/actions/create-transaction";
+import { findCurrencySymbol } from "@/helpers/generalFunctions";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { addInvestment } from "@/actions/add-investment";
@@ -30,6 +28,7 @@ const formSchema = z.object({
 const AccountItem = ({ data }: { data: UserAccount }) => {
   const router = useRouter();
   const { toast } = useToast();
+
   const defaultValues = {
     amount: 0,
   };
@@ -109,7 +108,7 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
           <p className="font-semibold">Zůstatek</p>
           <p>
             {Intl.NumberFormat().format(data.balance)}{" "}
-            {currencies.find((cur) => cur.value === data.currency)?.symbol}
+            {findCurrencySymbol(data.currency)}
           </p>
         </div>
       </div>
@@ -169,11 +168,7 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
                           <div className="flex gap-2">
                             <p>
                               {Intl.NumberFormat().format(item.amount)}{" "}
-                              {
-                                currencies.find(
-                                  (cur) => cur.value === item.currency,
-                                )?.symbol
-                              }
+                              {findCurrencySymbol(item.currency)}
                             </p>
 
                             <button

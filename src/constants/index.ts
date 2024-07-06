@@ -1,5 +1,3 @@
-import { useTranslations } from "next-intl";
-
 export const colors = [
   {
     id: 1,

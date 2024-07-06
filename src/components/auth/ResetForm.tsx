@@ -14,7 +14,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CardSuccess from "@/components/auth/CardSuccess";
 import { ResetSchema } from "@/schemas";
-import { login } from "@/actions/login";
 import { useTranslations } from "next-intl";
 import { reset } from "@/actions/reset";
 

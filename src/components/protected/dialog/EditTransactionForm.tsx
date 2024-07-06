@@ -22,7 +22,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { EditTransactionProps } from "@/types";
-import { removeEmptyStrings } from "@/helpers/generalFunctions";
+import {
+  convertFrequencyToDate,
+  getTomorrowDate,
+  removeEmptyStrings,
+} from "@/helpers/generalFunctions";
 import { deleteTransaction } from "@/actions/delete";
 import { editTransaction } from "@/actions/edit-transaction";
 import { categories, frequencies } from "@/constants";
@@ -42,15 +46,14 @@ const formSchema = z.object({
 });
 
 interface EditTransactionFormProps {
-  // data: TransactionData;
   data: EditTransactionProps;
 }
 
 const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
-  // const [selectedType, setSelectedType] = useState(1);
-  // useEffect(() => {
-  //   setSelectedType(data.transactionType);
-  // }, []);
+  const [isPending, startTransition] = useTransition();
+
+  const router = useRouter();
+  const { toast } = useToast();
   const t = useTranslations("protected-dialog");
   const defaultValues = {
     accountFrom: data.accountFrom?.name || "",
@@ -73,17 +76,12 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
       : "",
   };
 
-  const router = useRouter();
-  const { toast } = useToast();
-  const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1))
-    .toISOString()
-    .slice(0, 10);
+  const tomorrowDate = getTomorrowDate();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
   });
-  const [isPending, startTransition] = useTransition();
 
   function onDelete() {
     startTransition(() => {
@@ -150,26 +148,6 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                         className="dialog-inputs"
                         disabled
                       />
-                      {/*<Combobox*/}
-                      {/*  className="p-0 min-h-0 h-fit overflow-clip rounded-lg "*/}
-                      {/*  popoverClassname="min-[512px]:w-[416px]"*/}
-                      {/*  mode="single" //single or multiple*/}
-                      {/*  options={yourOptions}*/}
-                      {/*  placeholder="Vyberte účet"*/}
-                      {/*  selected={field.value}*/}
-                      {/*  // onChange={(value) => {*/}
-                      {/*  //   field.onChange(value);*/}
-                      {/*  //   if (selectedType === 1) {*/}
-                      {/*  //     const account = userAccounts.find(*/}
-                      {/*  //       (item) => item.value === value,*/}
-                      {/*  //     );*/}
-                      {/*  //     if (account?.currency) {*/}
-                      {/*  //       form.setValue("currency", account.currency);*/}
-                      {/*  //     }*/}
-                      {/*  //   }*/}
-                      {/*  // }}*/}
-                      {/*  // onCreate={(value) => {}}*/}
-                      {/*/>*/}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -192,26 +170,6 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                       className="dialog-inputs"
                       disabled
                     />
-                    {/*<Combobox*/}
-                    {/*  className="p-0 min-h-0 h-fit overflow-clip rounded-lg "*/}
-                    {/*  popoverClassname="min-[512px]:w-[416px]"*/}
-                    {/*  mode="single" //single or multiple*/}
-                    {/*  options={yourOptions}*/}
-                    {/*  placeholder="Vyberte účet"*/}
-                    {/*  selected={field.value}*/}
-                    {/*  // onChange={(value) => {*/}
-                    {/*  //   field.onChange(value);*/}
-                    {/*  //   if (selectedType !== 1) {*/}
-                    {/*  //     const account = userAccounts.find(*/}
-                    {/*  //       (item) => item.value === value,*/}
-                    {/*  //     );*/}
-                    {/*  //     if (account?.currency) {*/}
-                    {/*  //       form.setValue("currency", account.currency);*/}
-                    {/*  //     }*/}
-                    {/*  //   }*/}
-                    {/*  // }}*/}
-                    {/*  // onCreate={(value) => {}}*/}
-                    {/*/>*/}
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -259,7 +217,6 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                   </FormItem>
                 )}
               />
-
               {/*currency*/}
               <FormField
                 control={form.control}
@@ -277,25 +234,6 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                         onChange={field.onChange}
                         disabled
                       />
-                      {/*<Select*/}
-                      {/*  onValueChange={field.onChange}*/}
-                      {/*  value={field.value}*/}
-                      {/*>*/}
-                      {/*  <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">*/}
-                      {/*    <SelectValue />*/}
-                      {/*  </SelectTrigger>*/}
-                      {/*  <SelectContent className="min-w-0">*/}
-                      {/*    {currencies.map((currency) => (*/}
-                      {/*      <SelectItem*/}
-                      {/*        key={currency.id}*/}
-                      {/*        className="px-0 py-1 justify-center items-center"*/}
-                      {/*        value={currency.value}*/}
-                      {/*      >*/}
-                      {/*        {currency.value.toUpperCase()}*/}
-                      {/*      </SelectItem>*/}
-                      {/*    ))}*/}
-                      {/*  </SelectContent>*/}
-                      {/*</Select>*/}
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -321,7 +259,6 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
           />
           {/*date and frequency*/}
           <div
-            // className={`w-full flex  justify-between gap-x-2 ${selectedType !== 4 ? "max-[370px]:flex-col" : "max-[470px]:flex-col"}`}
             className={`w-full flex  justify-between gap-x-2 gap-y-1 min-[450px]:gap-2 ${data.transactionType !== 4 && data.transactionType !== 5 ? "max-[370px]:flex-col" : "flex-col"}`}
           >
             <div className="flex justify-between w-full">
@@ -384,50 +321,6 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                   />
                 </div>
               </div>
-              {/*{selectedType === 4 && (*/}
-              {/*  <FormField*/}
-              {/*    control={form.control}*/}
-              {/*    name="frequency"*/}
-              {/*    render={({ field }) => (*/}
-              {/*      <FormItem className="flex flex-col space-y-0">*/}
-              {/*        <FormLabel className="dialog-labels">*/}
-              {/*          Frekvence:*/}
-              {/*        </FormLabel>*/}
-              {/*        <FormControl>*/}
-              {/*          <Select*/}
-              {/*            onValueChange={field.onChange}*/}
-              {/*            defaultValue={field.value}*/}
-              {/*          >*/}
-              {/*            <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit min-h-[32px] sm:min-h-[36px] focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">*/}
-              {/*              <SelectValue />*/}
-              {/*            </SelectTrigger>*/}
-              {/*            <SelectContent className="min-w-0">*/}
-              {/*              <SelectItem*/}
-              {/*                className="px-0 py-1 justify-center items-center"*/}
-              {/*                value="7"*/}
-              {/*              >*/}
-              {/*                7*/}
-              {/*              </SelectItem>*/}
-              {/*              <SelectItem*/}
-              {/*                className="px-0 py-1 justify-center items-center"*/}
-              {/*                value="14"*/}
-              {/*              >*/}
-              {/*                14*/}
-              {/*              </SelectItem>*/}
-              {/*              <SelectItem*/}
-              {/*                className="px-0 py-1 justify-center items-center"*/}
-              {/*                value="30"*/}
-              {/*              >*/}
-              {/*                30*/}
-              {/*              </SelectItem>*/}
-              {/*            </SelectContent>*/}
-              {/*          </Select>*/}
-              {/*        </FormControl>*/}
-              {/*        <FormMessage />*/}
-              {/*      </FormItem>*/}
-              {/*    )}*/}
-              {/*  />*/}
-              {/*)}*/}
             </div>
             {data.transactionType === 2 ||
             data.transactionType === 4 ||

@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState, useTransition } from "react";
-
 import {
   Select,
   SelectContent,
@@ -8,14 +7,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../ui/select";
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/components/ui/use-toast";
 import { categories, currencies, frequencies } from "@/constants";
-import { removeEmptyStrings } from "@/helpers/generalFunctions";
-import { UserAccount } from "@/types";
+import {
+  getTomorrowDate,
+  removeEmptyStrings,
+} from "@/helpers/generalFunctions";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
@@ -40,6 +40,14 @@ const formSchema = z.object({
 });
 const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
   const [selectedType, setSelectedType] = useState(1);
+  const [isPending, startTransition] = useTransition();
+  useEffect(() => {
+    form.reset(defaultValues);
+  }, [selectedType]);
+
+  const router = useRouter();
+  const { toast } = useToast();
+
   const t = useTranslations("protected-dialog");
   const t1 = useTranslations("account-types");
   const accountTypes = [
@@ -60,9 +68,6 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
       id: 4,
     },
   ];
-  useEffect(() => {
-    form.reset(defaultValues);
-  }, [selectedType]);
 
   const defaultValues = {
     number: "",
@@ -74,16 +79,13 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
     payment: 0,
     category: "",
   };
-  const router = useRouter();
-  const { toast } = useToast();
-  const tomorrowDate = new Date(new Date().setDate(new Date().getDate() + 1))
-    .toISOString()
-    .slice(0, 10);
+
+  const tomorrowDate = getTomorrowDate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues,
   });
-  const [isPending, startTransition] = useTransition();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const category = categories.find((cat) => cat.value === values.category);
@@ -96,6 +98,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
         },
         category ? { category: category?.id } : null,
       );
+
       const cleanedData = removeEmptyStrings(allValues);
 
       createPaymentAccount(cleanedData).then((data) => {
@@ -119,7 +122,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
         className="w-full space-y-1 sm:space-y-2"
         autoComplete="off"
       >
-        {/*select transaction type*/}
+        {/*select  type of account*/}
         <div className="h-fit w-full grid grid-cols-2 min-[432px]:grid-cols-4 gap-x-2 gap-y-1">
           {accountTypes.map((item) => {
             return (
@@ -135,7 +138,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
           })}
         </div>
         <div className="space-y-1 sm:space-y-2 min-[512px]:w-[90%] mx-auto">
-          {/*to account*/}
+          {/*number of account*/}
           <FormField
             control={form.control}
             name="number"
@@ -152,7 +155,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
             )}
           />
 
-          {/*name ammount currency*/}
+          {/*name, balance of account, currency**/}
           <div className="flex gap-1 max-[450px]:flex-col min-[450px]:gap-2">
             {/*name*/}
             <FormField
@@ -168,9 +171,9 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                 </FormItem>
               )}
             />
-            {/*ammount currency*/}
+            {/*balance of account, currency*/}
             <div className="flex gap-2 max-[320px]:flex-col">
-              {/*ammount*/}
+              {/*balance of account*/}
               <FormField
                 control={form.control}
                 name="balance"
@@ -193,7 +196,6 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                   </FormItem>
                 )}
               />
-
               {/*currency*/}
               <FormField
                 control={form.control}
@@ -204,13 +206,6 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                       {t(`currency`)}
                     </FormLabel>
                     <FormControl>
-                      {/*<input*/}
-                      {/*  type="text"*/}
-                      {/*  className="dialog-inputs min-[320px]:w-[100px] min-[450px]:max-w-[80px]"*/}
-                      {/*  value={field.value.toUpperCase()}*/}
-                      {/*  onChange={field.onChange}*/}
-                      {/*  disabled*/}
-                      {/*/>*/}
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
@@ -237,11 +232,11 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
               />
             </div>
           </div>
-          {/*payment date ftrequency*/}
+          {/*debt payment, date , frequency category only on type debt/credit*/}
           {selectedType === 2 && (
             <div className="flex flex-col space-y-1 sm:space-y-2">
               <div className="flex gap-1 max-[450px]:flex-col min-[450px]:gap-2">
-                {/*name*/}
+                {/*debt payment*/}
                 <FormField
                   control={form.control}
                   name="payment"
@@ -249,7 +244,6 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                     <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
                       <FormLabel className="dialog-labels">Splátka</FormLabel>
                       <FormControl>
-                        {/*<input type="text" className="dialog-inputs" {...field} />*/}
                         <input
                           type="number"
                           value={field.value === 0 ? "" : field.value}
@@ -263,8 +257,9 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                     </FormItem>
                   )}
                 />
-                {/*ammount currency*/}
+                {/*date , frequency*/}
                 <div className="flex gap-2 max-[320px]:flex-col">
+                  {/*date*/}
                   <FormField
                     control={form.control}
                     name="date"
@@ -283,8 +278,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                       </FormItem>
                     )}
                   />
-
-                  {/*currency*/}
+                  {/*frequency*/}
                   <FormField
                     control={form.control}
                     name="frequency"
@@ -320,6 +314,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                   />
                 </div>
               </div>
+              {/*category*/}
               <FormField
                 control={form.control}
                 name="category"
@@ -365,7 +360,6 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
               />
             </div>
           )}
-
           <div>
             <button
               type="submit"

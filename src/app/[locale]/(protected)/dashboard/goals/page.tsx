@@ -1,15 +1,20 @@
 import React from "react";
 import GoalItem from "@/components/protected/GoalItem";
-import { test, userAccounts, userGoals } from "@/helpers/current-user";
+import { userAccounts, userGoals } from "@/helpers/current-user";
 import { convertCurrency } from "@/app/api/convert-currency/route";
 
 const GoalsPage = async () => {
-  const goalsData = await userGoals();
+  const [goalsData, allUserAccounts] = await Promise.all([
+    userGoals(),
+    userAccounts(),
+  ]);
+  // const goalsData = await userGoals();
+
   const userCurrencyConvert = await convertCurrency(
     goalsData[0]?.user?.mainCurrency,
   );
 
-  const allUserAccounts = await userAccounts();
+  // const allUserAccounts = await userAccounts();
 
   return (
     <div>

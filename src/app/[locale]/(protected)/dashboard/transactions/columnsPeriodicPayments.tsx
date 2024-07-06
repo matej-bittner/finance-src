@@ -7,8 +7,8 @@ import DialogContentWrapper from "@/components/protected/dialog/DialogContentWra
 import EditTransactionForm from "@/components/protected/dialog/EditTransactionForm";
 import Image from "next/image";
 import { PeriodicPaymentData } from "@/types";
-import { accountType, currencies } from "@/constants";
 import { useTranslations } from "next-intl";
+import { findCurrencySymbol } from "@/helpers/generalFunctions";
 
 export const useColumnsPeriodicPayments =
   (): ColumnDef<PeriodicPaymentData>[] => {
@@ -45,9 +45,7 @@ export const useColumnsPeriodicPayments =
         cell: ({ row }) => {
           const amount = row.original.amount;
           const currency = row.original.currency;
-          const symbol = currencies.find(
-            (item) => item.value === currency,
-          )?.symbol;
+          const symbol = findCurrencySymbol(currency);
 
           return (
             <p>

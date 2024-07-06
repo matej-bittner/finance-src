@@ -1,10 +1,11 @@
 import React from "react";
-import { currencies, frequencies } from "@/constants";
+import { frequencies } from "@/constants";
 import Image from "next/image";
 import DialogContentWrapper from "@/components/protected/dialog/DialogContentWrapper";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import EditTransactionForm from "@/components/protected/dialog/EditTransactionForm";
 import { useTranslations } from "next-intl";
+import { findCurrencySymbol } from "@/helpers/generalFunctions";
 
 const SubscriptionItem = ({ sub }: any) => {
   const t = useTranslations("protected-dialog");
@@ -21,7 +22,11 @@ const SubscriptionItem = ({ sub }: any) => {
                 })
                 .toUpperCase()}
             </p>
-            <p className="font-medium">{sub.toProcess.getDay()}</p>
+            <p className="font-medium">
+              {sub.toProcess.toLocaleString("default", {
+                day: "numeric",
+              })}
+            </p>
           </div>
         </div>
         <div className="flex gap-1 min-[500px]:w-[250px] sm:w-full items-center sm:justify-around md:gap-4 ">
@@ -40,7 +45,8 @@ const SubscriptionItem = ({ sub }: any) => {
                 : "--------"}
             </p>
             <p className="text-sm sm:hidden">
-              {t(`next-payment`)} {sub.toProcess.toLocaleDateString()}
+              {/*{t(`next-payment`)} {sub.toProcess.toLocaleDateString()}*/}
+              Další platba
             </p>
             {sub.description && (
               <p className="hidden text-sm md:block pt-2 max-w-[90%]">
@@ -50,8 +56,7 @@ const SubscriptionItem = ({ sub }: any) => {
           </div>
           <div className="max-sm:hidden border-main-blue border-2 rounded-xl py-2 px-3 font-medium lg:px-4">
             <p className="text-nowrap">
-              {sub.amount}{" "}
-              {currencies.find((item) => item.value === sub.currency)?.symbol}
+              {sub.amount} {findCurrencySymbol(sub.currency)}
             </p>
           </div>
           <div className="absolute  right-1 top-1">

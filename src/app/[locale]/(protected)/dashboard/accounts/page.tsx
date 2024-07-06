@@ -1,10 +1,10 @@
 import React from "react";
 import { userAccounts } from "@/helpers/current-user";
-import { accountType, currencies } from "@/constants";
 import AccountItem from "@/components/protected/AccountItem";
 
 const AccountsPage = async () => {
   const accounts = await userAccounts();
+
   const currentAndSavingsAccounts = accounts
     .filter((account) => account.type === 1 || account.type === 3)
     .sort((a, b) => a.type - b.type);

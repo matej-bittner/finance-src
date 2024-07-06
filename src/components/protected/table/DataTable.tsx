@@ -21,20 +21,24 @@ import { PeriodicPaymentData, TransactionData } from "@/types";
 import { useColumnsPeriodicPayments } from "@/app/[locale]/(protected)/dashboard/transactions/columnsPeriodicPayments";
 import { useTranslations } from "next-intl";
 
-type ColumnData = TransactionData | PeriodicPaymentData;
+type ColumnData = TransactionData | PeriodicPaymentData | any;
 // interface DataTableProps<TData, TValue> {
 interface DataTableProps {
   // columns: ColumnDef<TData, TValue>[];
   // data: TData[];
   data: ColumnData[];
-  title: string;
+  title?: string;
   type: number;
+  full_width?: boolean;
+  row_limit?: number;
 }
 export function DataTable({
   // export function DataTable<TData, TValue>({
   title,
   // columns,
   data,
+  full_width,
+  row_limit,
   type,
   // }: DataTableProps<TData, TValue>) {
 }: DataTableProps) {
@@ -55,14 +59,16 @@ export function DataTable({
     initialState: {
       pagination: {
         // pageIndex: 1, //custom initial page index
-        pageSize: 5, //custom default page size
+        pageSize: row_limit || 5, //custom default page size
       },
     },
   });
   const t = useTranslations("data-table");
   return (
-    <div className="px-2 overflow-auto w-full 2xl:max-w-[720px] ">
-      <h2 className="max-tb:text-center pb-1 2xl:pb-6">{title}</h2>
+    <div
+      className={`px-2 overflow-auto w-full  ${!full_width && "2xl:max-w-[720px]"}`}
+    >
+      {title && <h2 className="max-tb:text-center pb-1 2xl:pb-6">{title}</h2>}
       <Table style={{ borderCollapse: "separate", borderSpacing: "0px 5px" }}>
         <TableHeader className="bg-main-gray ">
           {table.getHeaderGroups().map((headerGroup) => (

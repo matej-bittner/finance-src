@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { currencies } from "@/constants";
-import { getTranslations } from "next-intl/server";
 import { useTranslations } from "next-intl";
+import { findCurrencySymbol } from "@/helpers/generalFunctions";
 
 const UpcomingPayments = ({ data }: any) => {
   const t = useTranslations("dashboard");
   return (
-    <div className="box flex flex-col gap-2 min-[450px]:gap-3 w-full max-w-[380px] shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+    <div className="box flex flex-col gap-2 min-[450px]:gap-3 w-full max-w-[380px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] ">
       {data.map((payment: any, i: number) => (
         <div key={i} className="space-y-2">
           <div className="flex items-center">
@@ -19,7 +19,11 @@ const UpcomingPayments = ({ data }: any) => {
                   })
                   .toUpperCase()}
               </p>
-              <p className="text-sm">{payment.toProcess.getDay()}</p>
+              <p className="text-sm">
+                {payment.toProcess.toLocaleString("default", {
+                  day: "numeric",
+                })}
+              </p>
             </div>
             <div className="flex flex-col flex-1 pl-2 min-[350px]:pl-4 min-[400px]:pl-5 sm:pl-2">
               <p className="font-semibold max-md:text-sm">{payment.name}</p>
@@ -32,12 +36,7 @@ const UpcomingPayments = ({ data }: any) => {
             </div>
             <div className="flex flex-col text-sm items-center justify-center">
               <p>{payment.amount}</p>
-              <p>
-                {
-                  currencies.find((item) => item.value === payment.currency)
-                    ?.symbol
-                }
-              </p>
+              <p>{findCurrencySymbol(payment.currency)}</p>
             </div>
           </div>
           <hr

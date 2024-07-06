@@ -3,14 +3,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 
 import { GoalData, UserAccount } from "@/types";
-import { colors, currencies } from "@/constants";
+import { colors } from "@/constants";
 import CircleProgressBar from "@/components/ui/circle-progress-bar";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DialogContentWrapper from "@/components/protected/dialog/DialogContentWrapper";
 import EditGoalForm from "@/components/protected/dialog/EditGoalForm";
-import { deleteGoal } from "@/actions/delete";
-import { getTranslations } from "next-intl/server";
 import { useTranslations } from "next-intl";
+import { findCurrencySymbol } from "@/helpers/generalFunctions";
 
 interface GoalItemProps {
   goalData: GoalData[];
@@ -26,9 +25,8 @@ const GoalItem = ({
   const t = useTranslations("protected-dialog");
 
   const [openBalance, setOpenBalance] = useState("");
-  const currencySymbol = currencies.find(
-    (currency) => currency.value === goalData[0].user.mainCurrency,
-  );
+  const currencySymbol = findCurrencySymbol(goalData[0].user.mainCurrency);
+
   let wasConverted = "";
   return (
     <div className="grid grid-cols-1 min-[420px]:grid-cols-2 min-[920px]:grid-cols-3 min-[1350px]:grid-cols-4 2xl:grid-cols-5 min-[1900px]:grid-cols-6 place-items-center items-center  ">
@@ -88,7 +86,7 @@ const GoalItem = ({
                 <p className="text-main-success">
                   {wasConverted}
                   {Intl.NumberFormat().format(totalBalance)}{" "}
-                  {currencySymbol && currencySymbol.symbol}
+                  {currencySymbol && currencySymbol}
                 </p>
                 <p className="leading-tight text-sm">{t(`out-of`)}</p>
                 <p>{Intl.NumberFormat().format(goal.amount)}</p>

@@ -9,8 +9,6 @@ const SubscriptionsPage = async () => {
 
   return (
     <div className="grid grid-cols-1 place-items-center 2xl:grid-cols-2  gap-2 lg:gap-4 max-w-[1550px] mx-auto  justify-center items-start h-fit pt-2 2xl:pt-8">
-      {/*<div className="flex flex-col items-center gap-2 lg:gap-4">*/}
-      {/*<SubscriptionItem data={allSubscriptions} />*/}
       {allSubscriptions.map((sub, i) => {
         return <SubscriptionItem key={i} sub={sub} />;
       })}

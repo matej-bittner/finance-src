@@ -2,14 +2,12 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { UserAccount } from "@/types";
-import { findCurrencyByValue } from "@/helpers/generalFunctions";
 import { useTranslations } from "next-intl";
-import { currencies } from "@/constants";
+import { findCurrencySymbol } from "@/helpers/generalFunctions";
 
 interface AccountInfoDisplayProps {
   currency: string;
   data: UserAccount[];
-  // data: any;
   type: "account" | "debt" | "investment";
   userCurrencyConvert: any;
 }
@@ -53,11 +51,10 @@ const AccountInfoDisplay = ({
     return 0; // Return accumulator if no paymentAccount or empty
   };
 
-  // };
   const totalBalance = extractAndSumBalances(data);
 
-  const currencyTypes = findCurrencyByValue(data[selectedAccount].currency);
-  const mainCurrency = findCurrencyByValue(currency);
+  const currencyTypes = findCurrencySymbol(data[selectedAccount].currency);
+  const mainCurrency = findCurrencySymbol(currency);
   return (
     <div className="box flex flex-col gap-2 min-[450px]:gap-3 w-full max-w-[380px] shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
       {/*top */}
@@ -65,7 +62,7 @@ const AccountInfoDisplay = ({
         <div className="flex justify-between">
           <p className="md:text-lg">
             {wasConverted}
-            {Intl.NumberFormat().format(totalBalance)} {mainCurrency?.symbol}
+            {Intl.NumberFormat().format(totalBalance)} {mainCurrency}
           </p>
           <p>
             {type === "account"
@@ -101,14 +98,14 @@ const AccountInfoDisplay = ({
         <div className="md:border-l-2 max-md:border-t-2 w-[80%] max-md:mx-auto max-md:pt-2 border-black flex flex-col items-center justify-center md:w-2/5 max-md:flex-1 ">
           <p>
             {Intl.NumberFormat().format(data[selectedAccount].balance)}{" "}
-            {currencyTypes?.symbol || ""}
+            {currencyTypes || ""}
           </p>
           <div className="flex md:flex-col items-center max-md:gap-2">
             {type === "debt" ? (
               <p className="text-white/60">
                 {/*@ts-ignore*/}
                 {data[selectedAccount]?.periodicPayment[0].amount}{" "}
-                {currencyTypes?.symbol || ""}
+                {currencyTypes || ""}
               </p>
             ) : (
               <div className="flex gap-1 ">

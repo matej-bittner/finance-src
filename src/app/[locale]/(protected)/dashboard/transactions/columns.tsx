@@ -7,8 +7,8 @@ import DialogContentWrapper from "@/components/protected/dialog/DialogContentWra
 import EditTransactionForm from "@/components/protected/dialog/EditTransactionForm";
 import Image from "next/image";
 import { TransactionData } from "@/types";
-import { currencies } from "@/constants";
 import { useTranslations } from "next-intl";
+import { findCurrencySymbol } from "@/helpers/generalFunctions";
 
 export const useColumns = (): ColumnDef<TransactionData>[] => {
   const t = useTranslations("protected-dialog");
@@ -47,9 +47,7 @@ export const useColumns = (): ColumnDef<TransactionData>[] => {
       cell: ({ row }) => {
         const amount = row.original.amount;
         const currency = row.original.currency;
-        const symbol = currencies.find(
-          (item) => item.value === currency,
-        )?.symbol;
+        const symbol = findCurrencySymbol(currency);
 
         return (
           <p>
@@ -70,7 +68,7 @@ export const useColumns = (): ColumnDef<TransactionData>[] => {
       id: "actions",
       cell: ({ row }) => {
         const data = row.original;
-
+        if (!data.transactionType) return;
         return (
           <Dialog>
             <DialogTrigger>
