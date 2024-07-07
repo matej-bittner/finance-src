@@ -8,13 +8,10 @@ const GoalsPage = async () => {
     userGoals(),
     userAccounts(),
   ]);
-  // const goalsData = await userGoals();
 
   const userCurrencyConvert = await convertCurrency(
     goalsData[0]?.user?.mainCurrency,
   );
-
-  // const allUserAccounts = await userAccounts();
 
   return (
     <div>

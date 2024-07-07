@@ -4,6 +4,7 @@ import Image from "next/image";
 import { UserAccount } from "@/types";
 import { useTranslations } from "next-intl";
 import { findCurrencySymbol } from "@/helpers/generalFunctions";
+import Link from "next/link";
 
 interface AccountInfoDisplayProps {
   currency: string;
@@ -84,13 +85,15 @@ const AccountInfoDisplay = ({
             <p className="md:text-lg font-medium">
               {data[selectedAccount].name}
             </p>
-            <Image
-              src="/icons/line-arrow-up.svg"
-              alt="arrow"
-              width={18}
-              height={18}
-              className="invert rotate-45 max-md:absolute right-2 top-2"
-            />
+            <Link href="/dashboard/accounts">
+              <Image
+                src="/icons/line-arrow-up.svg"
+                alt="arrow"
+                width={18}
+                height={18}
+                className="invert rotate-45 max-md:absolute right-2 top-2"
+              />
+            </Link>
           </div>
           <p className="text-xs ">{data[selectedAccount]?.number}</p>
         </div>
@@ -100,30 +103,38 @@ const AccountInfoDisplay = ({
             {Intl.NumberFormat().format(data[selectedAccount].balance)}{" "}
             {currencyTypes || ""}
           </p>
-          <div className="flex md:flex-col items-center max-md:gap-2">
-            {type === "debt" ? (
+          {type === "debt" && (
+            <div className="flex md:flex-col items-center max-md:gap-2">
               <p className="text-white/60">
                 {/*@ts-ignore*/}
                 {data[selectedAccount]?.periodicPayment[0].amount}{" "}
                 {currencyTypes || ""}
               </p>
-            ) : (
-              <div className="flex gap-1 ">
-                <Image
-                  src="/icons/arrow-up-succes.svg"
-                  alt="arrow"
-                  width={18}
-                  height={18}
-                />
-                <p className="text-main-success">10%</p>
-              </div>
-            )}
-            <p className="text-sm text-[#ABABAB]">
-              {type === "account"
-                ? t1(`since-last-month`)
-                : type === "debt" && t1(`next-payment`)}
-            </p>
-          </div>
+              <p className="text-sm text-[#ABABAB]">{t1(`next-payment`)}</p>
+              {/*{type === "debt" ? (*/}
+              {/*  <p className="text-white/60">*/}
+              {/*    /!*@ts-ignore*!/*/}
+              {/*    {data[selectedAccount]?.periodicPayment[0].amount}{" "}*/}
+              {/*    {currencyTypes || ""}*/}
+              {/*  </p>*/}
+              {/*) : (*/}
+              {/*  <div className="flex gap-1 ">*/}
+              {/*    <Image*/}
+              {/*      src="/icons/arrow-up-succes.svg"*/}
+              {/*      alt="arrow"*/}
+              {/*      width={18}*/}
+              {/*      height={18}*/}
+              {/*    />*/}
+              {/*    <p className="text-main-success">10%</p>*/}
+              {/*  </div>*/}
+              {/*)}*/}
+              {/*<p className="text-sm text-[#ABABAB]">*/}
+              {/*  {type === "account"*/}
+              {/*    ? t1(`since-last-month`)*/}
+              {/*    : type === "debt" && t1(`next-payment`)}*/}
+              {/*</p>*/}
+            </div>
+          )}
         </div>
       </div>
       {data.length > 1 && (

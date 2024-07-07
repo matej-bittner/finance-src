@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import LanguageSwitchButton from "@/components/navbar/LanguageSwitchButton";
+import { usePathname } from "next/navigation";
 
 interface MobileNavbarProps {
   navLinksData: {
@@ -11,6 +12,7 @@ interface MobileNavbarProps {
 }
 const MobileNavbar = ({ navLinksData }: MobileNavbarProps) => {
   const [openMobileNav, setOpenMobileNav] = useState(false);
+
   return (
     <div className="min-[450px]:min-w-[125px] sm:hidden z-20">
       <Image
@@ -21,8 +23,8 @@ const MobileNavbar = ({ navLinksData }: MobileNavbarProps) => {
         onClick={() => setOpenMobileNav(!openMobileNav)}
       />
       {openMobileNav && (
-        <div className="absolute left-0 top-[65px] flex h-fit w-full items-center justify-center gap-2 bg-main-yellow py-3 text-black border-white border-b-2 flex-col ">
-          <div className="flex gap-4">
+        <div className="absolute left-0 top-[65px] flex h-fit w-full items-center justify-center gap-2 bg-main-yellow py-3 text-black border-white border-b-2 flex-col bg ">
+          <div className="flex gap-4 ">
             {navLinksData.map((item, i) => {
               return (
                 <a

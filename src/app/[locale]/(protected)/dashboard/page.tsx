@@ -28,7 +28,26 @@ const DashboardPage = async ({
 }: {
   searchParams: { mainChartRange?: string; mainChartCurrency?: string };
 }) => {
-  const allUsedCurrenciesOnTransactions = await getAllUsedCurrencies();
+  const [
+    allUsedCurrenciesOnTransactions,
+    accountsNew,
+    user,
+    upcomingPaymentsData,
+    userTransactionsLimited,
+    expensesByCategoryData,
+    t,
+  ] = await Promise.all([
+    getAllUsedCurrencies(),
+    userAccounts(),
+    currentUser(),
+    userPeriodicPayments(),
+    dashboardTransactions(),
+    getDataByCategory(),
+    getTranslations("dashboard"),
+  ]);
+
+  const userCurrencyConvert = await convertCurrency(user?.mainCurrency);
+  const mainCurrency = user?.mainCurrency;
 
   const graphDataRangeOption =
     getRangeOption(mainChartRange) || RANGE_OPTIONS.last_7_days;
@@ -45,15 +64,6 @@ const DashboardPage = async ({
     graphCurrencyExist,
   );
 
-  const t = await getTranslations("dashboard");
-  const accountsNew = await userAccounts();
-  const user = await currentUser();
-  const userCurrencyConvert = await convertCurrency(user?.mainCurrency);
-  const upcomingPaymentsData = await userPeriodicPayments();
-  const userTransactionsLimited = await dashboardTransactions();
-  const expensesByCategoryData = await getDataByCategory();
-  const mainCurrency = user?.mainCurrency;
-
   const currentAndSavingsAccounts = accountsNew
     .filter((account) => account.type === 1 || account.type === 3)
     .sort((a, b) => a.type - b.type);
@@ -68,7 +78,7 @@ const DashboardPage = async ({
         <div className="grid grid-cols-1 w-full max-sm:max-w-[95%] mg:grid-cols-2 xlb:flex gap-y-3 ">
           {/*acounts + savings*/}
           <div className="flex flex-col w-full xlb:w-2/3 xlb:max-w-[820px] max-xlb:items-center">
-            <h2 className="pb-1 mg:pb-2">Účty</h2>
+            <h2 className="pb-1 mg:pb-2">{t(`accounts`)}</h2>
             <div className="flex max-xlb:flex-col w-full gap-y-2  mg:h-full mg:justify-between items-center xlb:items-start ">
               <AccountInfoDisplay
                 data={currentAndSavingsAccounts}
@@ -86,7 +96,7 @@ const DashboardPage = async ({
           </div>
           <div className="xlb:w-1/3 flex flex-col   xlb:max-w-[410px] max-xlb:items-center mg:gap-y-3">
             <div className="max-w-[380px] flex flex-col items-center max-xlb:mx-auto w-full xlb:ml-auto xlb:items-start">
-              <h2 className="pb-1 mg:pb-2">Úvěry</h2>
+              <h2 className="pb-1 mg:pb-2">{t(`loans`)}</h2>
               <AccountInfoDisplay
                 data={creditAccounts}
                 type="debt"
@@ -95,7 +105,7 @@ const DashboardPage = async ({
               />
             </div>
             <div className="max-mg:hidden xlb:hidden max-w-[380px] mx-auto w-full">
-              <h2 className="pb-1 mg:pb-2">Budoicí platby</h2>
+              <h2 className="pb-1 mg:pb-2">{t(`upcoming-payments`)}</h2>
               <UpcomingPayments data={upcomingPaymentsData} />
             </div>
           </div>
@@ -105,11 +115,11 @@ const DashboardPage = async ({
           {/*categories, payments*/}
           <div className="mg:w-[280px] xlb:w-[410px] flex flex-col gap-y-3 mg:gap-y-4 ">
             <div className="flex mg:hidden xlb:flex  max-w-[380px]   mx-auto w-full  items-center flex-col xlb:order-2  ">
-              <h2 className="pb-1 mg:pb-2">Budoicí platby</h2>
+              <h2 className="pb-1 mg:pb-2">{t(`upcoming-payments`)}</h2>
               <UpcomingPayments data={upcomingPaymentsData} />
             </div>
             <div className="max-w-[430px] mx-auto flex flex-col xlb:order-1">
-              <h2 className="pb-1 mg:pb-2 text-center">Kategorie</h2>
+              <h2 className="pb-1 mg:pb-2 text-center">{t(`categories`)}</h2>
               <ExpensesByCategory
                 // @ts-expect-error
                 data={expensesByCategoryData}
@@ -119,13 +129,13 @@ const DashboardPage = async ({
           </div>
           {/*graph*/}
           <div className="max-mg:hidden flex-1">
-            <h2 className="pb-1 mg:pb-2">Výdaje příjmy</h2>
+            <h2 className="pb-1 mg:pb-2">{t(`income-expenses`)}</h2>
             <DashboardChart
               data={graphData}
               queryRangeKey="mainChartRange"
               queryCurrencyKey="mainChartCurrency"
               usedCurrencies={allUsedCurrenciesOnTransactions}
-              selectedRangeLabel={graphDataRangeOption.label}
+              selectedRange={mainChartRange}
               selectedCurrencyLabel={graphCurrencyExist || mainCurrency}
             />
           </div>
@@ -182,7 +192,7 @@ const DashboardPage = async ({
               );
             })}
             <Link
-              href="/"
+              href="/dashboard/transactions"
               className="underline text-sm text-center flex-1 flex items-end justify-center pb-2 "
             >
               {t(`show-more`)}

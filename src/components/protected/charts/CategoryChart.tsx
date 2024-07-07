@@ -16,7 +16,7 @@ import {
   YAxis,
 } from "recharts";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { findCurrencySymbol } from "@/helpers/generalFunctions";
 
 interface CategoryChartProps {
@@ -32,6 +32,7 @@ const CategoryChart = ({
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations("chart");
   function setCurrency(currency: string) {
     const params = new URLSearchParams(searchParams);
     params.set("currency", currency);
@@ -57,19 +58,21 @@ const CategoryChart = ({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="bg-[#BBBBBB] font-medium py-1 px-2 rounded-md">
-                  {selectedCurrencyLabel.toUpperCase()}
+                  {currencySymbol}
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="min-w-0 bg-[#BBBBBB]/20 border-0">
-                {usedCurrencies.map((usedCurr) => (
-                  <DropdownMenuItem
-                    className={`${usedCurr === selectedCurrencyLabel && "hidden"} hover:bg-[#BBBBBB]/60 focus:bg-[#BBBBBB]/60`}
-                    onClick={() => setCurrency(usedCurr)}
-                    key={usedCurr}
-                  >
-                    {usedCurr}
-                  </DropdownMenuItem>
-                ))}
+                {usedCurrencies.map((usedCurr) => {
+                  return (
+                    <DropdownMenuItem
+                      className={`${usedCurr === selectedCurrencyLabel && "hidden"} hover:bg-[#BBBBBB]/60 focus:bg-[#BBBBBB]/60`}
+                      onClick={() => setCurrency(usedCurr)}
+                      key={usedCurr}
+                    >
+                      {findCurrencySymbol(usedCurr)}
+                    </DropdownMenuItem>
+                  );
+                })}
               </DropdownMenuContent>
             </DropdownMenu>
           )}
@@ -81,7 +84,7 @@ const CategoryChart = ({
         <ResponsiveContainer width="100%" height="100%">
           {!existsAnyTotalAmount ? (
             <div className="w-full h-full flex items-center justify-center  text-center">
-              Momentálně zde nejsou žádná data k zobrazení
+              {t("no-data")}
             </div>
           ) : (
             <BarChart width={500} height={200} data={data}>
@@ -95,6 +98,9 @@ const CategoryChart = ({
                 stroke="#000"
               />
               <Tooltip
+                formatter={(value: number) =>
+                  new Intl.NumberFormat().format(value) + " " + currencySymbol
+                }
                 contentStyle={{
                   backgroundColor: "rgba(187, 187, 187, 0.8)",
                   borderRadius: "10px",
@@ -102,7 +108,11 @@ const CategoryChart = ({
                 }}
               />
 
-              <Bar dataKey="totalAmount" fill="#000080" />
+              <Bar
+                dataKey="totalAmount"
+                fill="#000080"
+                name={t("total-amount")}
+              />
             </BarChart>
           )}
         </ResponsiveContainer>

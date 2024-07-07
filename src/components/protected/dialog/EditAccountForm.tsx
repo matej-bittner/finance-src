@@ -30,17 +30,18 @@ import { deleteAccount } from "@/actions/delete";
 import { categories, frequencies } from "@/constants";
 import { useTranslations } from "next-intl";
 import { editPaymentAccount } from "@/actions/edit-payment-account";
+import { getAddAccountSchema, getEditAccountSchema } from "@/schemas";
 
-const formSchema = z.object({
-  number: z.string().optional(),
-  name: z.string().min(1),
-  balance: z.number().positive().min(1),
-  payment: z.number(),
-  currency: z.string().min(1),
-  date: z.string(),
-  frequency: z.string(),
-  category: z.string().optional(),
-});
+// const formSchema = z.object({
+//   number: z.string().optional(),
+//   name: z.string().min(1),
+//   balance: z.number().positive().min(1),
+//   payment: z.number(),
+//   currency: z.string().min(1),
+//   date: z.string(),
+//   frequency: z.string(),
+//   category: z.string().optional(),
+// });
 
 interface EditAccountFormProps {
   data: UserAccount;
@@ -56,6 +57,10 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
   const { toast } = useToast();
 
   const t = useTranslations("protected-dialog");
+  const t1 = useTranslations("frequency");
+  const t2 = useTranslations("form-messages");
+  const EditAccountSchema = getEditAccountSchema(t2, selectedType);
+  const t3 = useTranslations("category");
 
   const defaultValues = {
     number: data?.number || "",
@@ -81,8 +86,8 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
   };
 
   const tomorrowDate = getTomorrowDate();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof EditAccountSchema>>({
+    resolver: zodResolver(EditAccountSchema),
     defaultValues: defaultValues,
   });
 
@@ -101,7 +106,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
     });
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof EditAccountSchema>) {
     startTransition(() => {
       const category = categories.find((cat) => cat.value === values.category);
 
@@ -148,7 +153,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
             render={({ field }) => (
               <FormItem className="flex flex-col space-y-0">
                 <FormLabel className="dialog-labels">
-                  {t(`number-contract`)}
+                  {t(`account-number`)}
                 </FormLabel>
                 <FormControl>
                   <input type="text" className="dialog-inputs" {...field} />
@@ -188,12 +193,13 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                     <FormControl>
                       <input
                         type="number"
-                        value={field.value === 0 ? "" : field.value}
+                        // value={field.value === 0 ? "" : field.value}
                         className="dialog-inputs min-[450px]:w-[120px]"
                         disabled
-                        onChange={(event) =>
-                          field.onChange(+event.target.value)
-                        }
+                        value={field.value}
+                        // onChange={(event) =>
+                        //   field.onChange(+event.target.value)
+                        // }
                       />
                     </FormControl>
                     <FormMessage />
@@ -235,7 +241,9 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                   name="payment"
                   render={({ field }) => (
                     <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
-                      <FormLabel className="dialog-labels">Splátka</FormLabel>
+                      <FormLabel className="dialog-labels">
+                        {t(`loan-payment`)}
+                      </FormLabel>
                       <FormControl>
                         <input
                           type="number"
@@ -257,7 +265,9 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                     name="date"
                     render={({ field }) => (
                       <FormItem className="flex flex-col max-[450px]:flex-1 space-y-0">
-                        <FormLabel className="dialog-labels">K datu</FormLabel>
+                        <FormLabel className="dialog-labels">
+                          {t(`next-payment`)}
+                        </FormLabel>
                         <FormControl>
                           <input
                             min={tomorrowDate}
@@ -295,7 +305,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                                   value={freq.value}
                                   key={i}
                                 >
-                                  {freq.selectText}
+                                  {t1(freq.selectText)}
                                 </SelectItem>
                               ))}
                             </SelectContent>
@@ -332,7 +342,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                               className="px-0 py-1 justify-center items-center"
                               value={category.value}
                             >
-                              {category.value}
+                              {t3(category.value)}
                             </SelectItem>
                           ))}
                           <button
@@ -358,7 +368,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
               type="submit"
               className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3"
             >
-              edit
+              {t(`edit-account`)}
             </button>
           </div>
         </form>
@@ -368,7 +378,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
         disabled={isPending}
         className="py-1 px-2 bg-black text-white rounded-lg mt-2"
       >
-        odstranit
+        {t(`delete-account`)}
       </button>
     </>
   );

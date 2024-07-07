@@ -13,18 +13,20 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CardSuccess from "@/components/auth/CardSuccess";
-import { LoginSchema } from "@/schemas";
+import { getLoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 
 const LoginForm = () => {
   const t = useTranslations("login-form");
+  const t1 = useTranslations("form-messages");
+  const LoginSchema = getLoginSchema(t1);
 
   const searchParams = useSearchParams();
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email in use with different provider"
+      ? t("OAuthAccountNotLinked")
       : "";
 
   const [error, setError] = useState<string | undefined>("");

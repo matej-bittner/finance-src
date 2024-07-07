@@ -3,11 +3,14 @@
 import { currentUser } from "@/helpers/current-user";
 import { db } from "@/lib/db";
 import { z } from "zod";
+import { getTranslations } from "next-intl/server";
 
 export const editPaymentAccount = async (values: any) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const session = await currentUser();
 
-  if (!session?.id) return { error: "něco se nepovedlo" };
+  if (!session?.id) return { error: te("4") };
 
   const {
     number,
@@ -174,7 +177,7 @@ export const editPaymentAccount = async (values: any) => {
   //   },
   // });
 
-  return { success: "ok" };
+  return { success: ts("11") };
 };
 
 // export const createPaymentAccount = async (values: any) => {

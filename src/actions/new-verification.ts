@@ -3,23 +3,26 @@
 import { db } from "@/lib/db";
 import { getVerificationTokenByToken } from "@/data/verification-token";
 import { getUserByEmail } from "@/data/user";
+import { getTranslations } from "next-intl/server";
 
 const NewVerification = async (token: string) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const existingToken = await getVerificationTokenByToken(token);
 
   if (!existingToken) {
-    return { error: "Obnovení se nezdařilo, zkuste to znovu" };
+    return { error: te("4") };
   }
 
   const hasExpired = new Date(existingToken.expires) < new Date();
   if (hasExpired) {
-    return { error: "Akce nebyla dokončena v časovém limitu, zkuste to znovu" };
+    return { error: te("17") };
   }
 
   const existingUser = await getUserByEmail(existingToken.email);
 
   if (!existingUser) {
-    return { error: "Obnovení se nezdařilo, zkuste to znovu" };
+    return { error: te("4") };
   }
 
   await db.user.update({
@@ -33,7 +36,7 @@ const NewVerification = async (token: string) => {
 
   await db.verificationToken.delete({ where: { id: existingToken.id } });
 
-  return { success: "Email byl ověřen!" };
+  return { success: ts("14") };
 };
 
 export default NewVerification;

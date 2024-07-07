@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/components/ui/use-toast";
-import { categories, currencies, frequencies } from "@/constants";
+import { accountType, categories, currencies, frequencies } from "@/constants";
 import {
   getTomorrowDate,
   removeEmptyStrings,
@@ -27,17 +27,18 @@ import {
   FormMessage,
 } from "../../ui/form";
 import { createPaymentAccount } from "@/actions/create-payment-account";
+import { getAddAccountSchema } from "@/schemas";
 
-const formSchema = z.object({
-  number: z.string().optional(),
-  name: z.string().min(1),
-  balance: z.number().positive().min(1),
-  payment: z.number(),
-  currency: z.string().min(1),
-  date: z.string(),
-  frequency: z.string(),
-  category: z.string().optional(),
-});
+// const formSchema = z.object({
+//   number: z.string().optional(),
+//   name: z.string().min(1),
+//   balance: z.number().positive().min(1),
+//   payment: z.number(),
+//   currency: z.string().min(1),
+//   date: z.string(),
+//   frequency: z.string(),
+//   category: z.string().optional(),
+// });
 const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
   const [selectedType, setSelectedType] = useState(1);
   const [isPending, startTransition] = useTransition();
@@ -50,24 +51,10 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
 
   const t = useTranslations("protected-dialog");
   const t1 = useTranslations("account-types");
-  const accountTypes = [
-    {
-      title: t1(`current`),
-      id: 1,
-    },
-    {
-      title: t1(`credit`),
-      id: 2,
-    },
-    {
-      title: t1(`saving`),
-      id: 3,
-    },
-    {
-      title: t1(`investment`),
-      id: 4,
-    },
-  ];
+  const t2 = useTranslations("frequency");
+  const t3 = useTranslations("form-messages");
+  const AddAccountSchema = getAddAccountSchema(t3, selectedType);
+  const t4 = useTranslations("category");
 
   const defaultValues = {
     number: "",
@@ -82,12 +69,12 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
 
   const tomorrowDate = getTomorrowDate();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof AddAccountSchema>>({
+    resolver: zodResolver(AddAccountSchema),
     defaultValues: defaultValues,
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof AddAccountSchema>) {
     const category = categories.find((cat) => cat.value === values.category);
 
     startTransition(() => {
@@ -124,7 +111,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
       >
         {/*select  type of account*/}
         <div className="h-fit w-full grid grid-cols-2 min-[432px]:grid-cols-4 gap-x-2 gap-y-1">
-          {accountTypes.map((item) => {
+          {accountType.map((item) => {
             return (
               <button
                 key={item.id}
@@ -132,7 +119,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                 onClick={() => setSelectedType(item.id)}
                 className={`border-2 border-white rounded-md w-full pl-2 py-1 flex items-center text-left   ${selectedType === item.id && "bg-main-blue text-white"}`}
               >
-                {item.title}
+                {t1(item.title)}
               </button>
             );
           })}
@@ -145,7 +132,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
             render={({ field }) => (
               <FormItem className="flex flex-col space-y-0">
                 <FormLabel className="dialog-labels">
-                  {t(`number-contract`)}
+                  {t(`account-number`)}
                 </FormLabel>
                 <FormControl>
                   <input type="text" className="dialog-inputs" {...field} />
@@ -242,7 +229,9 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                   name="payment"
                   render={({ field }) => (
                     <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
-                      <FormLabel className="dialog-labels">Splátka</FormLabel>
+                      <FormLabel className="dialog-labels">
+                        {t(`loan-payment`)}
+                      </FormLabel>
                       <FormControl>
                         <input
                           type="number"
@@ -265,7 +254,9 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                     name="date"
                     render={({ field }) => (
                       <FormItem className="flex flex-col max-[450px]:flex-1 space-y-0">
-                        <FormLabel className="dialog-labels">K datu</FormLabel>
+                        <FormLabel className="dialog-labels">
+                          {t(`next-payment`)}
+                        </FormLabel>
                         <FormControl>
                           <input
                             min={tomorrowDate}
@@ -302,7 +293,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                                   value={freq.value}
                                   key={i}
                                 >
-                                  {freq.selectText}
+                                  {t2(freq.selectText)}
                                 </SelectItem>
                               ))}
                             </SelectContent>
@@ -340,7 +331,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                               className="px-0 py-1 justify-center items-center"
                               value={category.value}
                             >
-                              {category.value}
+                              {t4(category.value)}
                             </SelectItem>
                           ))}
                           <button
@@ -365,7 +356,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
               type="submit"
               className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3"
             >
-              {t(`add-transaction`)}
+              {t(`add-account`)}
             </button>
           </div>
         </div>

@@ -31,18 +31,19 @@ import { createTransaction } from "@/actions/create-transaction";
 import { UserAccount } from "@/types";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { getAddGoalSchema, getAddSubscriptionSchema } from "@/schemas";
 
-const formSchema = z.object({
-  accountFrom: z.string(),
-  name: z.string().min(1),
-  amount: z.number().positive().min(1),
-  currency: z.string().min(1),
-  description: z.string().optional(),
-  date: z.string().min(1),
-  frequency: z.string(),
-  category: z.string().optional(),
-  endOfPayment: z.string().optional(),
-});
+// const formSchema = z.object({
+//   accountFrom: z.string(),
+//   name: z.string().min(1),
+//   amount: z.number().positive().min(1),
+//   currency: z.string().min(1),
+//   description: z.string().optional(),
+//   date: z.string().min(1),
+//   frequency: z.string(),
+//   category: z.string().optional(),
+//   endOfPayment: z.string().optional(),
+// });
 const AddSubscriptionForm = ({
   userAccounts,
   defaultCurrency,
@@ -68,6 +69,10 @@ const AddSubscriptionForm = ({
   };
 
   const t = useTranslations("protected-dialog");
+  const t1 = useTranslations("frequency");
+  const t2 = useTranslations("form-messages");
+  const AddSubscriptionSchema = getAddSubscriptionSchema(t2);
+  const t3 = useTranslations("category");
 
   const tomorrowDate = getTomorrowDate();
 
@@ -92,12 +97,12 @@ const AddSubscriptionForm = ({
     }
   }, [dateLimit.firstPaymentDate, dateLimit.frequency]);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof AddSubscriptionSchema>>({
+    resolver: zodResolver(AddSubscriptionSchema),
     defaultValues: defaultValues,
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof AddSubscriptionSchema>) {
     const category = categories.find((cat) => cat.value === values.category);
 
     startTransition(() => {
@@ -361,7 +366,7 @@ const AddSubscriptionForm = ({
                             value={freq.value}
                             key={i}
                           >
-                            {freq.selectText}
+                            {t1(freq.selectText)}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -391,7 +396,7 @@ const AddSubscriptionForm = ({
                             className="px-0 py-1 justify-center items-center"
                             value={category.value}
                           >
-                            {category.value}
+                            {t3(category.value)}
                           </SelectItem>
                         ))}
                         <button

@@ -45,7 +45,10 @@ const UpcomingPayments = ({ data }: any) => {
         </div>
       ))}
 
-      <Link href="/" className="underline text-sm text-center">
+      <Link
+        href="/dashboard/transactions"
+        className="underline text-sm text-center"
+      >
         {t(`show-more`)}
       </Link>
     </div>

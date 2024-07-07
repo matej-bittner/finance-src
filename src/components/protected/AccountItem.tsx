@@ -21,14 +21,19 @@ import DialogContentWrapper from "@/components/protected/dialog/DialogContentWra
 import EditAccountForm from "@/components/protected/dialog/EditAccountForm";
 import Image from "next/image";
 import { deleteInvestmentHistoryItem } from "@/actions/delete";
+import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 const formSchema = z.object({
   amount: number().min(1).positive(),
 });
 
 const AccountItem = ({ data }: { data: UserAccount }) => {
+  const t = useTranslations("protected-dialog");
+  const t2 = useTranslations("account-types");
+
   const router = useRouter();
   const { toast } = useToast();
-
+  const title = accountType.find((acc) => acc.id === data.type)?.title;
   const defaultValues = {
     amount: 0,
   };
@@ -68,7 +73,6 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
         id: data.value,
         type: data.type,
       });
-      console.log(allValues);
       addInvestment(allValues).then((data) => {
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
@@ -98,14 +102,16 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
     <div className="w-full flex flex-col justify-between p-2 min-[520px]:p-4 bg-main-gray rounded-xl mx-auto gap-2 max-w-[600px] shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
       <div className="flex max-[520px]:flex-col gap-4 px-2">
         <div className="flex flex-col flex-1 gap-1 max-[520px]:items-center max-[500px]:text-center">
-          <p className="font-semibold">
-            {accountType.find((acc) => acc.id === data.type)?.title}
-          </p>
+          <p className="font-semibold">{title ? t2(title) : ""}</p>
           <p>{data.name}</p>
-          {data.number && <p>Číslo: {data.number}</p>}
+          {data.number && (
+            <p>
+              {t(`account-number`)}: {data.number}
+            </p>
+          )}
         </div>
         <div className="flex flex-col items-center text-center justify-center min-[520px]:pl-2">
-          <p className="font-semibold">Zůstatek</p>
+          <p className="font-semibold">{t(`balance`)}</p>
           <p>
             {Intl.NumberFormat().format(data.balance)}{" "}
             {findCurrencySymbol(data.currency)}
@@ -129,7 +135,7 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
                       <FormControl>
                         <input
                           type="number"
-                          placeholder="Dnešní částka"
+                          placeholder={t(`today-value`)}
                           value={field.value === 0 ? "" : field.value}
                           className="border-[2px] border-main-blue bg-transparent px-2 py-1 min-[300px]:px-3 text-black rounded-md outline-none placeholder-black font-medium max-[300px]:text-sm max-w-[130px] min-[300px]:max-w-[160px]   h-full"
                           onChange={(event) =>
@@ -145,7 +151,7 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
                   type="submit"
                   className="bg-black rounded-md text-white px-2 max-[300px]:text-sm min-[300px]:px-6 min-[300px]:py-1.5"
                 >
-                  Přidat
+                  {t(`add`)}
                 </button>
               </form>
             </Form>
@@ -154,13 +160,13 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
             <div className="  flex justify-center">
               <Dialog>
                 <DialogTrigger>
-                  <p className="">historie</p>
+                  <p className="">{t(`history`)}</p>
                 </DialogTrigger>
                 <DialogContent
                   id="dialog-content"
                   className="bg-main-gray text-black rounded-md max-w-[400px]"
                 >
-                  <DialogContentWrapper title="Editovat účet" titleCenter>
+                  <DialogContentWrapper title={t(`history`)} titleCenter>
                     <div className="flex flex-col gap-2 max-h-[90%] overflow-auto">
                       {data.updateBalance.map((item, i) => (
                         <div key={i} className=" w-full flex justify-between">
@@ -202,7 +208,7 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
           <p
             className={`w-full  text-white py-1.5 rounded-md cursor-pointer ${data.type === 2 ? "bg-main-error" : data.type === 3 ? "bg-green-600" : data.type === 4 ? "bg-main-yellow" : "bg-main-blue "}`}
           >
-            Upravit
+            {t(`edit`)}
           </p>
         </DialogTrigger>
         <DialogContent
@@ -210,8 +216,8 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
           className="bg-main-gray text-black rounded-md"
         >
           <DialogContentWrapper
-            title="Editovat účet"
-            description="editovat účet"
+            title={t(`edit-account`)}
+            description={t(`edit-account-desc`)}
             titleCenter
           >
             <EditAccountForm data={data} />

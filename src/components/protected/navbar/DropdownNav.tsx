@@ -15,10 +15,7 @@ interface DropdownNavProps {
 }
 const DropdownNav = ({ dropdownNavData }: DropdownNavProps) => {
   const pathname = usePathname();
-  const paths = pathname
-    .split("/")
-    .filter((path) => path !== "")
-    .map((item) => `/${item}`);
+  const x = pathname.split("/").pop();
 
   const [openDropdownNav, setOpenDropdownNav] = useState(false);
   return (
@@ -34,10 +31,13 @@ const DropdownNav = ({ dropdownNavData }: DropdownNavProps) => {
       {openDropdownNav && (
         <div className="absolute left-0 top-[50px] h-fit grid grid-cols-3 min-[420px]:grid-cols-4 md:grid-cols-5 place-items-center w-full  items-center justify-center bg-main-blue py-3 text-white border-white border-b-2 limited-width gap-y-2 gap-x-1">
           {dropdownNavData.map((item, i) => {
+            const y = item.link.split("/").pop();
             return (
-              <div
+              <Link
+                href={item.link}
+                onClick={() => setOpenDropdownNav(!openDropdownNav)}
                 key={i}
-                className={`w-full h-[65px] max-w-[125px] rounded-xl border-2 border-white flex flex-col items-center bg-main-bg/25 whitespace-break-spaces text-xs text-center p-[2px] ${paths[paths.length - 1] === item.link ? "bg-black/20 text-white font-medium" : "bg-main-bg/20"}`}
+                className={`w-full h-[65px] max-w-[125px] rounded-xl border-2 border-white flex flex-col items-center whitespace-break-spaces text-xs text-center p-[2px] ${x === y ? "bg-black/20 text-white font-medium" : "bg-main-bg/20"}`}
               >
                 <Image
                   src={`/icons/${item.icon}.svg`}
@@ -46,10 +46,8 @@ const DropdownNav = ({ dropdownNavData }: DropdownNavProps) => {
                   height={24}
                   className="invert "
                 />
-                <Link href={item.link} className="flex-1 flex items-center">
-                  {item.title}
-                </Link>
-              </div>
+                <p className="flex-1 flex items-center">{item.title}</p>
+              </Link>
             );
           })}
         </div>

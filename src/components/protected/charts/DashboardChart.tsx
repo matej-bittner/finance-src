@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Bar,
   BarChart,
@@ -18,21 +18,24 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { RANGE_OPTIONS } from "@/schemas/rangeOptions";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { findCurrencySymbol } from "@/helpers/generalFunctions";
 
 interface ChartOneProps {
   data: { date: string; income: number; expense: number }[];
   queryRangeKey: string;
   queryCurrencyKey: string;
-  selectedRangeLabel: string;
+  selectedRange?: string;
+  // selectedRangeLabel: string;
   selectedCurrencyLabel: string;
   usedCurrencies: string[];
 }
+
 const DashboardChart = ({
   data,
   queryRangeKey,
-  selectedRangeLabel,
+  selectedRange,
+  // selectedRangeLabel,
   usedCurrencies,
   queryCurrencyKey,
   selectedCurrencyLabel,
@@ -40,7 +43,7 @@ const DashboardChart = ({
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-
+  const t = useTranslations("chart");
   function setRange(range: keyof typeof RANGE_OPTIONS) {
     const params = new URLSearchParams(searchParams);
     params.set(queryRangeKey, range);
@@ -61,6 +64,21 @@ const DashboardChart = ({
     );
   };
 
+  const [longestTick, setLongestTick] = useState("");
+  const tickFormatter = (val: number) => {
+    const formattedTick = formatNumber(val) + " " + currencySymbol;
+
+    if (longestTick.length < formattedTick.length) {
+      setLongestTick(formattedTick);
+    }
+    return formattedTick;
+  };
+
+  const getYAxisTickLen = () => {
+    const charWidth = 6; // example w/ estimated 8px width/char
+    return longestTick.length * charWidth;
+  };
+
   return (
     <div className="w-full  box h-[450px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] flex flex-col ">
       {usedCurrencies.length > 0 ? (
@@ -69,7 +87,7 @@ const DashboardChart = ({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="bg-[#BBBBBB] font-medium py-1 px-2 rounded-md">
-                  {selectedCurrencyLabel.toUpperCase()}
+                  {currencySymbol}
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="min-w-0 bg-[#BBBBBB]/20 border-0">
@@ -79,7 +97,7 @@ const DashboardChart = ({
                     onClick={() => setCurrency(usedCurr)}
                     key={usedCurr}
                   >
-                    {usedCurr}
+                    {findCurrencySymbol(usedCurr)}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -88,17 +106,17 @@ const DashboardChart = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="bg-[#BBBBBB] font-medium py-1 px-2 rounded-md">
-                {selectedRangeLabel}
+                {t(selectedRange) || t("last_7_days")}
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-[#BBBBBB]/20 border-0">
-              {Object.entries(RANGE_OPTIONS).map(([key, value]) => (
+              {Object.entries(RANGE_OPTIONS).map(([key]) => (
                 <DropdownMenuItem
-                  className={`${value.label === selectedRangeLabel && "hidden"} hover:bg-[#BBBBBB]/60 focus:bg-[#BBBBBB]/60`}
+                  className={`${selectedRange ? selectedRange === key && "hidden" : key === "last_7_days" && "hidden"} hover:bg-[#BBBBBB]/60 focus:bg-[#BBBBBB]/60`}
                   onClick={() => setRange(key as keyof typeof RANGE_OPTIONS)}
                   key={key}
                 >
-                  {value.label}
+                  {t(key)}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -111,7 +129,7 @@ const DashboardChart = ({
         <ResponsiveContainer width="100%" height="100%">
           {data.length === 0 ? (
             <div className="w-full h-full flex items-center justify-center">
-              Momentálně zde nejsou žádná data k zobrazení
+              {t("no-data")}
             </div>
           ) : (
             <BarChart
@@ -122,14 +140,19 @@ const DashboardChart = ({
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" stroke="#000" fontSize="13" />
-              <YAxis
-                fontSize="13"
-                tickFormatter={(tick) =>
-                  formatNumber(tick) + " " + currencySymbol
-                }
-                stroke="#000"
-              />
+              {/*<YAxis*/}
+              {/*  fontSize="13"*/}
+              {/*  // tickFormatter={(tick) =>*/}
+              {/*  //   formatNumber(tick) + " " + currencySymbol*/}
+              {/*  // }*/}
+              {/*  tickFormatter={tickFormatter}*/}
+              {/*  width={getYAxisTickLen()}*/}
+              {/*  stroke="#000"*/}
+              {/*/>*/}
               <Tooltip
+                formatter={(value: number) =>
+                  new Intl.NumberFormat().format(value) + " " + currencySymbol
+                }
                 contentStyle={{
                   backgroundColor: "rgba(187, 187, 187, 0.8)",
                   borderRadius: "10px",
@@ -137,8 +160,8 @@ const DashboardChart = ({
                 }}
               />
               <Legend wrapperStyle={{ top: -30, left: -40 }} />
-              <Bar dataKey="income" fill="#000080" />
-              <Bar dataKey="expense" fill="#AC0101" />
+              <Bar dataKey="income" fill="#000080" name={t("income")} />
+              <Bar dataKey="expense" fill="#AC0101" name={t("expense")} />
             </BarChart>
           )}
         </ResponsiveContainer>

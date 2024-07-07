@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "./scroll-area";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export type ComboboxOptions = {
   value: string;
@@ -53,6 +54,7 @@ export function Combobox({
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = React.useState<string>("");
+  const t = useTranslations("combox");
   return (
     <div className={cn("block", className)}>
       <Popover open={open} onOpenChange={setOpen}>
@@ -126,7 +128,7 @@ export function Combobox({
                 href="/dashboard/accounts"
                 className="font-medium w-full hover:font-semibold transition "
               >
-                Vytvořit nový účet
+                {t("create-account")}
               </Link>
             </CommandEmpty>
             <ScrollArea>
@@ -201,7 +203,7 @@ export function Combobox({
                         href="/"
                         className="font-medium text-center w-full hover:font-semibold transition"
                       >
-                        Vytvořit nový účet
+                        {t("create-account")}
                       </Link>
                     </CommandItem>
                   </CommandList>

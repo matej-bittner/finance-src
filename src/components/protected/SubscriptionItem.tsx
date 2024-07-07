@@ -1,19 +1,27 @@
 import React from "react";
-import { frequencies } from "@/constants";
 import Image from "next/image";
 import DialogContentWrapper from "@/components/protected/dialog/DialogContentWrapper";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import EditTransactionForm from "@/components/protected/dialog/EditTransactionForm";
 import { useTranslations } from "next-intl";
-import { findCurrencySymbol } from "@/helpers/generalFunctions";
+import {
+  findCurrencySymbol,
+  findFrequencyByValue,
+} from "@/helpers/generalFunctions";
 
 const SubscriptionItem = ({ sub }: any) => {
   const t = useTranslations("protected-dialog");
+  const t1 = useTranslations("frequency");
+
+  const frequency = findFrequencyByValue(sub.frequency);
+
   return (
     <div className="bg-main-gray relative w-full max-w-[90%] h-fit rounded-2xl flex flex-col px-4 py-2 gap-2 sm:py-3 sm:rounded-xl sm:gap-3 tb:max-w-[500px] md:max-w-[750px] md:px-6 2xl:h-full 2xl:justify-center">
       <div className="flex max-[350px]:flex-col w-full gap-2 max-[350px]:items-center justify-around sm:max-w-[90%] sm:mx-auto md:max-w-full md:gap-6">
         <div className="max-sm:w-[30%] min-w-fit flex items-center justify-center max-[350px]:order-2">
-          <p className="font-medium text-[18px] sm:hidden">2900 Kč</p>
+          <p className="font-medium text-[18px] sm:hidden">
+            {sub.amount} {findCurrencySymbol(sub.currency)}
+          </p>
           <div className="hidden sm:flex flex-col items-center justify-center gap-2 rounded-md bg-[#B1B1B1] aspect-[4/5] h-[80px] md:min-h-[100px]">
             <p className="font-semibold text-[18px]">
               {sub.toProcess
@@ -33,10 +41,7 @@ const SubscriptionItem = ({ sub }: any) => {
           <div className="flex flex-col gap-1 sm:flex-1 ">
             <h2 className="no-underline p-0">{sub.name}</h2>
             <p className="max-lg:text-sm">
-              {
-                frequencies.find((freq) => Number(freq.value) === sub.frequency)
-                  ?.title
-              }
+              {frequency ? t1(frequency.title) : ""}
             </p>
             <p className="max-lg:text-sm">
               {t(`last-payment`)}{" "}
@@ -45,8 +50,8 @@ const SubscriptionItem = ({ sub }: any) => {
                 : "--------"}
             </p>
             <p className="text-sm sm:hidden">
-              {/*{t(`next-payment`)} {sub.toProcess.toLocaleDateString()}*/}
-              Další platba
+              {t(`next-payment`)} {sub.toProcess.toLocaleDateString()}
+              {/*Další platba*/}
             </p>
             {sub.description && (
               <p className="hidden text-sm md:block pt-2 max-w-[90%]">

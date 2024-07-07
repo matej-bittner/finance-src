@@ -111,7 +111,14 @@
     "email": "E-mail",
     "email-placeholder": "tomas-novak@seznam.cz",
     "password": "Heslo",
-    "submit-button": "Přihlásit"
+    "submit-button": "Přihlásit",
+    "OAuthAccountNotLinked": "Email je používán s jinou přihlšovací metodou",
+    "new-password": "Nové heslo",
+    "back-to-login": "Zpět na přihlášení",
+    "change-password": "Změnit heslo",
+    "forgotten-password": "Zapomenuté heslo",
+    "error": "Něco se nepovedlo",
+    "confirming-email": "Potvrzování emailu"
   },
 
   "register-form": {
@@ -121,5 +128,247 @@
     "email-placeholder": "tomas-novak@seznam.cz",
     "password": "Heslo",
     "submit-button": "Registrovat"
+  },
+  "action-errors": {
+    "1": "Neplatná pole!",
+    "2": "E-mail neexistuje!",
+    "3": "Neplatné přihlašovací údaje!",
+    "4": "Něco se nepovedlo",
+    "5": "E-mail již používán",
+    "6": "Tuto akci nelze provést",
+    "7": "Vyberte alespoň jeden účet",
+    "8": "Jméno je již používáno",
+    "9": "Vybraný účet nebyl nalezen",
+    "10": "Účet již připojen k jinému cíli",
+    "11": "Částka platby nebyla vyplněna",
+    "12": "Datum platby není vyplněno",
+    "13": "Je třeba zvolit frekvenci",
+    "14": "Musíte vybrat 2 účty",
+    "15": "Je třeba zadat 2 různé účty",
+    "16": "V současné době nemůžete přepínat mezi účty v jiné měně",
+    "17": "Akce nebyla provedena v časovém limitu",
+    "18": "Neplatný e-mail",
+    "19": "Zkontrolujte vyplněná pole a zkuste to znovu"
+  },
+  "action-success": {
+    "1": "Odeslán potvrzovací e-mail.",
+    "2": "Stav investice aktualizován",
+    "3": "Cíl vytvořen",
+    "4": "Účet vytvořen",
+    "5": "Transakce vytvořena",
+    "6": "Cíl smazán",
+    "7": "Transakce smazána",
+    "8": "Data odstraněna",
+    "9": "Účet odstraněn",
+    "10": "Cíl upraven",
+    "11": "Účet upraven",
+    "12": "Transakce upravena",
+    "13": "Heslo bylo změněno",
+    "14": "e-mail byl ověřen",
+    "15": "Odeslán e-mail pro obnovení hesla",
+    "16": "Předplatné vytvořeno",
+    "17": "Trvalá platba vytvořena"
+  },
+  "dashboard-navigation": {
+    "appName": "Family Finances",
+    "accountButton": "Můj účet",
+    "settings": "Nastavení",
+    "logOut": "Odhlásit",
+    "nav-links": {
+      "dashboard": {
+        "title": "Nástěnka",
+        "icon": "home",
+        "link": "/dashboard",
+        "form-title": "",
+        "form-desc": ""
+      },
+      "goals": {
+        "title": "Cíle",
+        "icon": "goals",
+        "link": "/dashboard/goals",
+
+        "form-title": "Přidat cíl",
+        "form-desc": "Zde můžete přidat nový cíl."
+      },
+      "income-expenses": {
+        "title": "Transakce",
+        "icon": "wallet-money",
+        "link": "/dashboard/transactions",
+
+        "form-title": "Přidat transakci",
+        "form-desc": "Zde můžete přidat novou transakci.."
+      },
+      "subscriptions": {
+        "title": "Předplatná",
+        "icon": "ticket-expired",
+        "link": "/dashboard/subscriptions",
+        "form-title": "Přidat předplatné",
+        "form-desc": "Zde můžete přidat nové předplatné."
+      },
+      "statistics": {
+        "title": "Statistiky",
+        "icon": "graph",
+        "link": "/",
+        "form-title": "",
+        "form-desc": ""
+      },
+      "accounts": {
+        "title": "Účty",
+        "icon": "account",
+        "link": "/dashboard/accounts",
+        "form-title": "Přídat účet",
+        "form-desc": "Zde můžete přidat nový účet."
+      }
+    }
+  },
+  "dashboard": {
+    "accounts": "Účty",
+    "loans": "Půjčky",
+    "categories": "Kategorie",
+    "income-expenses": "Příjmy/Výdaje",
+    "upcoming-payments": "Nadcházející platby",
+    "last-transaction": "Poslední transakce",
+    "show-more": "Zobrazit více",
+    "next": "Další",
+    "previous": "Předchozí",
+    "total-value": "Celková hodnota",
+    "next-payment": "Další platba",
+    "last-payment": "Poslední platba",
+    "account-info": {
+      "all-accounts": "Všechny účty",
+      "all-debts": "Všechny dluhy",
+      "all-investments": "Všechny investice"
+    }
+  },
+  "combox": {
+    "create-account": "Vytvořit účet"
+  },
+  "data-table": {
+    "next": "Další",
+    "previous": "Předchozí",
+    "no-result": "Žádné výsledky"
+  },
+  "frequency": {
+    "7days": "7",
+    "14days": "14",
+    "1month": "1M",
+    "2months": "2M",
+    "1year": "1R",
+    "everyWeek": "Každý týden",
+    "everyTwoWeeks": "Každé dva týdny",
+    "everyMonth": "Každý měsíc",
+    "everyTwoMonths": "Každé dva měsíce",
+    "everyYear": "Jednou ročně"
+  },
+  "category": {
+    "travel": "Cestování",
+    "housing": "Ubytování",
+    "entertainment": "Zábava",
+    "food": "Jídlo",
+    "shopping": "Nakupování",
+    "other": "Ostatní"
+  },
+  "transaction-types": {
+    "income": "Příjmy",
+    "income-transaction": "Příchozí",
+    "expenses": "Výdaje",
+    "expenses-transaction": "Odchozí",
+    "between": "Mezi účty",
+    "between-transaction": "Mezi účty",
+    "standing": "Trvalá platba",
+    "standing-transaction": "Trvalá platba"
+  },
+  "account-types": {
+    "current": "Běžný",
+    "credit": "Úvěrový",
+    "saving": "Spořicí",
+    "investment": "Investiční"
+  },
+  "transaction-page": {
+    "summary": "Souhrn",
+    "transaction-count": "Počet transakcí",
+    "transaction": "Transakce",
+    "this-month": "Tento měsíc",
+    "last-month": "Minulý měsíc"
+  },
+  "protected-dialog": {
+    "edit-goal": "Upravit cíl",
+    "edit-subscription": "Upravit předplatné",
+    "edit-transaction": "Upravit transakci",
+    "edit-account": "Upravit účet",
+
+    "edit-goal-desc": "Zde můžete upravit cíl",
+    "edit-subscription-desc": "Zde můžete upravit předplatné",
+    "edit-transaction-desc": "Zde můžete upravit transakci",
+    "edit-account-desc": "Zde můžete upravit účet",
+
+    "delete-subscription": "Smazat předplatné",
+    "delete-transaction": "Smazat transakci",
+    "delete-goal": "Smazat cíl",
+    "delete-account": "Smazat účet",
+
+    "add-goal": "Přidat cíl",
+    "add-subscription": "Přidat předplatné",
+    "add-transaction": "Přidat transakci",
+    "add-account": "Přidat účet",
+
+    "table-no-edit": "Tuto transakci lze upravit pouze v nastavení účtu",
+    "today-value": "Dnešní hodnota",
+    "history": "Historie",
+    "add": "Přidat",
+    "edit": "Upravit",
+    "out-of": "z",
+
+    "choose-account-placeholder": "Vybrat účet",
+    "connected-accounts": "Připojené účty",
+    "form-account-placeholder": "Pokud nevidíte účet, pravděpodobně je přiřazen k jinému cíli.",
+    "name": "Název",
+    "amount": "Částka",
+    "account-number": "Číslo účtu",
+    "balance": "Zůstatek",
+    "loan-payment": "Výše splátky",
+    "goal-finish-date": "Splnit cíl do",
+
+    "color": "Barva",
+    "icon": "Ikona",
+    "date": "Datum",
+    "from-account": "Z účtu",
+    "to-account": "Na účet",
+    "account": "Účet",
+    "currency": "Měna",
+    "description": "Popis",
+    "since": "Od",
+    "until": "Do",
+    "first-payment": "První platba",
+    "last-payment": "Poslední platba",
+    "next-payment": "Další platba",
+    "end-date": "Datum ukončení",
+    "frequency": "Frekvence",
+    "category": "Kategorie",
+    "category-placeholder": "Vybrat kategorii",
+    "clear-input": "Odstranit vybrané"
+  },
+  "form-messages": {
+    "field-required": "Toto pole je třeba vyplnit",
+    "dropdown-required": "Zvolte jednu možnost",
+    "positive": "Pole musí být kladné",
+    "string": "Povoleny pouze znaky",
+    "number": "Povolena pouze čísla",
+    "email": "Neplatný formát e-mailu",
+    "min-a": "Minimum 2 znaky",
+    "min-b": "Minimum 6 znaků",
+    "max-a": "Maximum 40 znaků"
+  },
+  "language-switch": {
+    "change-language": "Změnit jazyk"
+  },
+  "chart": {
+    "no-data": "Nyní nejsou k dispozici žádná data",
+    "total-amount": "Celková částka",
+    "income": "Příjmy",
+    "expense": "Výdaje",
+    "last_7_days": "Posledních 7 dní",
+    "last_30_days": "Posledních 30 dní",
+    "last_90_days": "Posledních 90 dní"
   }
 }

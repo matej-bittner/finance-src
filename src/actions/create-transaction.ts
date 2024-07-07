@@ -3,11 +3,14 @@
 import { currentUser } from "@/helpers/current-user";
 import { db } from "@/lib/db";
 import { number, util } from "zod";
+import { getTranslations } from "next-intl/server";
 
 export const createTransaction = async (values: any) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const session = await currentUser();
 
-  if (!session?.id) return { error: "něco se nepovedlo" };
+  if (!session?.id) return { error: te("4") };
 
   const {
     accountFrom,
@@ -24,23 +27,23 @@ export const createTransaction = async (values: any) => {
     endOfPayment,
   } = values;
   if (accountFrom === "" && accountTo === "") {
-    return { error: "alespon jeden účet musí být vybrán" };
+    return { error: te("7") };
   }
 
   if (transactionType === 3 && !accountFrom && !accountTo) {
-    return { error: "musí být vybrané dva účty" };
+    return { error: te("14") };
   }
   if (transactionType === 3 && accountFrom === accountTo) {
-    return { error: "musí být vybrané odlišné účty" };
+    return { error: te("15") };
   }
   if (transactionType === 4 && !frequency) {
-    return { error: "nebyla vabrána frequence" };
+    return { error: te("13") };
   }
   // if (transactionType === 4 || (transactionType === 5 && !accountFrom)) {
   //   return { error: "nebyl vybrán účet" };
   // }
   if ((transactionType === 4 || transactionType === 5) && !accountFrom) {
-    return { error: "nebyl vybrán účet" };
+    return { error: te("7") };
   }
 
   if (transactionType === 3) {
@@ -61,10 +64,10 @@ export const createTransaction = async (values: any) => {
       },
     });
     if (!balanceFrom?.currency || !balanceTo?.currency) {
-      return { error: "Něco se nepovedlo" };
+      return { error: te("4") };
     }
     if (balanceTo.currency !== balanceFrom.currency) {
-      return { error: "Momentálně nelze zadat platbu mezi účty v jiné měně" };
+      return { error: te("16") };
     }
   }
 
@@ -107,7 +110,10 @@ export const createTransaction = async (values: any) => {
         },
       },
     });
-    return { success: "Příkaz OK" };
+    if (transactionType === 5) {
+      return { success: ts("16") };
+    }
+    return { success: ts("17") };
   }
 
   await db.$transaction(async (db) => {
@@ -163,5 +169,5 @@ export const createTransaction = async (values: any) => {
       });
     }
   });
-  return { success: "ok" };
+  return { success: ts("5") };
 };

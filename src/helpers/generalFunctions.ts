@@ -1,4 +1,4 @@
-import { currencies } from "@/constants";
+import { currencies, frequencies } from "@/constants";
 
 export const removeEmptyStrings = (data: any) => {
   return Object.entries(data)
@@ -53,7 +53,11 @@ export function getMonthArray(monthsCount: number) {
   return months;
 }
 
-// TODO:Check usecase of this funciton
+export function findFrequencyByValue(frequencyToFind: number) {
+  return frequencies.find(
+    (frequency) => Number(frequency.value) === frequencyToFind,
+  );
+}
 export const findCurrencySymbol = (value: string) => {
   const findSymbol = currencies.find(
     (currency) => currency.value === value,

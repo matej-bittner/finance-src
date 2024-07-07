@@ -2,16 +2,19 @@
 
 import { currentUser } from "@/helpers/current-user";
 import { db } from "@/lib/db";
+import { getTranslations } from "next-intl/server";
 
 export const editGoal = async (values: any) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const session = await currentUser();
 
-  if (!session?.id) return { error: "něco se nepovedlo" };
+  if (!session?.id) return { error: te("4") };
 
   const { name, amount, date, color, icon, accounts, id } = values;
 
   if (accounts.length === 0) {
-    return { error: "alespon jeden účet musí být vybrán" };
+    return { error: te("7") };
   }
 
   const dateISO = new Date(date).toISOString();
@@ -57,5 +60,5 @@ export const editGoal = async (values: any) => {
     });
   });
 
-  return { success: "ok" };
+  return { success: ts("10") };
 };

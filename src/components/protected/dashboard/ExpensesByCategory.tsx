@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { categories } from "@/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 interface ExpensesByCategoryProps {
   flat?: boolean;
@@ -17,6 +18,7 @@ const ExpensesByCategory = ({
   data,
   mainCurrency,
 }: ExpensesByCategoryProps) => {
+  const t = useTranslations("category");
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -61,7 +63,7 @@ const ExpensesByCategory = ({
               className={`${Number(searchParams.get("category")) === item.id && "invert"}`}
             />
             <div className="flex-1 pl-2 text-left">
-              <p className="font-semibold">{item.value}</p>
+              <p className="font-semibold">{t(item.value)}</p>
               {!flat && amount && (
                 <p className="text-sm">
                   {amount + " " + mainCurrency?.toUpperCase()}

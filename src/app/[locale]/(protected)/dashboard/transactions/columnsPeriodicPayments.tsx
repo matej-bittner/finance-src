@@ -87,10 +87,7 @@ export const useColumnsPeriodicPayments =
                     title={t(`edit-transaction`)}
                     titleCenter
                   >
-                    <p>
-                      Tugle transakci můžerš editovat pouze v Účty - Upravit
-                      účet
-                    </p>
+                    <p className="w-full text-center">{t("table-no-edit")}</p>
                   </DialogContentWrapper>
                 ) : (
                   <DialogContentWrapper

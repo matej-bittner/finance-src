@@ -21,7 +21,7 @@ const VerificationForm = () => {
 
   const onSubmit = useCallback(() => {
     if (!token) {
-      setError("Něco se nepovedlo.");
+      setError(t("error"));
       return;
     }
 
@@ -31,7 +31,7 @@ const VerificationForm = () => {
         setError(data.error);
       })
       .catch(() => {
-        setError("Něco se nepovedlo");
+        setError(t("error"));
       });
   }, [token]);
 
@@ -41,9 +41,9 @@ const VerificationForm = () => {
   return (
     <section className="size-full flex items-center justify-center">
       <Card
-        title="Potvrzování Emailu"
+        title={t("confirming-email")}
         backLink1="/"
-        backText1="zpět na přihlášení"
+        backText1={t("back-to-login")}
       >
         <div className="flex items-center w-full justify-center">
           {!success && !error && <BeatLoader />}

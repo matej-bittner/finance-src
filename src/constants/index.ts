@@ -81,13 +81,39 @@ export const icons = [
   "truck",
 ];
 
+// prelozeno
 export const transactionType = [
-  { title: "Příjmy", transaction: "Příchozí", abbreviation: "in", id: 1 },
-  { title: "Výdaje", transaction: "Odchozí", abbreviation: "out", id: 2 },
-  { title: "Mezi účty", abbreviation: "between", id: 3 },
-  { title: "Pravidelná platba", abbreviation: "standing", id: 4 },
+  {
+    title: "income",
+    transaction: "income-transaction",
+    abbreviation: "in",
+    id: 1,
+  },
+  {
+    title: "expenses",
+    transaction: "expenses-transaction",
+    abbreviation: "out",
+    id: 2,
+  },
+  {
+    title: "between",
+    transaction: "between-transaction",
+    abbreviation: "between",
+    id: 3,
+  },
+  {
+    title: "standing",
+    transaction: "standing-transaction",
+    abbreviation: "standing",
+    id: 4,
+  },
+  // { title: "Příjmy", transaction: "Příchozí", abbreviation: "in", id: 1 },
+  // { title: "Výdaje", transaction: "Odchozí", abbreviation: "out", id: 2 },
+  // { title: "Mezi účty", abbreviation: "between", id: 3 },
+  // { title: "Pravidelná platba", abbreviation: "standing", id: 4 },
 ];
 
+// prelozeno
 export const categories = [
   { id: 1, value: "travel", icon: "car" },
   { id: 2, value: "housing", icon: "building" },
@@ -133,61 +159,64 @@ export const currencies = [
     symbol: "$",
   },
 ];
-
+// prelozeno
 export const frequencies = [
   {
     value: "7",
-    selectText: "7",
-    title: "Každý týden",
+    selectText: "7days",
+    title: "everyWeek",
   },
   {
     value: "14",
-    selectText: "14",
-    title: "Každé dva týdny",
+    selectText: "14days",
+    title: "everyTwoWeeks",
   },
   {
     value: "30",
-    selectText: "1M",
-    title: "Každý měsíc",
+    selectText: "1month",
+    title: "everyMonth",
   },
   {
     value: "60",
-    selectText: "2M",
-    title: "Každé dva měíce",
+    selectText: "2months",
+    title: "everyTwoMonths",
   },
   {
     value: "360",
-    selectText: "1R",
-    title: "Jednou ročně",
+    selectText: "1year",
+    title: "everyYear",
   },
+  // {
+  //   value: "7",
+  //   selectText: "7",
+  //   title: "Každý týden",
+  // },
+  // {
+  //   value: "14",
+  //   selectText: "14",
+  //   title: "Každé dva týdny",
+  // },
+  // {
+  //   value: "30",
+  //   selectText: "1M",
+  //   title: "Každý měsíc",
+  // },
+  // {
+  //   value: "60",
+  //   selectText: "2M",
+  //   title: "Každé dva měíce",
+  // },
+  // {
+  //   value: "360",
+  //   selectText: "1R",
+  //   title: "Jednou ročně",
+  // },
 ];
 
+//prelozeno
 export const accountType = [
-  { title: "Běžný", id: 1 },
-  { title: "Úvěrový", id: 2 },
-  { title: "Spočící", id: 3 },
-  { title: "Investiční", id: 4 },
+  { title: "current", id: 1 },
+  { title: "credit", id: 2 },
+  { title: "saving", id: 3 },
+  { title: "investment", id: 4 },
 ];
-
-// export const interestPayments = [
-//   {
-//     value: "1",
-//     selectText: "daily",
-//     title: "Každý týden",
-//   },
-//   {
-//     value: "30",
-//     selectText: "p.m.",
-//     title: "Každý měsíc",
-//   },
-//   {
-//     value: "90",
-//     selectText: "p.q.",
-//     title: "Každé dva měíce",
-//   },
-//   {
-//     value: "360",
-//     selectText: "p.a.",
-//     title: "Jednou ročně",
-//   },
-// ];

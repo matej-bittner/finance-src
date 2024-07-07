@@ -13,13 +13,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CardSuccess from "@/components/auth/CardSuccess";
-import { ResetSchema } from "@/schemas";
+import { getResetSchema } from "@/schemas";
 import { useTranslations } from "next-intl";
 import { reset } from "@/actions/reset";
 
 const ResetForm = () => {
   const t = useTranslations("login-form");
-
+  const t1 = useTranslations("form-messages");
+  const ResetSchema = getResetSchema(t1);
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -44,7 +45,11 @@ const ResetForm = () => {
   };
   return (
     <section className="size-full flex items-center justify-center">
-      <Card title="zapomenuté heslo" backLink1="/" backText1="back to login">
+      <Card
+        title={t("forgotten-password")}
+        backLink1="/"
+        backText1={t("back-to-login")}
+      >
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -78,7 +83,7 @@ const ResetForm = () => {
               type="submit"
               className="text-white bg-black border-2 border-white rounded-lg text-xl py-2 my-1 tracking-wide"
             >
-              reset Email
+              {t("back-text1")}
             </button>
           </form>
         </Form>

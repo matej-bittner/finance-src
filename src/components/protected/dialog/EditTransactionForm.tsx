@@ -31,19 +31,20 @@ import { deleteTransaction } from "@/actions/delete";
 import { editTransaction } from "@/actions/edit-transaction";
 import { categories, frequencies } from "@/constants";
 import { useTranslations } from "next-intl";
+import { getAddGoalSchema, getEditTransactionSchema } from "@/schemas";
 
-const formSchema = z.object({
-  accountFrom: z.string(),
-  accountTo: z.string(),
-  name: z.string().min(1),
-  amount: z.number().positive().min(1),
-  currency: z.string().min(1),
-  description: z.string().optional(),
-  date: z.string().min(1),
-  frequency: z.string(),
-  category: z.string().optional(),
-  endOfPayment: z.string().optional(),
-});
+// const formSchema = z.object({
+//   accountFrom: z.string(),
+//   accountTo: z.string(),
+//   name: z.string().min(1),
+//   amount: z.number().positive().min(1),
+//   currency: z.string().min(1),
+//   description: z.string().optional(),
+//   date: z.string().min(1),
+//   frequency: z.string(),
+//   category: z.string().optional(),
+//   endOfPayment: z.string().optional(),
+// });
 
 interface EditTransactionFormProps {
   data: EditTransactionProps;
@@ -55,6 +56,11 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
   const router = useRouter();
   const { toast } = useToast();
   const t = useTranslations("protected-dialog");
+  const t1 = useTranslations("frequency");
+  const t2 = useTranslations("form-messages");
+  const EditTransactionSchema = getEditTransactionSchema(t2);
+  const t3 = useTranslations("category");
+
   const defaultValues = {
     accountFrom: data.accountFrom?.name || "",
     accountTo: data.accountTo?.name || "",
@@ -78,8 +84,8 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
 
   const tomorrowDate = getTomorrowDate();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof EditTransactionSchema>>({
+    resolver: zodResolver(EditTransactionSchema),
     defaultValues: defaultValues,
   });
 
@@ -98,8 +104,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
     });
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  function onSubmit(values: z.infer<typeof EditTransactionSchema>) {
     startTransition(() => {
       const category = categories.find((cat) => cat.value === values.category);
 
@@ -353,7 +358,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                                   value={freq.value}
                                   key={i}
                                 >
-                                  {freq.selectText}
+                                  {t1(freq.selectText)}
                                 </SelectItem>
                               ))}
                             </SelectContent>
@@ -389,7 +394,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                                 className="px-0 py-1 justify-center items-center"
                                 value={category.value}
                               >
-                                {category.value}
+                                {t3(category.value)}
                               </SelectItem>
                             ))}
                             <button

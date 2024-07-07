@@ -2,18 +2,21 @@
 
 import { currentUser } from "@/helpers/current-user";
 import { db } from "@/lib/db";
+import { getTranslations } from "next-intl/server";
 
 export const deleteGoal = async (id: string) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const session = await currentUser();
 
-  if (!session?.id) return { error: "něco se nepovedlo" };
+  if (!session?.id) return { error: te("4") };
 
   await db.$transaction(async (db) => {
     const goal = await db.goal.findUnique({
       where: { id, userId: session.id },
     });
     if (!goal) {
-      return { error: "něco se nepovedlo" };
+      return { error: te("4") };
     }
     await db.paymentAccount.updateMany({
       where: {
@@ -28,20 +31,22 @@ export const deleteGoal = async (id: string) => {
     });
   });
 
-  return { success: "ok" };
+  return { success: ts("6") };
 };
 
 export const deleteTransaction = async (
   id: string,
   transactionType: number,
 ) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const session = await currentUser();
 
-  if (!session?.id) return { error: "něco se nepovedlo" };
+  if (!session?.id) return { error: te("4") };
 
   if (transactionType === 4 || transactionType === 5) {
     await db.periodicPayment.delete({ where: { id, userId: session.id } });
-    return { success: "ok1" };
+    return { success: ts("7") };
   }
 
   await db.$transaction(async (db) => {
@@ -49,7 +54,7 @@ export const deleteTransaction = async (
       where: { id, userId: session.id },
     });
     if (!originalTransaction) {
-      return { error: "něco se nepovedlo" };
+      return { error: te("4") };
     }
 
     if (originalTransaction.accountFromId) {
@@ -81,16 +86,18 @@ export const deleteTransaction = async (
     await db.transaction.delete({ where: { id, userId: session.id } });
   });
 
-  return { success: "ok" };
+  return { success: ts("7") };
 };
 
 export const deleteInvestmentHistoryItem = async (
   id: string,
   linkedToAccountId: string,
 ) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const session = await currentUser();
 
-  if (!session?.id) return { error: "něco se nepovedlo" };
+  if (!session?.id) return { error: te("4") };
 
   await db.$transaction(async (db) => {
     await db.updateBalance.delete({
@@ -120,7 +127,7 @@ export const deleteInvestmentHistoryItem = async (
     });
 
     if (!checkIfDeletedIsLast) {
-      return { error: "Něco se nepovedlo" };
+      return { error: te("4") };
     }
     await db.paymentAccount.update({
       where: {
@@ -133,12 +140,14 @@ export const deleteInvestmentHistoryItem = async (
     });
   });
 
-  return { success: "ok" };
+  return { success: ts("8") };
 };
 export const deleteAccount = async (id: string, type: number) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const session = await currentUser();
 
-  if (!session?.id) return { error: "něco se nepovedlo" };
+  if (!session?.id) return { error: te("4") };
 
   await db.paymentAccount.delete({
     where: {
@@ -184,5 +193,5 @@ export const deleteAccount = async (id: string, type: number) => {
   //   await db.transaction.delete({ where: { id, userId: session.id } });
   // });
 
-  return { success: "ok" };
+  return { success: ts("9") };
 };

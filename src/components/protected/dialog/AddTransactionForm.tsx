@@ -21,7 +21,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Combobox } from "@/components/ui/combox";
 import { useToast } from "@/components/ui/use-toast";
-import { categories, frequencies } from "@/constants";
+import { categories, frequencies, transactionType } from "@/constants";
 import {
   convertFrequencyToDate,
   getTomorrowDate,
@@ -31,19 +31,20 @@ import { createTransaction } from "@/actions/create-transaction";
 import { UserAccount } from "@/types";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { getAddSubscriptionSchema, getAddTransactionSchema } from "@/schemas";
 
-const formSchema = z.object({
-  accountFrom: z.string(),
-  accountTo: z.string(),
-  name: z.string().min(1),
-  amount: z.number().positive().min(1),
-  currency: z.string().min(1),
-  description: z.string().optional(),
-  date: z.string().min(1),
-  frequency: z.string(),
-  category: z.string().optional(),
-  endOfPayment: z.string().optional(),
-});
+// const formSchema = z.object({
+//   accountFrom: z.string(),
+//   accountTo: z.string(),
+//   name: z.string().min(1),
+//   amount: z.number().positive().min(1),
+//   currency: z.string().min(1),
+//   description: z.string().optional(),
+//   date: z.string().min(1),
+//   frequency: z.string(),
+//   category: z.string().optional(),
+//   endOfPayment: z.string().optional(),
+// });
 const AddTransactionForm = ({
   userAccounts,
   defaultCurrency,
@@ -62,33 +63,11 @@ const AddTransactionForm = ({
 
   const t = useTranslations("protected-dialog");
   const t1 = useTranslations("transaction-types");
-  const transactionTypes = [
-    {
-      title: t1(`income`),
-      transaction: t1(`income-transaction`),
-      abbreviation: "in",
-      id: 1,
-    },
-    {
-      title: t1(`expenses`),
-      transaction: t1(`expenses-transaction`),
-      abbreviation: "out",
-      id: 2,
-    },
-    {
-      title: t1(`between`),
-      transaction: t1(`between-transaction`),
-      abbreviation: "between",
-      id: 3,
-    },
-    {
-      title: t1(`standing`),
-      transaction: t1(`standing-transaction`),
-      abbreviation: "standing",
-      id: 4,
-    },
-  ];
+  const t2 = useTranslations("frequency");
+  const t3 = useTranslations("form-messages");
+  const t4 = useTranslations("category");
 
+  const AddTransactionSchema = getAddTransactionSchema(t3, selectedType);
   const defaultValues = {
     accountFrom: "",
     accountTo: "",
@@ -125,12 +104,12 @@ const AddTransactionForm = ({
     }
   }, [dateLimit.firstPaymentDate, dateLimit.frequency]);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof AddTransactionSchema>>({
+    resolver: zodResolver(AddTransactionSchema),
     defaultValues: defaultValues,
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof AddTransactionSchema>) {
     const category = categories.find((cat) => cat.value === values.category);
 
     startTransition(() => {
@@ -166,7 +145,7 @@ const AddTransactionForm = ({
       >
         {/*select transaction type*/}
         <div className="h-fit w-full grid grid-cols-2 min-[432px]:grid-cols-4 gap-x-2 gap-y-1">
-          {transactionTypes.map((item) => {
+          {transactionType.map((item) => {
             return (
               <button
                 key={item.id}
@@ -174,7 +153,7 @@ const AddTransactionForm = ({
                 onClick={() => setSelectedType(item.id)}
                 className={`border-2 border-white rounded-md w-full pl-2 py-1 flex items-center text-left   ${selectedType === item.id && "bg-main-blue text-white"}`}
               >
-                {item.title}
+                {t1(item.title)}
               </button>
             );
           })}
@@ -455,7 +434,7 @@ const AddTransactionForm = ({
                                   value={freq.value}
                                   key={i}
                                 >
-                                  {freq.selectText}
+                                  {t2(freq.selectText)}
                                 </SelectItem>
                               ))}
                             </SelectContent>
@@ -491,7 +470,7 @@ const AddTransactionForm = ({
                                 className="px-0 py-1 justify-center items-center"
                                 value={category.value}
                               >
-                                {category.value}
+                                {t4(category.value)}
                               </SelectItem>
                             ))}
                             <button

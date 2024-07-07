@@ -13,14 +13,15 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CardSuccess from "@/components/auth/CardSuccess";
-import { LoginSchema, NewPasswordSchema } from "@/schemas";
-import { login } from "@/actions/login";
+import { getNewPasswordSchema } from "@/schemas";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import newPassword from "@/actions/new-password";
 
 const NewPasswordForm = () => {
   const t = useTranslations("login-form");
+  const t1 = useTranslations("form-messages");
+  const NewPasswordSchema = getNewPasswordSchema(t1);
 
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -48,7 +49,11 @@ const NewPasswordForm = () => {
   };
   return (
     <section className="size-full flex items-center justify-center">
-      <Card title="Nové heslo" backLink1="/" backText1="zpět na přihlášení">
+      <Card
+        title={t("new-password")}
+        backLink1="/"
+        backText1={t("back-to-login")}
+      >
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -82,7 +87,7 @@ const NewPasswordForm = () => {
               type="submit"
               className="text-white bg-black border-2 border-white rounded-lg text-xl py-2 my-1 tracking-wide"
             >
-              Změnit heslo
+              {t("change-password")}
             </button>
           </form>
         </Form>

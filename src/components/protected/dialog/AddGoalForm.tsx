@@ -27,15 +27,16 @@ import { colors, icons } from "@/constants";
 import { removeEmptyStrings } from "@/helpers/generalFunctions";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { getAddAccountSchema, getAddGoalSchema } from "@/schemas";
 
-const formSchema = z.object({
-  account: z.any(),
-  name: z.string().min(1),
-  amount: z.number().positive().min(1),
-  date: z.string().min(1),
-  color: z.string().min(1),
-  icon: z.string().min(1),
-});
+// const formSchema = z.object({
+//   account: z.any(),
+//   name: z.string().min(1),
+//   amount: z.number().positive().min(1),
+//   date: z.string().min(1),
+//   color: z.string().min(1),
+//   icon: z.string().min(1),
+// });
 
 const AddGoalForm = ({
   defaultCurrency,
@@ -51,6 +52,8 @@ const AddGoalForm = ({
   const { toast } = useToast();
 
   const t = useTranslations("protected-dialog");
+  const t1 = useTranslations("form-messages");
+  const AddGoalSchema = getAddGoalSchema(t1);
 
   const filteredAccounts = userAccounts.filter(
     (account) => !account.blockedForGoals,
@@ -64,12 +67,12 @@ const AddGoalForm = ({
     icon: "house",
   };
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof AddGoalSchema>>({
+    resolver: zodResolver(AddGoalSchema),
     defaultValues: defaultValues,
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof AddGoalSchema>) {
     startTransition(() => {
       const allValues = Object.assign(values, { accounts: selectedAccount });
       const cleanedData = removeEmptyStrings(allValues);

@@ -28,15 +28,16 @@ import { editGoal } from "@/actions/edit-goal";
 import { useRouter } from "next/navigation";
 import { deleteGoal } from "@/actions/delete";
 import { useTranslations } from "next-intl";
+import { getAddGoalSchema, getEditAccountSchema } from "@/schemas";
 
-const formSchema = z.object({
-  account: z.any(),
-  name: z.string().min(1),
-  amount: z.number().positive().min(1),
-  date: z.string().min(1),
-  color: z.string().min(1),
-  icon: z.string().min(1),
-});
+// const formSchema = z.object({
+//   account: z.any(),
+//   name: z.string().min(1),
+//   amount: z.number().positive().min(1),
+//   date: z.string().min(1),
+//   color: z.string().min(1),
+//   icon: z.string().min(1),
+// });
 
 const EditGoalForm = ({
   defaultCurrency,
@@ -58,6 +59,8 @@ const EditGoalForm = ({
   const router = useRouter();
 
   const t = useTranslations("protected-dialog");
+  const t1 = useTranslations("form-messages");
+  const EditGoalSchema = getAddGoalSchema(t1);
 
   const matchingAccounts = userAccounts.filter((account) =>
     goalData.paymentAccount.some((target) => target.id === account.value),
@@ -73,8 +76,8 @@ const EditGoalForm = ({
     color: goalData.color,
     icon: goalData.icon,
   };
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof EditGoalSchema>>({
+    resolver: zodResolver(EditGoalSchema),
     defaultValues: defaultValues,
   });
 
@@ -93,7 +96,7 @@ const EditGoalForm = ({
     });
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof EditGoalSchema>) {
     startTransition(() => {
       const allValues = Object.assign(
         values,
@@ -137,8 +140,8 @@ const EditGoalForm = ({
                     className="p-0 min-h-0 h-fit overflow-clip rounded-lg "
                     mode="multiple" //single or multiple
                     options={filteredAccounts}
-                    placeholder={t(`choose-account`)}
-                    message={t(`choose-account-placeholder`)}
+                    placeholder={t(`choose-account-placeholder`)}
+                    message={t(`form-account-placeholder`)}
                     selected={selectedAccount}
                     onChange={(value) => setSelectedAccount(value)}
                     onCreate={() => {}}

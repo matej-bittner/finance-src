@@ -3,11 +3,14 @@
 import { currentUser } from "@/helpers/current-user";
 import { db } from "@/lib/db";
 import { z } from "zod";
+import { getTranslations } from "next-intl/server";
 
 export const createPaymentAccount = async (values: any) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const session = await currentUser();
 
-  if (!session?.id) return { error: "něco se nepovedlo" };
+  if (!session?.id) return { error: te("4") };
 
   const {
     number,
@@ -29,18 +32,18 @@ export const createPaymentAccount = async (values: any) => {
   });
 
   if (existingAccount) {
-    return { error: "název už je používán" };
+    return { error: te("8") };
   }
 
   if (type === 2) {
     if (!payment) {
-      return { error: "Nebyla vyplněna výše splátky" };
+      return { error: te("11") };
     }
     if (!date) {
-      return { error: "Není vyplněno datum splátky" };
+      return { error: te("12") };
     }
     if (!frequency) {
-      return { error: "Není vyplněna frekvence" };
+      return { error: te("13") };
     }
     const dateISO = new Date(date).toISOString();
     const frequencyNumber = Number(frequency);
@@ -84,7 +87,7 @@ export const createPaymentAccount = async (values: any) => {
         },
       });
     });
-    return { success: "ok" };
+    return { success: ts("4") };
   }
 
   if (type === 4) {
@@ -112,7 +115,7 @@ export const createPaymentAccount = async (values: any) => {
         },
       },
     });
-    return { success: "ok" };
+    return { success: ts("4") };
   }
   await db.paymentAccount.create({
     data: {
@@ -129,41 +132,5 @@ export const createPaymentAccount = async (values: any) => {
     },
   });
 
-  return { success: "ok" };
+  return { success: ts("4") };
 };
-
-// export const createPaymentAccount = async (values: any) => {
-//   const session = await currentUser();
-//
-//   if (!session?.id) return { error: "něco se nepovedlo" };
-//
-//   const { number, name, balance, currency, type } = values;
-//
-//   const existingAccount = await db.paymentAccount.findFirst({
-//     where: {
-//       userId: session.id,
-//       OR: [{ name }, { number }],
-//     },
-//   });
-//
-//   if (existingAccount) {
-//     return { error: "název už je používán" };
-//   }
-//
-//   await db.paymentAccount.create({
-//     data: {
-//       name,
-//       number,
-//       balance,
-//       type,
-//       currency,
-//       user: {
-//         connect: {
-//           id: session.id,
-//         },
-//       },
-//     },
-//   });
-//
-//   return { success: "ok" };
-// };

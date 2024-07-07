@@ -5,19 +5,22 @@ import { getPasswordResetTokenByToken } from "@/data/password-reset-token";
 import { getUserByEmail } from "@/data/user";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
+import { getTranslations } from "next-intl/server";
 
 const NewPassword = async (
   values: z.infer<typeof NewPasswordSchema>,
   token: string | null,
 ) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   if (!token) {
-    return { error: "Něco se nepovedlo1" };
+    return { error: te("4") };
   }
 
   const validatedFiled = NewPasswordSchema.safeParse(values);
 
   if (!validatedFiled.success) {
-    return { error: "Něco se nepovedlo2" };
+    return { error: te("4") };
   }
 
   const { password } = validatedFiled.data;
@@ -25,19 +28,19 @@ const NewPassword = async (
   const existingToken = await getPasswordResetTokenByToken(token);
 
   if (!existingToken) {
-    return { error: "Něco se nepovedlo3" };
+    return { error: te("4") };
   }
 
   const hasExpired = new Date(existingToken.expires) < new Date();
 
   if (hasExpired) {
-    return { error: "Obnovení nebylo v časovém limitu" };
+    return { error: te("17") };
   }
 
   const existingUser = await getUserByEmail(existingToken.email);
 
   if (!existingUser) {
-    return { error: "Něco se nepovedlo4" };
+    return { error: te("4") };
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -49,7 +52,7 @@ const NewPassword = async (
 
   await db.passwordResetToken.delete({ where: { id: existingToken.id } });
 
-  return { success: "Heslo bylo změněno" };
+  return { success: ts("13") };
 };
 
 export default NewPassword;

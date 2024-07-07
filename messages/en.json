@@ -111,7 +111,14 @@
     "email": "E-mail",
     "email-placeholder": "john-doe@gmail.com",
     "password": "Password",
-    "submit-button": "Login"
+    "submit-button": "Login",
+    "OAuthAccountNotLinked": "Email in use with different provider",
+    "new-password": "New Password",
+    "back-to-login": "Back to login",
+    "change-password": "Change password",
+    "forgotten-password": "Forgotten password",
+    "error": "Something went wrong",
+    "confirming-email": "Confirming email"
   },
 
   "register-form": {
@@ -127,10 +134,40 @@
     "2": "Email does not exist!",
     "3": "Invalid Credentials!",
     "4": "Something went wrong",
-    "5": "Email already in use"
+    "5": "Email already in use",
+    "6": "This action cant be done",
+    "7": "Choose at least one account",
+    "8": "Name is already in use",
+    "9": "Selected account wasnt found",
+    "10": "Account already connected to another goal",
+    "11": "Payment amount wasnt filled",
+    "12": "Date of payment is not filled",
+    "13": "Frequency needs to be choose",
+    "14": "You need to select 2 account",
+    "15": "2 different accounts must be entered",
+    "16": "Currently you are not able to swap between account in different currency",
+    "17": "Action wasnt done in time limit",
+    "18": "Invalid Email",
+    "19": "Check filled fields and try it again"
   },
   "action-success": {
-    "1": "Confirmation email send."
+    "1": "Confirmation email send.",
+    "2": "State of investment Updated",
+    "3": "Goal Created",
+    "4": "Account Created",
+    "5": "Transaction Created",
+    "6": "Goal deleted",
+    "7": "Transaction deleted",
+    "8": "Data Removed",
+    "9": "Account Removed",
+    "10": "Goal edited",
+    "11": "Account Edited",
+    "12": "Transaction Edited",
+    "13": "Pasword was changed",
+    "14": "email has been verified ",
+    "15": "Email for password reset send",
+    "16": "Subscription created",
+    "17": "Standing payment Created"
   },
 
   "dashboard-navigation": {
@@ -187,16 +224,16 @@
   },
 
   "dashboard": {
+    "accounts": "Accounts",
+    "loans": "Loans",
+    "categories": "Categories",
+    "income-expenses": "Income/Expenses",
+    "upcoming-payments": "Upcoming Payments",
+    "last-transaction": "Last Transactions",
     "show-more": "Show more",
     "next": "Next",
     "previous": "Previous",
-    "last-transaction": "Last Transactions",
     "total-value": "Total Value",
-    "loan": "Loans",
-    "upcoming-payment": "Upcoming Payments",
-    "category": "Categories",
-    "graph": "Graph",
-    "since-last-month": "since last month",
     "next-payment": "next payment",
     "last-payment": "Last payment",
     "account-info": {
@@ -206,10 +243,35 @@
     }
   },
 
+  "combox": {
+    "create-account": "Create account"
+  },
+
   "data-table": {
     "next": "Next",
     "previous": "Previous",
     "no-result": "No results"
+  },
+
+  "frequency": {
+    "7days": "7",
+    "14days": "14",
+    "1month": "1M",
+    "2months": "2M",
+    "1year": "1Y",
+    "everyWeek": "Every week",
+    "everyTwoWeeks": "Every two weeks",
+    "everyMonth": "Every month",
+    "everyTwoMonths": "Every two months",
+    "everyYear": "Once a year"
+  },
+  "category": {
+    "travel": "Travel",
+    "housing": "Housing",
+    "entertainment": "Entertainment",
+    "food": "Food",
+    "shopping": "Shopping",
+    "other": "Other"
   },
 
   "transaction-types": {
@@ -222,6 +284,7 @@
     "standing": "Standing Payment",
     "standing-transaction": "Standing Payment"
   },
+
   "account-types": {
     "current": "Current",
     "credit": "Credit",
@@ -241,19 +304,27 @@
     "edit-goal": "Edit Goal",
     "edit-subscription": "Edit subscription",
     "edit-transaction": "Edit transaction",
+    "edit-account": "Edit account",
 
     "edit-goal-desc": "Here you can edit goal",
     "edit-subscription-desc": "Here you can edit subscription",
     "edit-transaction-desc": "Here you can edit transaction",
+    "edit-account-desc": "Here you can edit account",
 
     "delete-subscription": "Delete subscription",
     "delete-transaction": "Delete transaction",
     "delete-goal": "Delete goal",
+    "delete-account": "Delete Account",
 
     "add-goal": "Add Goal",
     "add-subscription": "Add subscription",
     "add-transaction": "Add transaction",
+    "add-account": "Add Account",
 
+    "table-no-edit": "This transaction can be edited only in account settings",
+    "today-value": "today's value",
+    "history": "history",
+    "add": "add",
     "edit": "edit",
     "out-of": "out of",
 
@@ -262,14 +333,14 @@
     "form-account-placeholder": "If you don't see an account, it probably is assigned to another goal.",
     "name": "Name",
     "amount": "Amount",
-    "number-contract": "Number/Contract number",
+    "account-number": "Account number",
     "balance": "Balance",
-
+    "loan-payment": "Payment amount",
     "goal-finish-date": "Meet the goal by",
+
     "color": "Color",
     "icon": "Icon",
     "date": "Date",
-
     "from-account": "From account",
     "to-account": "To account",
     "account": "Account",
@@ -279,10 +350,34 @@
     "until": "Until",
     "first-payment": "First Payment",
     "last-payment": "Last payment",
+    "next-payment": "Next payment",
     "end-date": "End date",
     "frequency": "Frequency",
     "category": "Category",
     "category-placeholder": "Choose category",
     "clear-input": "Clear"
+  },
+  "form-messages": {
+    "field-required": "This fields needs to be filled",
+    "dropdown-required": "Choose one variant",
+    "positive": "Field must be positive",
+    "string": "Only string allowed",
+    "number": "Only number Allowed",
+    "email": "This is not valid email format",
+    "min-a": "Minimum is 2 characters",
+    "min-b": "Minimum is 6 characters",
+    "max-a": "Maximum is 40 characters"
+  },
+  "language-switch": {
+    "change-language": "Change language"
+  },
+  "chart": {
+    "no-data": "Currently there are no data to show",
+    "total-amount": "Total amount",
+    "income": "Income",
+    "expense": "Expenses",
+    "last_7_days": "Last 7 Days",
+    "last_30_days": "Last 30 Days",
+    "last_90_days": "Last 90 Days"
   }
 }

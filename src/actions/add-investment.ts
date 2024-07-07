@@ -1,19 +1,22 @@
 "use server";
 import { currentUser } from "@/helpers/current-user";
 import { db } from "@/lib/db";
+import { getTranslations } from "next-intl/server";
 
 export const addInvestment = async (values: any) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const session = await currentUser();
 
-  if (!session?.id) return { error: "něco se nepovedlo" };
+  if (!session?.id) return { error: te("4") };
 
   const { amount, id, type } = values;
   if (!amount || !id || !type) {
-    return { error: "Něco se nepovedlo" };
+    return { error: te("4") };
   }
 
   if (type !== 4) {
-    return { error: "U Tohoto účtu nelze částku zadat" };
+    return { error: te("6") };
   }
 
   let date = new Date();
@@ -44,5 +47,5 @@ export const addInvestment = async (values: any) => {
     });
   });
 
-  return { success: "Ok" };
+  return { success: ts("2") };
 };

@@ -2,11 +2,14 @@
 
 import { currentUser } from "@/helpers/current-user";
 import { db } from "@/lib/db";
+import { getTranslations } from "next-intl/server";
 
 export const editTransaction = async (values: any) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const session = await currentUser();
 
-  if (!session?.id) return { error: "něco se nepovedlo" };
+  if (!session?.id) return { error: te("4") };
 
   const {
     name,
@@ -52,7 +55,7 @@ export const editTransaction = async (values: any) => {
       where: { id, userId: session.id },
     });
     if (!originalTransaction) {
-      return { error: "něco se nepovedlo" };
+      return { error: te("4") };
     }
 
     if (amount === originalTransaction.amount) {
@@ -69,7 +72,7 @@ export const editTransaction = async (values: any) => {
           category,
         },
       });
-      return { success: "ok" };
+      return { success: ts("12") };
     }
     const netChangeFrom = originalTransaction.amount - amount;
     const netChangeTo = amount - originalTransaction.amount;
@@ -113,5 +116,5 @@ export const editTransaction = async (values: any) => {
     }
   });
 
-  return { success: "ok" };
+  return { success: ts("12") };
 };

@@ -13,12 +13,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CardSuccess from "@/components/auth/CardSuccess";
-import { RegisterSchema } from "@/schemas";
+import { getRegisterSchema } from "@/schemas";
 import { register } from "@/actions/register";
 import { useTranslations } from "next-intl";
 
 const RegisterForm = () => {
   const t = useTranslations("register-form");
+  const t1 = useTranslations("form-messages");
+  const RegisterSchema = getRegisterSchema(t1);
 
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");

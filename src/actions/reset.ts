@@ -4,11 +4,14 @@ import { getUserByEmail } from "@/data/user";
 import * as z from "zod";
 import { generatePasswordResetToken } from "@/lib/tokens";
 import { sendPasswordResetEmail } from "@/lib/mail";
+import { getTranslations } from "next-intl/server";
 
 export const reset = async (values: z.infer<typeof ResetSchema>) => {
+  const te = await getTranslations("action-errors");
+  const ts = await getTranslations("action-success");
   const validatedFiled = ResetSchema.safeParse(values);
   if (!validatedFiled.success) {
-    return { error: "neplatný email" };
+    return { error: te("18") };
   }
 
   const { email } = validatedFiled.data;
@@ -16,7 +19,7 @@ export const reset = async (values: z.infer<typeof ResetSchema>) => {
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser) {
-    return { error: "Zkontolujte vyplněná data a zkuste to znovu" };
+    return { error: te("19") };
   }
 
   const passwordResetToken = await generatePasswordResetToken(email);
@@ -26,5 +29,5 @@ export const reset = async (values: z.infer<typeof ResetSchema>) => {
     passwordResetToken.token,
   );
 
-  return { success: "Email pro resetování byl odeslán" };
+  return { success: ts("15") };
 };
