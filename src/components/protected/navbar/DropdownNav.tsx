@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { navLinks } from "@/constants";
+import { useTranslations } from "next-intl";
 
 interface DropdownNavProps {
   dropdownNavData: {
@@ -13,10 +15,11 @@ interface DropdownNavProps {
     formDesc: string;
   }[];
 }
+// const DropdownNav = () => {
 const DropdownNav = ({ dropdownNavData }: DropdownNavProps) => {
   const pathname = usePathname();
   const x = pathname.split("/").pop();
-
+  // const t = useTranslations("protected-nav-links");
   const [openDropdownNav, setOpenDropdownNav] = useState(false);
   return (
     <div className=" z-20 sm:hidden">
@@ -47,6 +50,7 @@ const DropdownNav = ({ dropdownNavData }: DropdownNavProps) => {
                   className="invert "
                 />
                 <p className="flex-1 flex items-center">{item.title}</p>
+                {/*<p className="flex-1 flex items-center">{t(item.title)}</p>*/}
               </Link>
             );
           })}

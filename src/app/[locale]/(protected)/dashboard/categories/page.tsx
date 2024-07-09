@@ -11,6 +11,7 @@ import {
 import CategoryChart from "@/components/protected/charts/CategoryChart";
 import ExpensesByCategory from "@/components/protected/dashboard/ExpensesByCategory";
 import { DataTable } from "@/components/protected/table/DataTable";
+import { getTranslations } from "next-intl/server";
 
 const CategoryPage = async ({
   searchParams,
@@ -18,6 +19,7 @@ const CategoryPage = async ({
   searchParams: { category?: number; month?: string; currency?: string };
 }) => {
   const user = await currentUser();
+  const t = await getTranslations("transaction-page");
 
   const categoryFromParams = searchParams.category
     ? Number(searchParams.category)
@@ -67,14 +69,14 @@ const CategoryPage = async ({
             href="/dashboard/categories"
             className={`min-[300px]:text-lg  ${!monthQuery && "underline"}`}
           >
-            Tento Měsíc
+            {t(`this-month`)}
           </Link>
           <p>|</p>
           <Link
             href={`?month=previous`}
             className={`min-[300px]:text-lg ${searchParams.month === "previous" && "underline"}`}
           >
-            Předchozí měsíc
+            {t(`last-month`)}
           </Link>
         </div>
         <div className="lg:hidden">
@@ -84,7 +86,7 @@ const CategoryPage = async ({
       {/*all categories on bic screen*/}
       <div className="flex max-xl:flex-col w-full pt-2 2xl:pt-6 lg:gap-4">
         <div className="max-lg:hidden xl:min-w-fit">
-          <ExpensesByCategory flat />
+          <ExpensesByCategory flat usedCategoryId={usedCategory.id} />
         </div>
         {/*graph+table*/}
         <div className="flex flex-col w-full xl:flex-col-reverse  rounded-xl items-center max-w-[1200px] gap-2 lg:gap-4">

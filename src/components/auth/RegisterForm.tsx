@@ -15,11 +15,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import CardSuccess from "@/components/auth/CardSuccess";
 import { getRegisterSchema } from "@/schemas";
 import { register } from "@/actions/register";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const RegisterForm = () => {
   const t = useTranslations("register-form");
   const t1 = useTranslations("form-messages");
+  const locale = useLocale();
+
   const RegisterSchema = getRegisterSchema(t1);
 
   const [error, setError] = useState<string | undefined>("");
@@ -38,7 +40,7 @@ const RegisterForm = () => {
     setError("");
     setSuccess("");
     startTransition(() => {
-      register(values).then((data) => {
+      register(values, locale).then((data) => {
         setError(data?.error);
         setSuccess(data?.success);
       });
@@ -48,7 +50,7 @@ const RegisterForm = () => {
     <section className="size-full flex items-center justify-center">
       <Card
         title={t("title")}
-        backLink1="/"
+        backLink1="/login"
         backText1={t("back-text1")}
         showSocials
       >

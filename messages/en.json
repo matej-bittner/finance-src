@@ -148,7 +148,8 @@
     "16": "Currently you are not able to swap between account in different currency",
     "17": "Action wasnt done in time limit",
     "18": "Invalid Email",
-    "19": "Check filled fields and try it again"
+    "19": "Check filled fields and try it again",
+    "20": "Incorect password"
   },
   "action-success": {
     "1": "Confirmation email send.",
@@ -167,7 +168,8 @@
     "14": "email has been verified ",
     "15": "Email for password reset send",
     "16": "Subscription created",
-    "17": "Standing payment Created"
+    "17": "Standing payment Created",
+    "18": "Settings updated"
   },
 
   "dashboard-navigation": {
@@ -178,47 +180,43 @@
     "nav-links": {
       "dashboard": {
         "title": "Dashboard",
-        "icon": "home",
-        "link": "/dashboard",
         "form-title": "",
-        "form-desc": ""
+        "form-desc": "",
+        "icon": "home",
+        "link": "/dashboard"
       },
       "goals": {
         "title": "Goals",
-        "icon": "goals",
-        "link": "/dashboard/goals",
-
         "form-title": "Add Goal",
-        "form-desc": "Here you can add new personal goal."
+        "form-desc": "Here you can add new personal goal.",
+        "icon": "goals",
+        "link": "/dashboard/goals"
       },
-      "income-expenses": {
+      "transactions": {
         "title": "Transactions",
-        "icon": "wallet-money",
-        "link": "/dashboard/transactions",
-
         "form-title": "Add Transaction",
-        "form-desc": "Here you can add new account transaction."
+        "form-desc": "Here you can add new account transaction.",
+        "icon": "wallet-money",
+        "link": "/dashboard/transactions"
       },
       "subscriptions": {
         "title": "Subscriptions",
-        "icon": "ticket-expired",
-        "link": "/dashboard/subscriptions",
         "form-title": "Add Subscription",
-        "form-desc": "Here you can add new subscription."
+        "form-desc": "Here you can add new subscription.",
+        "icon": "ticket-expired",
+        "link": "/dashboard/subscriptions"
       },
       "statistics": {
         "title": "Statistics",
-        "icon": "graph",
-        "link": "/",
         "form-title": "",
         "form-desc": ""
       },
       "accounts": {
         "title": "Accounts",
-        "icon": "account",
-        "link": "/dashboard/accounts",
         "form-title": "Add Account",
-        "form-desc": "Here you can add new account."
+        "form-desc": "Here you can add new account.",
+        "icon": "account",
+        "link": "/dashboard/accounts"
       }
     }
   },
@@ -236,6 +234,10 @@
     "total-value": "Total Value",
     "next-payment": "next payment",
     "last-payment": "Last payment",
+    "no-account": "No account to display",
+    "create-account": "Create Account",
+    "no-transactions": "No transaction to display",
+    "create-transaction": "Create Transaction",
     "account-info": {
       "all-accounts": "All Accounts",
       "all-debts": "All Debts",
@@ -366,7 +368,10 @@
     "email": "This is not valid email format",
     "min-a": "Minimum is 2 characters",
     "min-b": "Minimum is 6 characters",
-    "max-a": "Maximum is 40 characters"
+    "max-a": "Maximum is 40 characters",
+    "max-b": "Maximum is 25 characters",
+    "max-c": "Maximum is 15 characters",
+    "max-d": "Maximum is 50 characters"
   },
   "language-switch": {
     "change-language": "Change language"
@@ -379,5 +384,17 @@
     "last_7_days": "Last 7 Days",
     "last_30_days": "Last 30 Days",
     "last_90_days": "Last 90 Days"
+  },
+  "settings-page": {
+    "email": "E-mail",
+    "password": "Password",
+    "new-password": "New password",
+    "first-name": "First name",
+    "save-changes": "Save changes",
+    "main-currency": "Main Currency",
+    "language": "Language",
+    "general": "General",
+    "subscription": "Subscription",
+    "account": "Account"
   }
 }

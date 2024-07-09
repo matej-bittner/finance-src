@@ -148,7 +148,8 @@
     "16": "V současné době nemůžete přepínat mezi účty v jiné měně",
     "17": "Akce nebyla provedena v časovém limitu",
     "18": "Neplatný e-mail",
-    "19": "Zkontrolujte vyplněná pole a zkuste to znovu"
+    "19": "Zkontrolujte vyplněná pole a zkuste to znovu",
+    "20": "Neplatné heslo"
   },
   "action-success": {
     "1": "Odeslán potvrzovací e-mail.",
@@ -167,7 +168,8 @@
     "14": "e-mail byl ověřen",
     "15": "Odeslán e-mail pro obnovení hesla",
     "16": "Předplatné vytvořeno",
-    "17": "Trvalá platba vytvořena"
+    "17": "Trvalá platba vytvořena",
+    "18": "Nastavení změněno"
   },
   "dashboard-navigation": {
     "appName": "Family Finances",
@@ -190,7 +192,7 @@
         "form-title": "Přidat cíl",
         "form-desc": "Zde můžete přidat nový cíl."
       },
-      "income-expenses": {
+      "transactions": {
         "title": "Transakce",
         "icon": "wallet-money",
         "link": "/dashboard/transactions",
@@ -221,6 +223,7 @@
       }
     }
   },
+
   "dashboard": {
     "accounts": "Účty",
     "loans": "Půjčky",
@@ -234,6 +237,10 @@
     "total-value": "Celková hodnota",
     "next-payment": "Další platba",
     "last-payment": "Poslední platba",
+    "no-account": "Žádný účet k zobrazení",
+    "create-account": "Vytvořit účet",
+    "no-transactions": "Žádné transakce k zobrazení",
+    "create-transaction": "Vytvořit transakci",
     "account-info": {
       "all-accounts": "Všechny účty",
       "all-debts": "Všechny dluhy",
@@ -357,7 +364,10 @@
     "email": "Neplatný formát e-mailu",
     "min-a": "Minimum 2 znaky",
     "min-b": "Minimum 6 znaků",
-    "max-a": "Maximum 40 znaků"
+    "max-a": "Maximum 40 znaků",
+    "max-b": "Maximum 25 znaků",
+    "max-c": "Maximum 15 znaků",
+    "max-d": "Maximum 50 znaků"
   },
   "language-switch": {
     "change-language": "Změnit jazyk"
@@ -370,5 +380,17 @@
     "last_7_days": "Posledních 7 dní",
     "last_30_days": "Posledních 30 dní",
     "last_90_days": "Posledních 90 dní"
+  },
+  "settings-page": {
+    "email": "E-mail",
+    "password": "Heslo",
+    "new-password": "Nové heslo",
+    "first-name": "Křestní jméno",
+    "save-changes": "Uložit změny",
+    "main-currency": "Hlavní měna",
+    "language": "Jazyk",
+    "general": "Obecné",
+    "subscription": "Předplatné",
+    "account": "Účet"
   }
 }

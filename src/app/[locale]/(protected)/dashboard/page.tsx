@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import AccountInfoDisplay from "@/components/protected/dashboard/AccountInfoDisplay";
 import UpcomingPayments from "@/components/protected/dashboard/UpcomingPayments";
@@ -21,6 +21,8 @@ import DashboardChart from "@/components/protected/charts/DashboardChart";
 
 import { getRangeOption, RANGE_OPTIONS } from "@/schemas/rangeOptions";
 import { findCurrencySymbol } from "@/helpers/generalFunctions";
+import BlankAccountInfoDisplay from "@/components/protected/dashboard/BlankAccountInfoDisplay";
+import GoalItemSkeleton from "@/components/protected/skeletons/GoalItemSkeleton";
 
 const DashboardPage = async ({
   // searchParams: { dashboardGraph },
@@ -78,8 +80,15 @@ const DashboardPage = async ({
         <div className="grid grid-cols-1 w-full max-sm:max-w-[95%] mg:grid-cols-2 xlb:flex gap-y-3 ">
           {/*acounts + savings*/}
           <div className="flex flex-col w-full xlb:w-2/3 xlb:max-w-[820px] max-xlb:items-center">
-            <h2 className="pb-1 mg:pb-2">{t(`accounts`)}</h2>
+            <h2 className="pb-1 mg:pb-2 ">{t(`accounts`)}</h2>
+
             <div className="flex max-xlb:flex-col w-full gap-y-2  mg:h-full mg:justify-between items-center xlb:items-start ">
+              {currentAndSavingsAccounts.length === 0 && (
+                <BlankAccountInfoDisplay
+                  title={t("no-account")}
+                  linkText={t("create-account")}
+                />
+              )}
               <AccountInfoDisplay
                 data={currentAndSavingsAccounts}
                 type="account"
@@ -94,15 +103,21 @@ const DashboardPage = async ({
               />
             </div>
           </div>
-          <div className="xlb:w-1/3 flex flex-col   xlb:max-w-[410px] max-xlb:items-center mg:gap-y-3">
+          <div
+            className={`xlb:w-1/3 flex flex-col   xlb:max-w-[410px] max-xlb:items-center  ${creditAccounts.length > 0 && "mg:gap-y-3"}`}
+          >
             <div className="max-w-[380px] flex flex-col items-center max-xlb:mx-auto w-full xlb:ml-auto xlb:items-start">
-              <h2 className="pb-1 mg:pb-2">{t(`loans`)}</h2>
-              <AccountInfoDisplay
-                data={creditAccounts}
-                type="debt"
-                currency={mainCurrency}
-                userCurrencyConvert={userCurrencyConvert}
-              />
+              {creditAccounts.length > 0 && (
+                <>
+                  <h2 className="pb-1 mg:pb-2">{t(`loans`)}</h2>
+                  <AccountInfoDisplay
+                    data={creditAccounts}
+                    type="debt"
+                    currency={mainCurrency}
+                    userCurrencyConvert={userCurrencyConvert}
+                  />
+                </>
+              )}
             </div>
             <div className="max-mg:hidden xlb:hidden max-w-[380px] mx-auto w-full">
               <h2 className="pb-1 mg:pb-2">{t(`upcoming-payments`)}</h2>
@@ -147,56 +162,75 @@ const DashboardPage = async ({
         <div className="pl-12 flex flex-col">
           <h2 className="text-center pb-2">{t(`last-transaction`)}</h2>
           <div className="box flex flex-col h-fit shadow-[0_3px_10px_rgb(0,0,0,0.2)] w-[300px]">
-            {userTransactionsLimited.map((tran, i) => {
-              return (
-                <div key={i} className="py-1">
-                  <div className="flex w-full py-1 text-sm">
-                    <p className="min-w-[40px]">
-                      {new Intl.DateTimeFormat("default", {
-                        day: "numeric",
-                        month: "numeric",
-                      }).format(tran.date)}
-                    </p>
-                    <p className="flex-1 text-center font-medium ">
-                      {tran.name}
-                    </p>
-                    <div className="flex items-start font-medium gap-2">
-                      <Image
-                        src={
-                          tran.accountFromId && tran.accountToId
-                            ? "/icons/transaction-swap.svg"
-                            : tran.accountFromId
-                              ? "/icons/transaction-send.svg"
-                              : "/icons/transaction-received.svg"
-                        }
-                        alt="transaction type"
-                        width={20}
-                        height={20}
-                      />
-                      <p
-                        className={`min-w-[60px] text-right ${
-                          tran.accountFromId && tran.accountToId
-                            ? ""
-                            : tran.accountFromId
-                              ? "text-main-error"
-                              : "text-main-success"
-                        }`}
-                      >
-                        {Intl.NumberFormat().format(tran.amount)}{" "}
-                        {findCurrencySymbol(tran.currency)}
+            {userTransactionsLimited.length === 0 ? (
+              <div className="w-full h-[300px] flex flex-col items-center justify-center">
+                <p>{t("no-transactions")}</p>
+                <Link
+                  className="font-normal underline underline-offset-2 flex gap-1"
+                  href="/dashboard/transactions"
+                >
+                  {t("create-transaction")}
+                  <Image
+                    src="/icons/line-arrow-up.svg"
+                    alt="arrow"
+                    width={18}
+                    height={18}
+                    className="rotate-45"
+                  />
+                </Link>
+              </div>
+            ) : (
+              <>
+                {userTransactionsLimited.map((tran, i) => (
+                  <div key={i} className="py-1">
+                    <div className="flex w-full py-1 text-sm">
+                      <p className="min-w-[40px]">
+                        {new Intl.DateTimeFormat("default", {
+                          day: "numeric",
+                          month: "numeric",
+                        }).format(tran.date)}
                       </p>
+                      <p className="flex-1 text-center font-medium ">
+                        {tran.name}
+                      </p>
+                      <div className="flex items-start font-medium gap-2">
+                        <Image
+                          src={
+                            tran.accountFromId && tran.accountToId
+                              ? "/icons/transaction-swap.svg"
+                              : tran.accountFromId
+                                ? "/icons/transaction-send.svg"
+                                : "/icons/transaction-received.svg"
+                          }
+                          alt="transaction type"
+                          width={20}
+                          height={20}
+                        />
+                        <p
+                          className={`min-w-[60px] text-right ${
+                            tran.accountFromId && tran.accountToId
+                              ? ""
+                              : tran.accountFromId
+                                ? "text-main-error"
+                                : "text-main-success"
+                          }`}
+                        >
+                          {Intl.NumberFormat().format(tran.amount)}{" "}
+                          {findCurrencySymbol(tran.currency)}
+                        </p>
+                      </div>
                     </div>
+                    <hr className="w-[90%] mx-auto border-black" />
                   </div>
-                  <hr className="w-[90%] mx-auto border-black" />
-                </div>
-              );
-            })}
-            <Link
-              href="/dashboard/transactions"
-              className="underline text-sm text-center flex-1 flex items-end justify-center pb-2 "
-            >
-              {t(`show-more`)}
-            </Link>
+                ))}
+                <Link
+                  href="/dashboard/transactions"
+                  className="underline text-sm text-center flex-1 flex items-end justify-center pb-2 "
+                >
+                  {t(`show-more`)}
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

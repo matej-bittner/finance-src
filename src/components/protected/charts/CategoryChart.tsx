@@ -47,7 +47,6 @@ const CategoryChart = ({
       number,
     );
   };
-
   const existsAnyTotalAmount = data.some((o) => o.totalAmount > 0);
 
   return (
@@ -76,11 +75,19 @@ const CategoryChart = ({
               </DropdownMenuContent>
             </DropdownMenu>
           )}
+          {usedCurrencies.length === 1 && (
+            <button
+              onClick={() => setCurrency(usedCurrencies[0])}
+              className="bg-[#BBBBBB] font-medium py-1 px-2 rounded-md"
+            >
+              {findCurrencySymbol(usedCurrencies[0])}
+            </button>
+          )}
         </div>
       ) : (
         <div className="w-full h-[32px]"></div>
       )}
-      <div className="flex flex-grow pr-2">
+      <div className="flex flex-grow pr-2 ">
         <ResponsiveContainer width="100%" height="100%">
           {!existsAnyTotalAmount ? (
             <div className="w-full h-full flex items-center justify-center  text-center">
@@ -92,9 +99,11 @@ const CategoryChart = ({
               <XAxis dataKey="date" stroke="#000" fontSize="13" />
               <YAxis
                 fontSize="13"
-                tickFormatter={(tick) =>
-                  formatNumber(tick) + " " + currencySymbol
-                }
+                // tickFormatter={(tick) =>
+                //   formatNumber(tick) + " " + currencySymbol
+                // }
+                tickFormatter={(tick) => formatNumber(tick)}
+                // width={80}
                 stroke="#000"
               />
               <Tooltip

@@ -55,9 +55,9 @@ const LoginForm = () => {
     <section className="size-full flex items-center justify-center">
       <Card
         title={t("title")}
-        backLink1="/"
+        backLink1="/reset"
         backText1={t("back-text1")}
-        backLink2="/"
+        backLink2="/register"
         backText2={t("back-text2")}
         showSocials
       >

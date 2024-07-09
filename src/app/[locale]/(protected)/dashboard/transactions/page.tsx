@@ -122,6 +122,8 @@ const TransactionPage = async ({
     listSumArray = Object.values(listSum);
   }
 
+  // if (allTransactions.length === 0) return null;
+
   return (
     <div className="flex flex-col  items-center gap-2">
       <div className="flex gap-2 items-center">

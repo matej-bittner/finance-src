@@ -7,8 +7,13 @@ import { getUserByEmail } from "@/data/user";
 import { getTranslations } from "next-intl/server";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
+import { useLocale } from "next-intl";
+import { languages } from "@/constants";
 
-export const register = async (values: z.infer<typeof RegisterSchema>) => {
+export const register = async (
+  values: z.infer<typeof RegisterSchema>,
+  locale?: string,
+) => {
   const te = await getTranslations("action-errors");
   const ts = await getTranslations("action-success");
   const validatedFields = RegisterSchema.safeParse(values);
@@ -26,12 +31,22 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: te("5") };
   }
 
+  let language = "en";
+  let currency = "eur";
+  if (locale) {
+    const findLocale = languages.some((language) => language.value === locale);
+    if (findLocale) {
+      language = locale;
+      currency = language === "cs" ? "cs" : "eur";
+    }
+  }
+
   await db.user.create({
     data: {
       email,
       password: hashedPw,
-      mainLanguage: "cs",
-      mainCurrency: "czk",
+      mainLanguage: language,
+      mainCurrency: currency,
     },
   });
 

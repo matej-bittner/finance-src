@@ -150,6 +150,7 @@ const AddTransactionForm = ({
               <button
                 key={item.id}
                 type="button"
+                disabled={isPending}
                 onClick={() => setSelectedType(item.id)}
                 className={`border-2 border-white rounded-md w-full pl-2 py-1 flex items-center text-left   ${selectedType === item.id && "bg-main-blue text-white"}`}
               >
@@ -241,7 +242,12 @@ const AddTransactionForm = ({
                 <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
                   <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
                   <FormControl>
-                    <input type="text" className="dialog-inputs" {...field} />
+                    <input
+                      type="text"
+                      className="dialog-inputs"
+                      {...field}
+                      disabled={isPending}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -266,6 +272,7 @@ const AddTransactionForm = ({
                         onChange={(event) =>
                           field.onChange(+event.target.value)
                         }
+                        disabled={isPending}
                       />
                     </FormControl>
                     <FormMessage />
@@ -325,7 +332,12 @@ const AddTransactionForm = ({
                   {t(`description`)}
                 </FormLabel>
                 <FormControl>
-                  <input type="text" className="dialog-inputs" {...field} />
+                  <input
+                    type="text"
+                    className="dialog-inputs"
+                    {...field}
+                    disabled={isPending}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -356,6 +368,7 @@ const AddTransactionForm = ({
                               ? dateLimit.firstPaymentDate
                               : undefined
                           }
+                          disabled={isPending}
                           type="date"
                           className="dialog-inputs py-[5px] sm:py-[7px]"
                           value={field.value}
@@ -391,6 +404,7 @@ const AddTransactionForm = ({
                             type="date"
                             className="dialog-inputs py-[5px] sm:py-[7px]"
                             {...field}
+                            disabled={isPending}
                           />
                         </FormControl>
                         <FormMessage />
@@ -423,6 +437,7 @@ const AddTransactionForm = ({
                                 frequency: Number(value),
                               });
                             }}
+                            disabled={isPending}
                           >
                             <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit min-h-[32px] sm:min-h-[36px] focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                               <SelectValue />
@@ -457,6 +472,7 @@ const AddTransactionForm = ({
                         <Select
                           onValueChange={field.onChange}
                           value={field.value}
+                          disabled={isPending}
                         >
                           <SelectTrigger className="w-[180px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                             <SelectValue
@@ -478,6 +494,7 @@ const AddTransactionForm = ({
                               onClick={() => {
                                 form.setValue("category", "");
                               }}
+                              disabled={isPending}
                             >
                               {t(`clear-input`)}
                             </button>
@@ -493,7 +510,11 @@ const AddTransactionForm = ({
           </div>
 
           <div>
-            <button className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3">
+            <button
+              type="submit"
+              disabled={isPending}
+              className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3"
+            >
               {t(`add-transaction`)}
             </button>
           </div>

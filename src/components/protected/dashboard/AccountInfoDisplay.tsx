@@ -111,28 +111,6 @@ const AccountInfoDisplay = ({
                 {currencyTypes || ""}
               </p>
               <p className="text-sm text-[#ABABAB]">{t1(`next-payment`)}</p>
-              {/*{type === "debt" ? (*/}
-              {/*  <p className="text-white/60">*/}
-              {/*    /!*@ts-ignore*!/*/}
-              {/*    {data[selectedAccount]?.periodicPayment[0].amount}{" "}*/}
-              {/*    {currencyTypes || ""}*/}
-              {/*  </p>*/}
-              {/*) : (*/}
-              {/*  <div className="flex gap-1 ">*/}
-              {/*    <Image*/}
-              {/*      src="/icons/arrow-up-succes.svg"*/}
-              {/*      alt="arrow"*/}
-              {/*      width={18}*/}
-              {/*      height={18}*/}
-              {/*    />*/}
-              {/*    <p className="text-main-success">10%</p>*/}
-              {/*  </div>*/}
-              {/*)}*/}
-              {/*<p className="text-sm text-[#ABABAB]">*/}
-              {/*  {type === "account"*/}
-              {/*    ? t1(`since-last-month`)*/}
-              {/*    : type === "debt" && t1(`next-payment`)}*/}
-              {/*</p>*/}
             </div>
           )}
         </div>
@@ -150,7 +128,7 @@ const AccountInfoDisplay = ({
             {t1(`previous`)}
           </p>
           <div className="flex items-center gap-1">
-            {Array.from({ length: data.length }).map((_, i) => (
+            {Array.from({ length: Math.min(data.length, 6) }).map((_, i) => (
               <div
                 key={i}
                 className={`rounded-full w-[8px] aspect-square border-2 border-black ${selectedAccount === i && "bg-main-yellow"}`}

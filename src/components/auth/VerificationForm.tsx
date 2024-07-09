@@ -42,7 +42,7 @@ const VerificationForm = () => {
     <section className="size-full flex items-center justify-center">
       <Card
         title={t("confirming-email")}
-        backLink1="/"
+        backLink1="/login"
         backText1={t("back-to-login")}
       >
         <div className="flex items-center w-full justify-center">

@@ -26,7 +26,7 @@ export const createTransaction = async (values: any) => {
 
     endOfPayment,
   } = values;
-  if (accountFrom === "" && accountTo === "") {
+  if (!accountFrom && !accountTo) {
     return { error: te("7") };
   }
 
@@ -39,9 +39,7 @@ export const createTransaction = async (values: any) => {
   if (transactionType === 4 && !frequency) {
     return { error: te("13") };
   }
-  // if (transactionType === 4 || (transactionType === 5 && !accountFrom)) {
-  //   return { error: "nebyl vybrán účet" };
-  // }
+
   if ((transactionType === 4 || transactionType === 5) && !accountFrom) {
     return { error: te("7") };
   }

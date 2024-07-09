@@ -135,7 +135,12 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                   {t(`account-number`)}
                 </FormLabel>
                 <FormControl>
-                  <input type="text" className="dialog-inputs" {...field} />
+                  <input
+                    type="text"
+                    className="dialog-inputs"
+                    {...field}
+                    disabled={isPending}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -152,7 +157,12 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                 <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
                   <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
                   <FormControl>
-                    <input type="text" className="dialog-inputs" {...field} />
+                    <input
+                      type="text"
+                      className="dialog-inputs"
+                      {...field}
+                      disabled={isPending}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -174,6 +184,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                         type="number"
                         value={field.value === 0 ? "" : field.value}
                         className="dialog-inputs min-[450px]:w-[120px]"
+                        disabled={isPending}
                         onChange={(event) =>
                           field.onChange(+event.target.value)
                         }
@@ -196,6 +207,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
+                        disabled={isPending}
                       >
                         <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                           <SelectValue />
@@ -236,6 +248,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                         <input
                           type="number"
                           value={field.value === 0 ? "" : field.value}
+                          disabled={isPending}
                           className="dialog-inputs"
                           onChange={(event) =>
                             field.onChange(+event.target.value)
@@ -261,6 +274,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                           <input
                             min={tomorrowDate}
                             type="date"
+                            disabled={isPending}
                             className="dialog-inputs py-[5px] sm:py-[7px] min-[450px]:w-[120px]"
                             {...field}
                           />
@@ -282,6 +296,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
+                            disabled={isPending}
                           >
                             <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit min-h-[32px] sm:min-h-[36px] focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                               <SelectValue />
@@ -318,6 +333,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
+                        disabled={isPending}
                       >
                         <SelectTrigger className="w-[180px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                           <SelectValue
@@ -339,6 +355,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                             onClick={() => {
                               form.setValue("category", "");
                             }}
+                            disabled={isPending}
                           >
                             {t(`clear-input`)}
                           </button>

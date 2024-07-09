@@ -2,7 +2,6 @@
 import React from "react";
 import DropdownNav from "@/components/protected/navbar/DropdownNav";
 import Image from "next/image";
-import DropdownUserMenu from "@/components/protected/navbar/DropdownUserMenu";
 import { useTranslations } from "next-intl";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import DialogContentWrapper from "@/components/protected/dialog/DialogContentWrapper";
@@ -13,6 +12,9 @@ import { signOut } from "next-auth/react";
 import { UserAccount } from "@/types";
 import AddSubscriptionForm from "@/components/protected/dialog/AddSubscriptionForm";
 import AddAccountForm from "@/components/protected/dialog/AddAccountForm";
+import { navLinks } from "@/constants";
+import Link from "next/link";
+import DropdownUserMenu from "@/components/protected/navbar/DropdownUserMenu";
 
 const Navbar = ({
   userAccounts,
@@ -43,11 +45,11 @@ const Navbar = ({
       formDesc: t("nav-links.goals.form-desc"),
     },
     {
-      title: t("nav-links.income-expenses.title"),
-      icon: t("nav-links.income-expenses.icon"),
-      link: t("nav-links.income-expenses.link"),
-      formTitle: t("nav-links.income-expenses.form-title"),
-      formDesc: t("nav-links.income-expenses.form-desc"),
+      title: t("nav-links.transactions.title"),
+      icon: t("nav-links.transactions.icon"),
+      link: t("nav-links.transactions.link"),
+      formTitle: t("nav-links.transactions.form-title"),
+      formDesc: t("nav-links.transactions.form-desc"),
     },
     {
       title: t("nav-links.subscriptions.title"),
@@ -56,13 +58,13 @@ const Navbar = ({
       formTitle: t("nav-links.subscriptions.form-title"),
       formDesc: t("nav-links.subscriptions.form-desc"),
     },
-    {
-      title: t("nav-links.statistics.title"),
-      icon: t("nav-links.statistics.icon"),
-      link: t("nav-links.statistics.link"),
-      formTitle: t("nav-links.statistics.form-title"),
-      formDesc: t("nav-links.statistics.form-desc"),
-    },
+    // {
+    //   title: t("nav-links.statistics.title"),
+    //   icon: t("nav-links.statistics.icon"),
+    //   link: t("nav-links.statistics.link"),
+    //   formTitle: t("nav-links.statistics.form-title"),
+    //   formDesc: t("nav-links.statistics.form-desc"),
+    // },
     {
       title: t("nav-links.accounts.title"),
       icon: t("nav-links.accounts.icon"),
@@ -108,9 +110,9 @@ const Navbar = ({
       />
     );
   } else if (pathname.includes("accounts")) {
-    pageName = dropdownNavData[5].title;
-    title = dropdownNavData[5].formTitle;
-    description = dropdownNavData[5].formDesc;
+    pageName = dropdownNavData[4].title;
+    title = dropdownNavData[4].formTitle;
+    description = dropdownNavData[4].formDesc;
     form = <AddAccountForm defaultCurrency={defaultCurrency} />;
   } else if (pathname.includes("dashboard")) {
     pageName = t(`appName`);
@@ -122,9 +124,58 @@ const Navbar = ({
     signOut();
   };
 
+  // const t1 = useTranslations("dashboard-navigation");
+  //
+  // const pathname = usePathname();
+  // const currentSite = pathname.split("/").pop();
+  // let form;
+  // if (currentSite) {
+  //   form = {
+  //     goals: (
+  //       <AddGoalForm
+  //         userAccounts={removedLoanType}
+  //         defaultCurrency={defaultCurrency}
+  //       />
+  //     ),
+  //     transactions: (
+  //       <AddTransactionForm
+  //         userAccounts={userAccounts}
+  //         defaultCurrency={defaultCurrency}
+  //       />
+  //     ),
+  //     subscriptions: (
+  //       <AddSubscriptionForm
+  //         userAccounts={removedLoanType}
+  //         defaultCurrency={defaultCurrency}
+  //       />
+  //     ),
+  //     accounts: <AddAccountForm defaultCurrency={defaultCurrency} />,
+  //   }[currentSite]; // Access second path segment
+  // }
+  //
+  // const logOut = () => {
+  //   signOut();
+  // };
+  //
+  // const findData = navLinks.find(
+  //   (item) => item.link.split("/").pop() === currentSite,
+  // );
+  //
+  // const dialogTitle = findData?.title ? t1(findData.title) || "" : "";
+  // const dialogDesc = findData?.["form-desc"]
+  //   ? t1(findData?.["form-desc"]) || ""
+  //   : "";
+  // let pageName = dialogTitle || t1("appName");
+  //
+  // // Update pageName conditionally based on currentSite
+  // if (currentSite === "settings") {
+  //   pageName = t1("settings"); // Set a specific title for "settings"
+  // }
+
   return (
     <nav className="h-[50px] max-sm:bg-main-blue max-sm:text-white flex items-center justify-between sm:items-end  max-sm:border-b-2 border-white relative max-sm:px-4 xl:pl-16 ">
       <DropdownNav dropdownNavData={dropdownNavData} />
+      {/*<DropdownNav />*/}
       {/*Page Name*/}
       <div className="flex gap-2">
         <h1 className="sm:text-xl sm:font-medium md:text-2xl">{pageName}</h1>
@@ -144,10 +195,17 @@ const Navbar = ({
               className="bg-main-gray text-black rounded-md"
             >
               <DialogContentWrapper
+                // title={dialogTitle}
+                // description={dialogDesc}
                 title={title}
                 description={description}
                 titleCenter
               >
+                {/*  <DialogContentWrapper*/}
+                {/*  title={title}*/}
+                {/*  description={description}*/}
+                {/*  titleCenter*/}
+                {/*>*/}
                 {form}
               </DialogContentWrapper>
             </DialogContent>
@@ -171,15 +229,25 @@ const Navbar = ({
           className="nav-image opacity-30"
         />
       </div>
-      <div className="flex gap-6 md:gap-8 xl:gap-10">
+      <div className="flex gap-6 md:gap-6 xl:gap-6">
         <button
           onClick={logOut}
           className="bg-main-blue text-white py-1 px-2 md:px-3 xl:px-4 rounded-lg lg:text-lg hidden sm:block"
         >
           {t(`logOut`)}
+          {/*{t1(`logOut`)}*/}
         </button>
 
         <DropdownUserMenu />
+        <Link href="/settings" className="my-auto lg:pr-3">
+          <Image
+            src="/icons/settings.svg"
+            alt="settings"
+            width={24}
+            height={24}
+            className="nav-image"
+          />
+        </Link>
       </div>
     </nav>
   );

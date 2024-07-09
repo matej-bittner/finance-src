@@ -50,7 +50,7 @@ const Navbar = () => {
       </div>
       <div className="flex justify-end min-[450px]:min-w-[125px] sm:min-w-[140px] lg:min-w-[220px] drop-shadow-md sm:items-center sm:gap-2 min-[820px]:gap-3 ">
         <Link
-          href="/"
+          href="/login"
           className="flex w-fit items-center gap-2 rounded-lg border-2 border-black bg-main-yellow p-1 text-black max-lg:text-sm max-[450px]:aspect-square sm:max-[820px]:aspect-square min-[450px]:px-2 min-[450px]:py-[2px] sm:p-1"
         >
           <Image

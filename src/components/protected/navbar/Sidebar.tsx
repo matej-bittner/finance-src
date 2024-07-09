@@ -4,37 +4,9 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-
+import { navLinks } from "@/constants";
 const Sidebar = () => {
-  const t = useTranslations("dashboard-navigation");
-  const dropdownNavData = [
-    {
-      title: t("nav-links.dashboard.title"),
-      icon: t("nav-links.dashboard.icon"),
-      link: t("nav-links.dashboard.link"),
-    },
-    {
-      title: t("nav-links.goals.title"),
-      icon: t("nav-links.goals.icon"),
-      link: t("nav-links.goals.link"),
-    },
-    {
-      title: t("nav-links.income-expenses.title"),
-      icon: t("nav-links.income-expenses.icon"),
-      link: t("nav-links.income-expenses.link"),
-    },
-    {
-      title: t("nav-links.subscriptions.title"),
-      icon: t("nav-links.subscriptions.icon"),
-      link: t("nav-links.subscriptions.link"),
-    },
-
-    {
-      title: t("nav-links.accounts.title"),
-      icon: t("nav-links.accounts.icon"),
-      link: t("nav-links.accounts.link"),
-    },
-  ];
+  const t = useTranslations("dashboard-navigation.nav-links");
 
   const [openSidebar, setOpenSidebar] = useState(false);
 
@@ -62,8 +34,10 @@ const Sidebar = () => {
             />
           </button>
 
-          {dropdownNavData.map((item, i) => {
+          {navLinks.map((item, i) => {
+            // {dropdownNavData.map((item, i) => {
             const y = item.link.split("/").pop();
+
             return (
               <Link
                 href={item.link}
@@ -78,7 +52,7 @@ const Sidebar = () => {
                   height={24}
                   className={`${x === y && "invert"}`}
                 />
-                {openSidebar && <p className="pl-2">{item.title}</p>}
+                {openSidebar && <p className="pl-2">{t(item.title)}</p>}
               </Link>
             );
           })}

@@ -1,3 +1,7 @@
+export const languages = [
+  { value: "en", title: "English" },
+  { value: "cs", title: "Česky" },
+];
 export const colors = [
   {
     id: 1,
@@ -107,10 +111,6 @@ export const transactionType = [
     abbreviation: "standing",
     id: 4,
   },
-  // { title: "Příjmy", transaction: "Příchozí", abbreviation: "in", id: 1 },
-  // { title: "Výdaje", transaction: "Odchozí", abbreviation: "out", id: 2 },
-  // { title: "Mezi účty", abbreviation: "between", id: 3 },
-  // { title: "Pravidelná platba", abbreviation: "standing", id: 4 },
 ];
 
 // prelozeno
@@ -186,31 +186,6 @@ export const frequencies = [
     selectText: "1year",
     title: "everyYear",
   },
-  // {
-  //   value: "7",
-  //   selectText: "7",
-  //   title: "Každý týden",
-  // },
-  // {
-  //   value: "14",
-  //   selectText: "14",
-  //   title: "Každé dva týdny",
-  // },
-  // {
-  //   value: "30",
-  //   selectText: "1M",
-  //   title: "Každý měsíc",
-  // },
-  // {
-  //   value: "60",
-  //   selectText: "2M",
-  //   title: "Každé dva měíce",
-  // },
-  // {
-  //   value: "360",
-  //   selectText: "1R",
-  //   title: "Jednou ročně",
-  // },
 ];
 
 //prelozeno
@@ -219,4 +194,48 @@ export const accountType = [
   { title: "credit", id: 2 },
   { title: "saving", id: 3 },
   { title: "investment", id: 4 },
+];
+
+export const navLinks = [
+  {
+    title: "dashboard.title",
+    icon: "home",
+    link: "/dashboard",
+    "form-title": "goals.form-title",
+    "form-desc": "goals.form-desc",
+  },
+  {
+    title: "goals.title",
+    icon: "goals",
+    link: "/dashboard/goals",
+    "form-title": "goals.form-title",
+    "form-desc": "goals.form-desc",
+  },
+  {
+    title: "transactions.title",
+    icon: "wallet-money",
+    link: "/dashboard/transactions",
+    "form-title": "transactions.form-title",
+    "form-desc": "transactions.form-desc",
+  },
+  {
+    title: "subscriptions.title",
+    icon: "ticket-expired",
+    link: "/dashboard/subscriptions",
+    "form-title": "subscriptions.form-title",
+    "form-desc": "subscriptions.form-desc",
+  },
+  // {
+  //   title: "Statistics",
+  //   icon: "graph",
+  //   link: "/",
+  //
+  // },
+  {
+    title: "accounts.title",
+    icon: "account",
+    link: "/dashboard/accounts",
+    "form-title": "goals.form-title",
+    "form-desc": "goals.form-desc",
+  },
 ];

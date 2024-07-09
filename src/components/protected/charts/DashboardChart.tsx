@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Bar,
   BarChart,
@@ -44,6 +44,7 @@ const DashboardChart = ({
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations("chart");
+
   function setRange(range: keyof typeof RANGE_OPTIONS) {
     const params = new URLSearchParams(searchParams);
     params.set(queryRangeKey, range);
@@ -62,21 +63,6 @@ const DashboardChart = ({
     return new Intl.NumberFormat(locale, { notation: "compact" }).format(
       number,
     );
-  };
-
-  const [longestTick, setLongestTick] = useState("");
-  const tickFormatter = (val: number) => {
-    const formattedTick = formatNumber(val) + " " + currencySymbol;
-
-    if (longestTick.length < formattedTick.length) {
-      setLongestTick(formattedTick);
-    }
-    return formattedTick;
-  };
-
-  const getYAxisTickLen = () => {
-    const charWidth = 6; // example w/ estimated 8px width/char
-    return longestTick.length * charWidth;
   };
 
   return (
@@ -106,7 +92,7 @@ const DashboardChart = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="bg-[#BBBBBB] font-medium py-1 px-2 rounded-md">
-                {t(selectedRange) || t("last_7_days")}
+                {selectedRange ? t(selectedRange) : t("last_7_days")}
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-[#BBBBBB]/20 border-0">
@@ -140,15 +126,15 @@ const DashboardChart = ({
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" stroke="#000" fontSize="13" />
-              {/*<YAxis*/}
-              {/*  fontSize="13"*/}
-              {/*  // tickFormatter={(tick) =>*/}
-              {/*  //   formatNumber(tick) + " " + currencySymbol*/}
-              {/*  // }*/}
-              {/*  tickFormatter={tickFormatter}*/}
-              {/*  width={getYAxisTickLen()}*/}
-              {/*  stroke="#000"*/}
-              {/*/>*/}
+              <YAxis
+                fontSize="13"
+                // tickFormatter={(tick) =>
+                //   formatNumber(tick) + " " + currencySymbol
+                // }
+                tickFormatter={(tick) => formatNumber(tick)}
+                // width={80}
+                stroke="#000"
+              />
               <Tooltip
                 formatter={(value: number) =>
                   new Intl.NumberFormat().format(value) + " " + currencySymbol

@@ -115,6 +115,16 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
         category ? { category: category?.id } : null,
       );
       const cleanedData = removeEmptyStrings(allValues);
+
+      if (!cleanedData.hasOwnProperty("category") && data.category) {
+        // @ts-ignore
+        cleanedData.category = null;
+      }
+      if (!cleanedData.hasOwnProperty("description") && data.description) {
+        // @ts-ignore
+        cleanedData.description = null;
+      }
+
       editTransaction(cleanedData).then((data) => {
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
@@ -191,7 +201,12 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                 <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
                   <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
                   <FormControl>
-                    <input type="text" className="dialog-inputs" {...field} />
+                    <input
+                      type="text"
+                      className="dialog-inputs"
+                      {...field}
+                      disabled={isPending}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -216,6 +231,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                         onChange={(event) =>
                           field.onChange(+event.target.value)
                         }
+                        disabled={isPending}
                       />
                     </FormControl>
                     <FormMessage />
@@ -256,7 +272,12 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                   {t(`description`)}
                 </FormLabel>
                 <FormControl>
-                  <input type="text" className="dialog-inputs" {...field} />
+                  <input
+                    type="text"
+                    className="dialog-inputs"
+                    {...field}
+                    disabled={isPending}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -284,7 +305,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                       </FormLabel>
                       <FormControl>
                         <input
-                          disabled={!!data.firstPayment}
+                          disabled={!!data.firstPayment || isPending}
                           min={
                             data.transactionType === 4
                               ? tomorrowDate
@@ -318,6 +339,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                             type="date"
                             className="dialog-inputs py-[5px] sm:py-[7px]"
                             {...field}
+                            disabled={isPending}
                           />
                         </FormControl>
                         <FormMessage />
@@ -381,6 +403,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                         <Select
                           onValueChange={field.onChange}
                           value={field.value}
+                          disabled={isPending}
                         >
                           <SelectTrigger className="w-[180px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                             <SelectValue
@@ -402,6 +425,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                               onClick={() => {
                                 form.setValue("category", "");
                               }}
+                              disabled={isPending}
                             >
                               {t(`clear-input`)}
                             </button>

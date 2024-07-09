@@ -1,3 +1,4 @@
+"use client";
 import {
   Cloud,
   CreditCard,
@@ -18,57 +19,38 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
+import React from "react";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 const DropdownUserMenu = () => {
+  const t = useTranslations("dashboard-navigation");
+  const logOut = () => {
+    signOut();
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Image
-          src="/icons/user-menu.svg"
-          alt="user-menu"
+          src="/icons/settings.svg"
+          alt="settings"
           width={24}
           height={24}
-          className="nav-image"
+          className="nav-image sm:hidden"
         />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <CreditCard className="mr-2 h-4 w-4" />
-            <span>Billing</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Users className="mr-2 h-4 w-4" />
-            <span>Team</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Plus className="mr-2 h-4 w-4" />
-            <span>New Team</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent className="bg-main-gray border-main-gray sm:hidden">
+        <DropdownMenuItem className="settings-select-link ">
+          <Settings className="mr-2 h-4 w-4" />
+          <Link href="/settings">{t("settings")}</Link>
+        </DropdownMenuItem>
 
-        <DropdownMenuItem>
-          <LifeBuoy className="mr-2 h-4 w-4" />
-          <span>Support</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem disabled>
-          <Cloud className="mr-2 h-4 w-4" />
-          <span>API</span>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem className="settings-select-link">
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
+          <button onClick={logOut} className="cursor-pointer">
+            {t("logOut")}
+          </button>{" "}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

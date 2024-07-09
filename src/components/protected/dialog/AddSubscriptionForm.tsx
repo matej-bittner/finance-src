@@ -182,7 +182,12 @@ const AddSubscriptionForm = ({
               <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
                 <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
                 <FormControl>
-                  <input type="text" className="dialog-inputs" {...field} />
+                  <input
+                    type="text"
+                    className="dialog-inputs"
+                    {...field}
+                    disabled={isPending}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -202,6 +207,7 @@ const AddSubscriptionForm = ({
                       type="number"
                       value={field.value === 0 ? "" : field.value}
                       className="dialog-inputs min-[450px]:w-[120px]"
+                      disabled={isPending}
                       onChange={(event) => field.onChange(+event.target.value)}
                     />
                   </FormControl>
@@ -263,7 +269,12 @@ const AddSubscriptionForm = ({
                 {t(`description`)}
               </FormLabel>
               <FormControl>
-                <input type="text" className="dialog-inputs" {...field} />
+                <input
+                  type="text"
+                  className="dialog-inputs"
+                  {...field}
+                  disabled={isPending}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -296,6 +307,7 @@ const AddSubscriptionForm = ({
                       <input
                         min={dateLimit.firstPaymentDate}
                         type="date"
+                        disabled={isPending}
                         className="dialog-inputs py-[5px] sm:py-[7px]"
                         value={field.value}
                         onChange={(event) => {
@@ -325,6 +337,7 @@ const AddSubscriptionForm = ({
                         type="date"
                         className="dialog-inputs py-[5px] sm:py-[7px]"
                         {...field}
+                        disabled={isPending}
                       />
                     </FormControl>
                     <FormMessage />
@@ -355,6 +368,7 @@ const AddSubscriptionForm = ({
                           frequency: Number(value),
                         });
                       }}
+                      disabled={isPending}
                     >
                       <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit min-h-[32px] sm:min-h-[36px] focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                         <SelectValue />
@@ -385,7 +399,11 @@ const AddSubscriptionForm = ({
                     {t(`category`)}
                   </FormLabel>
                   <FormControl>
-                    <Select onValueChange={field.onChange} value={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      disabled={isPending}
+                    >
                       <SelectTrigger className="w-[180px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                         <SelectValue placeholder={t(`category-placeholder`)} />
                       </SelectTrigger>
@@ -404,6 +422,7 @@ const AddSubscriptionForm = ({
                           onClick={() => {
                             form.setValue("category", "");
                           }}
+                          disabled={isPending}
                         >
                           {t(`clear-input`)}
                         </button>
@@ -418,7 +437,11 @@ const AddSubscriptionForm = ({
         </div>
 
         <div>
-          <button className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3">
+          <button
+            type="submit"
+            disabled={isPending}
+            className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3"
+          >
             {t(`add-subscription`)}
           </button>
         </div>

@@ -22,7 +22,6 @@ export const editTransaction = async (values: any) => {
     transactionType,
     endOfPayment,
   } = values;
-
   const dateISO = new Date(date).toISOString();
   // let frequencyNumber = null;
   // if (frequency) {

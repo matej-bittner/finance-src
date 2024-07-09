@@ -27,7 +27,12 @@ import { colors, icons } from "@/constants";
 import { removeEmptyStrings } from "@/helpers/generalFunctions";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { getAddAccountSchema, getAddGoalSchema } from "@/schemas";
+import {
+  getAddAccountSchema,
+  getAddGoalSchema,
+  getRegisterSchema,
+} from "@/schemas";
+import { getTranslatedAddGoalSchema } from "@/schemas/translatedSchemas";
 
 // const formSchema = z.object({
 //   account: z.any(),
@@ -135,7 +140,12 @@ const AddGoalForm = ({
               <FormItem className="flex flex-col flex-1 space-y-0">
                 <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
                 <FormControl>
-                  <input type="text" className="dialog-inputs" {...field} />
+                  <input
+                    type="text"
+                    className="dialog-inputs"
+                    {...field}
+                    disabled={isPending}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -154,6 +164,7 @@ const AddGoalForm = ({
                     type="number"
                     placeholder={defaultCurrency?.toUpperCase()}
                     value={field.value === 0 ? "" : field.value}
+                    disabled={isPending}
                     className="dialog-inputs min-[400px]:w-[120px] sm:w-[150px]"
                     onChange={(event) => field.onChange(+event.target.value)}
                   />
@@ -178,6 +189,7 @@ const AddGoalForm = ({
                   <input
                     type="date"
                     className="dialog-inputs py-[5px] sm:py-[7px]"
+                    disabled={isPending}
                     {...field}
                   />
                 </FormControl>
@@ -198,6 +210,7 @@ const AddGoalForm = ({
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
+                      disabled={isPending}
                     >
                       <SelectTrigger className="w-[60px]  h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                         <SelectValue />
@@ -235,6 +248,7 @@ const AddGoalForm = ({
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
+                      disabled={isPending}
                     >
                       <SelectTrigger className="w-[60px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                         <SelectValue />

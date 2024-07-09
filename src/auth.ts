@@ -4,6 +4,7 @@ import authConfig from "@/auth.config";
 import { db } from "@/lib/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getUserById } from "@/data/user";
+import { getAccountByUserId } from "@/data/account";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
@@ -42,6 +43,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token.mainLanguage && session.user) {
         session.user.mainLanguage = token.mainLanguage;
       }
+      if (token.email && session.user) {
+        session.user.email = token.email;
+      }
+      if (session.user) {
+        session.user.name = token.name;
+        session.user.isOAuth = token.isOAuth as boolean;
+      }
 
       return session;
     },
@@ -52,6 +60,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       if (!existingUser) return token;
 
+      const existingAccount = await getAccountByUserId(existingUser.id);
+
+      token.isOAuth = !!existingAccount;
+      token.name = existingUser.name;
+      token.email = existingUser.email;
       token.mainCurrency = existingUser.mainCurrency;
       token.mainLanguage = existingUser.mainLanguage;
 

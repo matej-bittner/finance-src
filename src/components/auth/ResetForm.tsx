@@ -47,7 +47,7 @@ const ResetForm = () => {
     <section className="size-full flex items-center justify-center">
       <Card
         title={t("forgotten-password")}
-        backLink1="/"
+        backLink1="/login"
         backText1={t("back-to-login")}
       >
         <Form {...form}>

@@ -126,6 +126,11 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
         );
       }
       const cleanedData = removeEmptyStrings(allValues);
+      if (!cleanedData.hasOwnProperty("number") && data.number) {
+        // @ts-ignore
+        cleanedData.number = null;
+      }
+
       editPaymentAccount(cleanedData).then((data) => {
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
@@ -156,7 +161,12 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                   {t(`account-number`)}
                 </FormLabel>
                 <FormControl>
-                  <input type="text" className="dialog-inputs" {...field} />
+                  <input
+                    type="text"
+                    className="dialog-inputs"
+                    {...field}
+                    disabled={isPending}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -173,7 +183,12 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                 <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
                   <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
                   <FormControl>
-                    <input type="text" className="dialog-inputs" {...field} />
+                    <input
+                      type="text"
+                      className="dialog-inputs"
+                      {...field}
+                      disabled={isPending}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -252,6 +267,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                           onChange={(event) =>
                             field.onChange(+event.target.value)
                           }
+                          disabled={isPending}
                         />
                       </FormControl>
                       <FormMessage />
@@ -274,6 +290,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                             type="date"
                             className="dialog-inputs py-[5px] sm:py-[7px] min-[450px]:w-[120px]"
                             {...field}
+                            disabled={isPending}
                           />
                         </FormControl>
                         <FormMessage />
@@ -294,6 +311,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                           <Select
                             onValueChange={field.onChange}
                             defaultValue={field.value}
+                            disabled={isPending}
                           >
                             <SelectTrigger className="min-[320px]:w-[100px] min-[450px]:max-w-[80px] h-fit min-h-[32px] sm:min-h-[36px] focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                               <SelectValue />
@@ -329,6 +347,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                       <Select
                         onValueChange={field.onChange}
                         value={field.value}
+                        disabled={isPending}
                       >
                         <SelectTrigger className="w-[180px] h-fit focus:outline-none focus:ring-0  focus:ring-offset-0 pl-3 pr-1 py-1.5 sm:py-2 border-none rounded-lg">
                           <SelectValue
@@ -350,6 +369,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
                             onClick={() => {
                               form.setValue("category", "");
                             }}
+                            disabled={isPending}
                           >
                             {t(`clear-input`)}
                           </button>
@@ -367,6 +387,7 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
             <button
               type="submit"
               className="w-full font-medium bg-main-blue text-white rounded-lg py-2 mt-2 min-[450px]:py-3 min-[450px]:mt-3"
+              disabled={isPending}
             >
               {t(`edit-account`)}
             </button>

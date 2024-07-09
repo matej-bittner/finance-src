@@ -14,7 +14,6 @@ const Page = () => {
         {/*manage your money*/}
         <FirstSection />
         <hr className="mx-auto w-[80%] border-[1px] border-black" />
-
         <PotentialTable />
       </div>
       <Socials />

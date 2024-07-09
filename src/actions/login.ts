@@ -9,6 +9,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { getTranslations } from "next-intl/server";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
+
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const te = await getTranslations("action-errors");
   const ts = await getTranslations("action-success");
@@ -42,11 +43,22 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     return { success: ts("1") };
   }
 
+  let redirectUrl = DEFAULT_LOGIN_REDIRECT;
+
+  const supportedLanguages = ["en", "cs"]; // Replace with your supported languages
+
+  if (
+    existingUser?.mainLanguage &&
+    supportedLanguages.includes(existingUser.mainLanguage)
+  ) {
+    redirectUrl = `/${existingUser.mainLanguage}${DEFAULT_LOGIN_REDIRECT}`; // Construct URL with locale prefix
+  }
+
   try {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: redirectUrl,
     });
   } catch (error) {
     if (error instanceof AuthError) {

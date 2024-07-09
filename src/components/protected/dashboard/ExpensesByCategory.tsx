@@ -4,10 +4,12 @@ import Image from "next/image";
 import { categories } from "@/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { findCurrencySymbol } from "@/helpers/generalFunctions";
 
 interface ExpensesByCategoryProps {
   flat?: boolean;
   mainCurrency?: string;
+  usedCategoryId?: number;
   data?: {
     category: number;
     amount: number;
@@ -17,6 +19,7 @@ const ExpensesByCategory = ({
   flat,
   data,
   mainCurrency,
+  usedCategoryId,
 }: ExpensesByCategoryProps) => {
   const t = useTranslations("category");
   const searchParams = useSearchParams();
@@ -34,6 +37,7 @@ const ExpensesByCategory = ({
     } else {
       const params = new URLSearchParams(searchParams);
       params.set("category", categoryValue.toString());
+      params.delete("currency");
       router.push(`${pathname}?${params.toString()}`, { scroll: false });
     }
   }
@@ -53,20 +57,20 @@ const ExpensesByCategory = ({
           <button
             onClick={() => setCategory(item.id)}
             key={item.id}
-            className={`${flat ? "px-2" : "max-w-[250px]"} ${Number(searchParams.get("category")) === item.id && "bg-black/40 text-white"} flex w-full items-center justify-around md:justify-between  mx-auto h-fit  p-1 rounded-md group cursor-pointer`}
+            className={`   ${flat ? "px-2 border-2" : "max-w-[250px]"} ${usedCategoryId === item.id ? "border-black/60 bg-black/5" : "border-transparent"}  flex w-full items-center justify-around md:justify-between  mx-auto h-fit  p-1 rounded-md group cursor-pointer`}
           >
             <Image
               src={`/category-icons/${item.icon}.svg`}
               alt={item.icon}
               width={30}
               height={30}
-              className={`${Number(searchParams.get("category")) === item.id && "invert"}`}
+              // className={`${Number(searchParams.get("category")) === item.id && "invert"}`}
             />
             <div className="flex-1 pl-2 text-left">
               <p className="font-semibold">{t(item.value)}</p>
-              {!flat && amount && (
+              {!flat && amount && mainCurrency && (
                 <p className="text-sm">
-                  {amount + " " + mainCurrency?.toUpperCase()}
+                  {amount + " " + findCurrencySymbol(mainCurrency)}
                 </p>
               )}
             </div>
@@ -75,7 +79,8 @@ const ExpensesByCategory = ({
               alt="show more"
               width={30}
               height={30}
-              className={`${Number(searchParams.get("category")) === item.id && "invert"} group-hover:scale-110 origin-center transition-all duration-300`}
+              className={`group-hover:scale-110 origin-center transition-all duration-300`}
+              // className={`${Number(searchParams.get("category")) === item.id && "invert"} group-hover:scale-110 origin-center transition-all duration-300`}
             />
           </button>
         );
