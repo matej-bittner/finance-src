@@ -5,16 +5,16 @@
 
     "nav-links": {
       "about": {
-        "title": "about",
-        "link": "#"
+        "title": "Blog",
+        "link": "/blog"
       },
       "demo": {
         "title": "demo",
-        "link": "#"
+        "link": "/#demo"
       },
       "pricing": {
         "title": "pricing",
-        "link": "#"
+        "link": "/#pricing"
       }
     }
   },
@@ -33,37 +33,37 @@
       "title": "Menu",
       "slug": "menu",
       "icon": "expand-right",
-      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": ""
     },
     "goals": {
       "title": "Goals",
       "slug": "goals",
       "icon": "goals",
-      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": "We all have financial goals, even if they haven't surfaced yet! Our app helps you identify, track, and achieve them. See your progress in real-time and adjust your goals as needed. Whether it’s a new phone, an unforgettable vacation, or paying off debt, we provide the tools you need. Planning for a college fund, a new car, or a mountain cabin retreat? [App name] helps you turn those dreams into reality and keeps you on track every step of the way."
     },
     "income-expense": {
       "title": "Income and Expenses",
       "slug": "income-and-expenses",
       "icon": "wallet-money",
-      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small. We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": "Keep track of all your spending in one place with the Transactions tab. View all your expenses from all your accounts on a single page. You might discover you're paying for things you don't need or spending more on certain items than you realized. This feature provides clear insights into your spending habits, helping you make informed decisions and better manage your finances."
     },
     "subscriptions": {
       "title": "Subscriptions",
       "slug": "subscriptions",
       "icon": "ticket-expired",
-      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": "Keep all your subscriptions organized with our convenient Subscriptions tab. Whether it's Netflix, Spotify, or any other service, easily monitor and manage your recurring payments. It’s common to overlook how many subscriptions we have, but this feature helps you stay informed about your commitments and spending. Gain clarity and ensure you're only subscribed to what matters most to you."
     },
     "statistics": {
       "title": "Statistics",
       "slug": "statistics",
       "icon": "graph",
-      "text": "Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": "Discover insights into your monthly income and expenses, categorize your spending habits, and anticipate the addition of more graphs and comprehensive statistics soon. We recognize that presenting data graphically can often enhance comprehension more effectively than viewing it in tables alone. Stay tuned for these upcoming enhancements!"
     },
     "mobile-app": {
       "title": "Mobile App",
       "slug": "mobile-app",
       "icon": "mobile",
-      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": "We understand the usefulness of having a mobile app, but currently, our primary focus is on our web interface. That's why we've decided to optimize it for a pleasant experience on mobile phones as well. You don't need to worry about the web application causing issues on smaller screens in your browser."
     }
   },
 
@@ -71,23 +71,17 @@
 
   "pricing": {
     "title": "Check Our Pricing",
-    "currency": "usd",
+    "coming-soon": "Coming soon!",
     "period1": "month",
     "period2": "year",
     "purchase-text": "Select Now",
     "box-1": {
       "title": "premium",
-      "purchase-link": "#",
-      "price-month": "55",
-      "price-year": "150",
       "in-price": "100"
     },
     "box-2": {
       "title": "starter",
-      "purchase-link": "#",
-      "price-month": "22",
-      "price-year": "88",
-      "in-price": "3"
+      "in-price": "4"
     },
     "points": {
       "income": "Income and Expenses",
@@ -102,6 +96,49 @@
   "demo-section": {
     "title": "Demo",
     "text": " This demo video is here to help! We've packed it with everything you need to get started with our app, but keep in mind we're constantly adding new features. So, while this video might not cover every single bell and whistle, it'll equip you with the essentials to take control of your finances today."
+  },
+
+  "blog-page": {
+    "title": "What can you expect",
+    "priority": "Priority",
+    "blog-items": {
+      "item1": {
+        "title": "Enhanced Features",
+        "text": "If you actively use the app, you may have noticed that some fields cannot be edited. If not, you don't need to read further. We are currently actively working on an update that will allow this."
+      },
+      "item2": {
+        "title": "App Environment",
+        "text": "We plan to adjust the app for a more pleasant user experience."
+      },
+      "item3": {
+        "title": "Exporting Transactions to PDF",
+        "text": "We understand that even in today's world, people still like having information on paper, so we plan to add the ability to export transactions and account statuses."
+      },
+      "item4": {
+        "title": "Premium Plan",
+        "text": "Once the app is fully ready, we will launch a second plan that will allow you to have an overview of family accounts, unlock enhanced statistics, and a second view specifically for accounts of which you are not the direct owner."
+      },
+      "item5": {
+        "title": "Mobile App",
+        "text": "A mobile phone app is not currently our main priority. We plan to launch the app after the Premium plan is released. Until then, you can use our web interface, which we have designed to be fully functional and user-friendly even on smaller screens."
+      }
+    }
+  },
+  "subscription-select": {
+    "main-title": "Subscription",
+    "pay-duration": "Pay",
+    "pay-link": "Pay",
+    "pay-text": "After clicking 'Pay', you will be redirected to a page where you will fill in your details and confirm the payment. Then return and refresh the page.",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "save": "save",
+    "about-title": "About Plan",
+    "title": "Starter",
+    "text1": "The application is designed to connect all transactions, but it does not directly link to bank accounts, investment accounts, or any other accounts. You need to enter all information manually.",
+    "text2": "The plan includes an overview of accounts, including loans and investments. If you subscribe to services (Netflix, Spotify, etc.), you can set the amount to be automatically deducted from your account, and the same applies to standing orders and loan repayments.",
+    "text3": "You can create goals you want to achieve and link the above-mentioned accounts to them.",
+    "text4": "In the 'transactions' tab, you will see all payments, and you can add, remove, and edit them. If you need to find a payment, you can filter by month.",
+    "text5": "Accounts can also be in different currencies - CZK/EUR/USD (we are working on adding more)."
   },
 
   "login-form": {

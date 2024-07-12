@@ -4,6 +4,7 @@ export type ExtendedUser = DefaultSession["user"] & {
   mainCurrency: any;
   mainLanguage: any;
   isOAuth: boolean;
+  hasAccess: boolean;
 };
 
 declare module "next-auth" {

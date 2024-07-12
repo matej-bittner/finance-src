@@ -9,6 +9,7 @@ body,html,:root{
 body, html{
   padding: 0;
   margin: 0;
+  scroll-behavior: smooth;
 }
 
 #pages h1{@apply text-2xl font-medium tb:text-3xl xl:font-semibold  lg:text-4xl}

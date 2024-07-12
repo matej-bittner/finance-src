@@ -18,11 +18,14 @@ const Page = () => {
       </div>
       <Socials />
       {/*limit width box*/}
-      <div className="limited-width spacing-between-divs overflow-clip pt-1 lg:pt-2">
+      <div
+        className="limited-width spacing-between-divs overflow-clip pt-1 lg:pt-2 "
+        id="pricing"
+      >
         {/*pricing*/}
         <Pricing />
         <hr className="mx-auto w-[80%] border-[1px] border-black" />
-        <div className="spacing-in-div flex flex-col items-center">
+        <div className="spacing-in-div flex flex-col items-center" id="demo">
           <h1 className="">{t(`title`)}</h1>
           <p className="main-text max-w-[800px] text-center">{t(`text`)}</p>
           <div className="relative w-full sm:max-w-[580px] md:max-w-[680px] lg:max-w-[750px] xl:max-w-[890px]">

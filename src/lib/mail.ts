@@ -8,7 +8,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
   await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
-    subject: "Obnovení world",
+    subject: "Obnovení Hesla",
     html: `<p>Klikni <a href=${resetLink}>Zde</a></p>`,
   });
 };
@@ -20,5 +20,15 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     to: email,
     subject: "Confirm your Email",
     html: `<p>Click <a href="${confirmLink}">here</a></p>`,
+  });
+};
+
+export const sendWelcomeEmail = async (email: string) => {
+  const dashboardLink = `http://localhost:3000/cs/dashboard`;
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "Confirm your Email",
+    html: `<p>Click <a href="${dashboardLink}">here</a></p>`,
   });
 };

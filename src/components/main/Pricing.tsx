@@ -16,16 +16,16 @@ const Pricing = () => {
   const pricingBoxesData = [
     {
       title: t("box-1.title"),
-      link: t("box-1.purchase-link"),
-      "price-month": t("box-1.price-month"),
-      "price-year": t("box-1.price-year"),
+
+      "price-month": "??",
+      "price-year": "??",
       in_price: t("box-1.in-price"),
     },
     {
       title: t("box-2.title"),
-      link: t("box-2.purchase-link"),
-      "price-month": t("box-2.price-month"),
-      "price-year": t("box-2.price-year"),
+
+      "price-month": "8",
+      "price-year": "80",
       in_price: t("box-2.in-price"),
     },
   ];
@@ -39,22 +39,32 @@ const Pricing = () => {
           return (
             <div
               key={i}
-              className="flex h-[400px] relative w-full max-w-[350px] flex-col gap-3 rounded-xl border-2 border-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-main-yellow py-3 max-xl:mx-auto tb:h-[450px] tb:gap-5 tb:py-4 lg:h-[500px] lg:max-w-[400px] lg:py-5 xl:h-[550px] xl:max-w-[450px] xl:py-6"
+              className="flex h-[400px] relative overflow-clip w-full max-w-[350px] flex-col gap-3 rounded-xl border-2 border-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-main-yellow py-3 max-xl:mx-auto tb:h-[450px] tb:gap-5 tb:py-4 lg:h-[500px] lg:max-w-[400px] lg:py-5 xl:h-[550px] xl:max-w-[450px] xl:py-6"
             >
+              {i === 0 && (
+                <div className="absolute inset-0  backdrop-blur-[1px]  w-full h-full">
+                  <div className="absolute bg-main-blue border-2 border-white text-white font-medium text-lg rotate-45 top-10 md:top-14 -right-32 md:-right-28 h-[60px] w-[400px] flex items-center justify-center ">
+                    <p>{t("coming-soon")}</p>
+                  </div>
+                </div>
+              )}
               <h3 className="text-center">{pricingBox.title}</h3>
 
-              <div className="flex w-fit items-center gap-4 pl-4 min-[400px]:pl-6 lg:pl-10 xl:pl-16">
+              <div
+                className={` flex w-fit items-center gap-4 pl-4 min-[400px]:pl-6 lg:pl-10 xl:pl-16`}
+              >
                 <p className="price-amount">
                   {pricingBox["price-month"]}
                   <span className="text-xs font-normal lg:text-sm">
-                    {t(`currency`)}/{t(`period1`)}
+                    eur/{t(`period1`)}
                   </span>
                 </p>
                 <hr className="h-[50px] border-[1px] border-black" />
                 <p className="price-amount">
                   {pricingBox["price-year"]}
+
                   <span className="text-xs font-normal lg:text-sm">
-                    {t(`currency`)}/{t(`period2`)}
+                    eur/{t(`period2`)}
                   </span>
                 </p>
               </div>
@@ -85,12 +95,19 @@ const Pricing = () => {
                   );
                 })}
               </div>
-              <Link
-                href={pricingBox.link}
-                className="mx-auto w-fit rounded-xl px-3 py-[2px] text-center text-lg font-semibold tb:px-2 tb:py-1 lg:px-[12px] lg:text-xl xl:px-4 xl:py-[6px]"
-              >
-                {t(`purchase-text`)}
-              </Link>
+              {i === 0 ? (
+                <p className="mx-auto w-fit rounded-xl px-3 py-[2px] text-center text-lg font-semibold tb:px-2 tb:py-1 lg:px-[12px] lg:text-xl xl:px-4 xl:py-[6px]">
+                  {t(`purchase-text`)}
+                </p>
+              ) : (
+                <Link
+                  href="/register"
+                  // href={pricingBox.link}
+                  className="mx-auto w-fit rounded-xl px-3 py-[2px] text-center text-lg font-semibold tb:px-2 tb:py-1 lg:px-[12px] lg:text-xl xl:px-4 xl:py-[6px]"
+                >
+                  {t(`purchase-text`)}
+                </Link>
+              )}
             </div>
           );
         })}

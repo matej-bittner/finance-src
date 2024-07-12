@@ -39,7 +39,6 @@ export const editPaymentAccount = async (values: any) => {
     });
 
     if (type === 2) {
-      console.log(values);
       const dateISO = new Date(date).toISOString();
       const frequencyNumber = Number(frequency);
       await db.periodicPayment.update({

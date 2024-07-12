@@ -8,20 +8,23 @@ datasource db {
 }
 
 model User {
-  id              String            @id @default(cuid())
-  name            String?
-  email           String            @unique
-  emailVerified   DateTime?
-  image           String?
-  password        String?
-  accounts        Account[]
-  createdAt       DateTime          @default(now())
-  mainCurrency    String
-  mainLanguage    String
-  paymentAccounts PaymentAccount[]
-  goals           Goal[]
-  transactions    Transaction[]
-  PeriodicPayment PeriodicPayment[]
+  id                  String            @id @default(cuid())
+  name                String?
+  email               String            @unique
+  emailVerified       DateTime?
+  hasAccess           Boolean           @default(false)
+  subscriptionPriceId String?
+  customerId          String?
+  image               String?
+  password            String?
+  accounts            Account[]
+  createdAt           DateTime          @default(now())
+  mainCurrency        String
+  mainLanguage        String
+  paymentAccounts     PaymentAccount[]
+  goals               Goal[]
+  transactions        Transaction[]
+  PeriodicPayment     PeriodicPayment[]
 }
 
 model Account {

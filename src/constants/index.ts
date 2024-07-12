@@ -2,6 +2,32 @@ export const languages = [
   { value: "en", title: "English" },
   { value: "cs", title: "Česky" },
 ];
+
+export const plans = [
+  {
+    link:
+      process.env.NODE_ENV === "development"
+        ? "https://buy.stripe.com/test_9AQ14x8oZ4CK5b24gh"
+        : "",
+    priceId:
+      process.env.NODE_ENV === "development"
+        ? "price_1PagEDLy1KHXEetoonB80hb0"
+        : "",
+    duration: "yearly",
+  },
+  {
+    link:
+      process.env.NODE_ENV === "development"
+        ? "https://buy.stripe.com/test_fZe28Bax72uCavm6oo"
+        : "",
+    priceId:
+      process.env.NODE_ENV === "development"
+        ? "price_1PagAkLy1KHXEetoKzGDH6Fm"
+        : "",
+    duration: "monthly",
+  },
+];
+
 export const colors = [
   {
     id: 1,

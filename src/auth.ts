@@ -49,6 +49,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (session.user) {
         session.user.name = token.name;
         session.user.isOAuth = token.isOAuth as boolean;
+        session.user.hasAccess = token.hasAccess as boolean;
       }
 
       return session;
@@ -67,6 +68,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       token.email = existingUser.email;
       token.mainCurrency = existingUser.mainCurrency;
       token.mainLanguage = existingUser.mainLanguage;
+      token.hasAccess = existingUser.hasAccess;
 
       return token;
     },

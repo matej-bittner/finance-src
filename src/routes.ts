@@ -2,7 +2,7 @@
  * all routes that are accessible to public
  * @type{string[]}
  **/
-export const publicRoutes = ["/", "/new-verification"];
+export const publicRoutes = ["/", "/new-verification", "/blog"];
 
 /**
  * routes used for authentication
@@ -28,3 +28,4 @@ export const apiAuthPrefix = "/api/auth";
  * @type{string}
  **/
 export const DEFAULT_LOGIN_REDIRECT = "/dashboard";
+export const selectSubscriptionRoutes = ["/subscription-select"];

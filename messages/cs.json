@@ -5,16 +5,16 @@
 
     "nav-links": {
       "about": {
-        "title": "o projektu",
-        "link": "#"
+        "title": "Blog",
+        "link": "/blog"
       },
       "demo": {
         "title": "demo",
-        "link": "#"
+        "link": "/#demo"
       },
       "pricing": {
         "title": "ceník",
-        "link": "#"
+        "link": "/#pricing"
       }
     }
   },
@@ -33,37 +33,37 @@
       "title": "Menu",
       "slug": "menu",
       "icon": "expand-right",
-      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": ""
     },
     "goals": {
       "title": "Cíle",
       "slug": "goals",
       "icon": "goals",
-      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": "Všichni máme nějaké cíle, i když se třeba ještě neprojevily. Naše aplikace vám pomáhá tyto cíle identifikovat, sledovat a dosahovat jich. Sledujte svůj pokrok a podle potřeby své cíle upravujte. Ať už je to nový telefon, nezapomenutelnou dovolenou nebo splacení dluhů, poskytujeme vám nástroje, které potřebujete. Plánujete šetřit na vysokoškolské stipendium, nové auto nebo horskou chatu? [Název aplikace] vám pomůže tyto sny proměnit v realitu a udrží vás na správné cestě každým krokem."
     },
     "income-expense": {
       "title": "Příjmy a Výdaje",
       "slug": "income-and-expenses",
       "icon": "wallet-money",
-      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small. We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": "Udržujte přehled o všech svých výdajích a příjmech na jednom místě. Zobrazte si všechny vaše transakce z různých účtů na jediné stránce. Můžete přidávat, editovat a kategorizovat transakce. Často se stává, že lidé nevědí, za co a kolik peněz utrácejí, což není ideální. Pokud transakce budete mít o transakcích přehled,tak se vám to určitě nestane."
     },
     "subscriptions": {
       "title": "Předplatné",
       "slug": "subscriptions",
       "icon": "ticket-expired",
-      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": "Často se stává, že zapomínáme,co vše si předplácíme. Proto jsme vytvořili vlastní záložku pro předplatné, která vám pomůže sledovat vše, co si aktuálně předplácíte. Možná objevíte služby, které již nepotřebujete, a přesto na ně každý měsíc platíte, aniž byste si to uvědomili."
     },
     "statistics": {
       "title": "Statistiky",
       "slug": "statistics",
       "icon": "graph",
-      "text": "Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": "Získejte detailní přehled o vašich měsíčních příjmech a výdajích. Analyzujte své výdajové návyky s přehlednými kategoriemi a těšte se na brzká vylepšení v podobě dalších grafů a komplexních statistik. Věříme, že grafické zobrazení dat usnadňuje pochopení a zpříjemňuje jejich prohlížení oproti tabulkám. Buďte s námi, až nová vylepšení spustíme!"
     },
     "mobile-app": {
       "title": "Mobilní Aplikace",
       "slug": "mobile-app",
       "icon": "mobile",
-      "text": "We all have financial goals, even if they haven't bubbled to the surface yet! Our app can help you uncover and achieve them, no matter how big or small.  Dreaming of a new phone, that unforgettable vacation, or finally conquering your debt? We've got the tools you need.  Need to plan for your kids' college fund, a brand new car, or that perfect mountain cabin retreat? The possibilities are limitless!  Let your imagination run wild –  [app name] can help you turn those dreams into reality."
+      "text": "Víme, že mít mobilní aplikaci je užitečné, ale momentálně věnujeme většinu pozornosti našemu webovému rozhraní. Proto jsme se rozhodli ho upravit tak, aby bylo příjemné pro užívání i na mobilních telefonech. Nemusíte se tedy bát, že by vám webová aplikace na menších obrazovkách dělala v prohlížeči problémy."
     }
   },
 
@@ -71,7 +71,7 @@
 
   "pricing": {
     "title": "Prohlédněte si naše cenové plány.",
-    "currency": "czk",
+    "coming-soon": "Připravované",
     "period1": "měsíc",
     "period2": "rok",
     "purchase-text": "Vybrat",
@@ -87,7 +87,7 @@
       "purchase-link": "#",
       "price-month": "22",
       "price-year": "88",
-      "in-price": "3"
+      "in-price": "4"
     },
     "points": {
       "income": "Příjmy a Výdaje",
@@ -104,6 +104,49 @@
     "text": "Toto demo video je zde, aby vám pomohlo! Naleznete v něm vše potřebné k tomu, abyste mohli začít s naší aplikací. Pamatujte však, že neustále přidáváme nové funkce. Přestože toto video nemusí pokrýt naprosto všechny dostupné možnosti, vybaví vás základními znalostmi k tomu, abyste ještě dnes převzali kontrolu nad svými financemi."
   },
 
+  "blog-page": {
+    "title": "Co můžete očekávat",
+    "priority": "Priorita",
+    "blog-items": {
+      "item1": {
+        "title": "Vylepšené funkce",
+        "text": "Pokud aplikaci aktivně používáte, všimli jste si, že některé pole nelze editovat. Pokud ne, tak dál číst nemusíte. Momentálně aktivně pracuje na úpravě, která to již bude umožnovat."
+      },
+      "item2": {
+        "title": "Prostředí aplikace",
+        "text": "Aplikaci plánujeme upravit pro příjemnějsí uživatelskou zkušenost."
+      },
+      "item3": {
+        "title": "Exportování transakcí do PDF",
+        "text": "Vnímáme, že i v dnešní době lidé  mají rádi informace na papíru, proto mít možnost exportovat transakce a stavy účtů plánujeme přidat."
+      },
+      "item4": {
+        "title": "Premiu plán",
+        "text": "Až bude aplikace plně připravená, bude spuštěn druhý plán, který umožní mít přehled nad rodinnými účty, odemkneme vylepšené statistiky a druhé zobrazení, právě pro účty, kterých nebudete přímý vlastník"
+      },
+      "item5": {
+        "title": "Mobilní aplikace",
+        "text": "Aplikace do mobilního telefonu momentálně není naší hlavní prioritou. Aplikaci plánujeme spustit poté, co bude spuštěn Premium plán. Do té doby můžete využívat naše webové rozhraní, které jsme se snažily navrhnout tak, aby i na menších obrazovkách  bylo plně funkční a přehledné."
+      }
+    }
+  },
+  "subscription-select": {
+    "main-title": "Předplatné",
+    "pay-duration": "Platba",
+    "pay-link": "Zaplatit",
+    "pay-text": "Po kliknutí na “Zaplatit” budete přesměrování na stránku, kde vyplníte údaje a potvrdíte platbu. Poté se vraťte zpět a obnovte stránku.",
+    "monthly": "Měsíčně",
+    "yearly": "Ročně",
+    "save": "ušetříte",
+    "about-title": "O plánu",
+
+    "title": "Startovací",
+    "text1": "Aplikace slouží k propojení veškerých transakcí, žádným způsobem se ale nepropojuje přímo s bankovními účty, investičními účty, nebo jakýmkoliv jiným účtem. Veškeré informace si musíte zadat ručně.",
+    "text2": "Plán obsahuje přehled účtů, včetně úvěrů a investic. Pokud si platíte předplatné (Netflix, Spotify, časopis Český rybář,..), můžete si nastavit, aby se Vám částka automaticky odečítala z účtu, to stejné i s trvalými platby a splátkami úvěru",
+    "text3": "Můžete si vytvořit cíle, které chcete splnit a připojit k ním výše uvedené účty",
+    "text4": "V záložce “transakce” uvidíte veškeré platby, můžete je přidávat, odebírat i editovat. Pokud potřebujete platbu dohledat, můžete si filtrovat dle měsíce. ",
+    "text5": "Účty také mohou být v měnách - CZK/EUR/USD (na přidání dalších pracujeme)"
+  },
   "login-form": {
     "title": "Vítejte zpět",
     "back-text1": "Obnovit zapomenuté heslo",
