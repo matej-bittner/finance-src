@@ -435,5 +435,46 @@
     "general": "Obecné",
     "subscription": "Předplatné",
     "account": "Účet"
+  },
+  "email": {
+    "subscription-payment": {
+      "subject": "Předplatné úspěšně aktivováno!",
+      "title": "Zaplaceno!",
+      "text1": "Děkujeme ti za důvěru, kterou si do nás vložil přihlášením se k právě k nám. Doufáme, že splníme veškerá tva očekávání a budeš se k nám rád vracet.",
+      "text2": "Pro přesměrování do aplikace klikněte",
+      "clickHere": "ZDE",
+      "text3": "V případě, že narazíte na jakýkoli problém nebo budete mít dotaz ohledně aplikace, neváhejte nás kontaktovat.",
+      "greeting": "S pozdravem,",
+      "greeting2": "Tým"
+    },
+    "password-reset": {
+      "subject": "Obnovení hesla",
+      "title": "Obnovení hesla",
+      "text1": "Právě byl vygenerován požadavek na obnovení hesla, pokud si o obnovení nežádal, E-mail ignoruj.",
+      "text2": " Pokud E-mail nepatří tobě, kontaktuj prosím podpor, aby se situace neopakovala.",
+      "text3": "Pro obnovení klikni",
+      "clickHere": "ZDE",
+      "greeting": "S pozdravem,",
+      "greeting2": "Tým"
+    },
+    "verification-register": {
+      "subject": "Potvrzení E-mailu!",
+      "title": "Vítej!",
+      "text1": "Registrace proběhla v pořádku, jediné co potřebujeme je ověřit tento E-mail, stačí kliknout na odkaz níže.",
+      "text2": "Pokud si o registaci nežádal, E-mail můžeš ignorovat",
+      "clickHere": "Ověřit E-mailovou adresu",
+      "text3": "Po ověření se znovu přihlaš do aplikace a vyber si jakou formou budeš chtít hradit předplatné",
+      "greeting": "S pozdravem,",
+      "greeting2": "Tým"
+    },
+    "change-on-account": {
+      "subject": "Pokus o změnu nastavení účtu",
+      "title": "Změna účtu",
+      "text1": "Právě byl vygenerován požadavek na změnu nastavení účtu",
+      "text2": "Pokud si o změnu nežádal, E-mail můžeš ignorovat a popřípadě kontaktuj podporu",
+      "clickHere": "Potvrdit změny",
+      "greeting": "S pozdravem,",
+      "greeting2": "Tým"
+    }
   }
 }

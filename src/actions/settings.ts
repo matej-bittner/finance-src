@@ -7,7 +7,7 @@ import { db } from "@/lib/db";
 import { getTranslations } from "next-intl/server";
 import { currentUser } from "@/helpers/current-user";
 import { generateVerificationToken } from "@/lib/tokens";
-import { sendVerificationEmail } from "@/lib/mail";
+import { sendChangeOnAccountEmail, sendVerificationEmail } from "@/lib/mail";
 
 export const settings = async (values: z.infer<typeof SettingsSchema>) => {
   const te = await getTranslations("action-errors");
@@ -24,16 +24,22 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
     values.password = undefined;
     values.newPassword = undefined;
   }
+
   if (values.email && values.email !== user.email) {
     const existingUser = await getUserByEmail(values.email);
+
     if (existingUser && existingUser.id !== user.id) {
       return { error: te("5") };
     }
 
-    const verificationToken = await generateVerificationToken(values.email);
-    await sendVerificationEmail(
+    const verificationToken = await generateVerificationToken(
+      values.email,
+      dbUser.email,
+    );
+    await sendChangeOnAccountEmail(
       verificationToken.email,
       verificationToken.token,
+      dbUser.mainLanguage,
     );
     return { success: ts("1") };
   }

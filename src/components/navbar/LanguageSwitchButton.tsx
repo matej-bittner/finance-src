@@ -1,19 +1,30 @@
 "use client";
 import React, { useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import { languages } from "@/constants";
+import Cookies from "js-cookie";
 
 const LanguageSwitchButton = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const localActive = useLocale();
+  const pathname = usePathname();
+
   const t = useTranslations("language-switch");
 
   const onSelectChange = (e: any) => {
     const nextLocale = e.target.value;
+    const newPathname = pathname.replace(/^\/[^/]+/, `/${nextLocale}`);
     startTransition(() => {
-      router.replace(`/${nextLocale}`);
+      if (
+        !Cookies.get("preferredLanguage") ||
+        Cookies.get("preferredLanguage") !== nextLocale
+      ) {
+        Cookies.set("preferredLanguage", nextLocale);
+      }
+      router.push(newPathname);
     });
   };
   return (
@@ -32,8 +43,11 @@ const LanguageSwitchButton = () => {
         onChange={onSelectChange}
         className="outline-none focus:outline-none bg-main-yellow"
       >
-        <option value="en">English</option>
-        <option value="cs">Česky</option>
+        {languages.map((lang, i) => (
+          <option key={i} value={lang.value}>
+            {lang.title}
+          </option>
+        ))}
       </select>
     </label>
   );

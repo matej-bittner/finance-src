@@ -5,9 +5,7 @@ import { currentUser } from "@/helpers/current-user";
 import ChangeSecurityInfoForm from "@/components/protected/settings/ChangeSecurityInfoForm";
 import { getTranslations } from "next-intl/server";
 
-const Settings = async ({ searchParams }: any) => {
-  const category = searchParams.type;
-  const user = await currentUser();
+const Settings = async () => {
   const t = await getTranslations("settings-page");
   return (
     <div id="settings" className=" flex flex-col w-full gap-2">

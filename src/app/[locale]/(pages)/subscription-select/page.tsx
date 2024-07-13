@@ -1,13 +1,22 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import SubscriptionSelector from "@/components/SubscriptionSelector";
-import { getTranslations } from "next-intl/server";
-import { currentUser } from "@/helpers/current-user";
 
-const Page = async () => {
-  const t = await getTranslations("subscription-select");
+import { useTranslations } from "next-intl";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useRouter } from "next/navigation";
 
-  const user = await currentUser();
+const Page = () => {
+  const t = useTranslations("subscription-select");
+  const router = useRouter();
+  const user = useCurrentUser();
+  useEffect(() => {
+    if (user?.hasAccess) {
+      router.refresh();
+    }
+  }, []);
   if (!user?.email) return null;
+
   return (
     <section className="limited-width flex min-h-[calc(100vh-65px)] sm:min-h-[calc(100vh-75px)] md:min-h-[calc(100vh-85px)] flex-col py-5 tb:py-6 gap-3 md:gap-4 lg:gap-6 ">
       <h1 className="text-center underline pb-2">{t("main-title")}</h1>

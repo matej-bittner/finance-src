@@ -7,23 +7,27 @@ export const plans = [
   {
     link:
       process.env.NODE_ENV === "development"
-        ? "https://buy.stripe.com/test_9AQ14x8oZ4CK5b24gh"
-        : "",
+        ? "https://buy.stripe.com/test_6oE4gJcFf8T0cDu28a"
+        : // ? "https://buy.stripe.com/test_9AQ14x8oZ4CK5b24gh"
+          "",
     priceId:
       process.env.NODE_ENV === "development"
-        ? "price_1PagEDLy1KHXEetoonB80hb0"
-        : "",
+        ? "price_1PbodmLy1KHXEetojHh6lTdn"
+        : // ? "price_1PagEDLy1KHXEetoonB80hb0"
+          "",
     duration: "yearly",
   },
   {
     link:
       process.env.NODE_ENV === "development"
-        ? "https://buy.stripe.com/test_fZe28Bax72uCavm6oo"
-        : "",
+        ? "https://buy.stripe.com/test_14k28BbBbgls5b2eUX"
+        : // ? "https://buy.stripe.com/test_fZe28Bax72uCavm6oo"
+          "",
     priceId:
       process.env.NODE_ENV === "development"
-        ? "price_1PagAkLy1KHXEetoKzGDH6Fm"
-        : "",
+        ? "price_1PbodKLy1KHXEetoMwxPTsvU"
+        : // ? "price_1PagAkLy1KHXEetoKzGDH6Fm"
+          "",
     duration: "monthly",
   },
 ];

@@ -19,7 +19,13 @@ const NewVerification = async (token: string) => {
     return { error: te("17") };
   }
 
-  const existingUser = await getUserByEmail(existingToken.email);
+  let existingUser;
+
+  if (existingToken.oldEmail) {
+    existingUser = await getUserByEmail(existingToken.oldEmail);
+  } else {
+    existingUser = await getUserByEmail(existingToken.email);
+  }
 
   if (!existingUser) {
     return { error: te("4") };

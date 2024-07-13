@@ -433,5 +433,46 @@
     "general": "General",
     "subscription": "Subscription",
     "account": "Account"
+  },
+  "email": {
+    "subscription-payment": {
+      "subject": "Subscription Successfully Activated!",
+      "title": "Payment Successful!",
+      "text1": "Thank you for the trust you've placed in us by subscribing. We hope to meet all your expectations and that you'll enjoy coming back to us.",
+      "text2": "To be redirected to the application, click",
+      "clickHere": "HERE",
+      "text3": "If you encounter any problems or have questions about the application, do not hesitate to contact us.",
+      "greeting": "Best regards,",
+      "greeting2": "The Team"
+    },
+    "password-reset": {
+      "subject": "Password Reset",
+      "title": "Password Reset",
+      "text1": "A password reset request has just been generated. If you did not request a reset, please ignore this email.",
+      "text2": "If the email does not belong to you, please contact support to prevent this from happening again.",
+      "text3": "To reset your password, click",
+      "clickHere": "HERE",
+      "greeting": "Best regards,",
+      "greeting2": "The Team"
+    },
+    "verification-register": {
+      "subject": "Email confirmation",
+      "title": "Welcome",
+      "text1": "Registration was successful. The only thing we need now is to verify this email. Just click on the link below.",
+      "text2": "If you did not request the registration, you can ignore this email.",
+      "clickHere": "Verify Email Address",
+      "text3": "After verification, log back into the application and choose how you would like to pay for the subscription.",
+      "greeting": "Best regards,",
+      "greeting2": "The Team"
+    },
+    "change-on-account": {
+      "subject": "Attempt to change account settings",
+      "title": "Account change",
+      "text1": "A request to change account settings has just been generated.",
+      "text2": "If you did not request this change, you can ignore this email and contact support if necessary.",
+      "clickHere": "Confirm Changes",
+      "greeting": "Best regards,",
+      "greeting2": "The team"
+    }
   }
 }

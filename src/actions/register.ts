@@ -12,7 +12,7 @@ import { languages } from "@/constants";
 
 export const register = async (
   values: z.infer<typeof RegisterSchema>,
-  locale?: string,
+  locale: string,
 ) => {
   const te = await getTranslations("action-errors");
   const ts = await getTranslations("action-success");
@@ -51,7 +51,11 @@ export const register = async (
   });
 
   const verificationToken = await generateVerificationToken(email);
-  await sendVerificationEmail(verificationToken.email, verificationToken.token);
+  await sendVerificationEmail(
+    verificationToken.email,
+    verificationToken.token,
+    locale,
+  );
 
   return { success: ts("1") };
 };

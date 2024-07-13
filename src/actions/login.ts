@@ -39,6 +39,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     await sendVerificationEmail(
       verificationToken.email,
       verificationToken.token,
+      existingUser.mainLanguage,
     );
     return { success: ts("1") };
   }
