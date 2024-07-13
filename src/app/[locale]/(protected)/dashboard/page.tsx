@@ -13,14 +13,17 @@ import {
   userAccounts,
   userPeriodicPayments,
 } from "@/helpers/current-user";
-import { convertCurrency } from "@/app/api/convert-currency/route";
+// import { convertCurrency } from "@/app/api/convert-currency/route";
 import Link from "next/link";
 import { currencies } from "@/constants";
 import { getTranslations } from "next-intl/server";
 import DashboardChart from "@/components/protected/charts/DashboardChart";
 
 import { getRangeOption, RANGE_OPTIONS } from "@/schemas/rangeOptions";
-import { findCurrencySymbol } from "@/helpers/generalFunctions";
+import {
+  convertCurrency,
+  findCurrencySymbol,
+} from "@/helpers/generalFunctions";
 import BlankAccountInfoDisplay from "@/components/protected/dashboard/BlankAccountInfoDisplay";
 import GoalItemSkeleton from "@/components/protected/skeletons/GoalItemSkeleton";
 
