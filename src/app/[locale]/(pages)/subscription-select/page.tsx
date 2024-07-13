@@ -8,13 +8,9 @@ import { useRouter } from "next/navigation";
 
 const Page = () => {
   const t = useTranslations("subscription-select");
-  const router = useRouter();
+  // const router = useRouter();
   const user = useCurrentUser();
-  useEffect(() => {
-    if (user?.hasAccess) {
-      router.refresh();
-    }
-  }, []);
+
   if (!user?.email) return null;
 
   return (

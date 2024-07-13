@@ -37,7 +37,7 @@ export const register = async (
     const findLocale = languages.some((language) => language.value === locale);
     if (findLocale) {
       language = locale;
-      currency = language === "cs" ? "cs" : "eur";
+      currency = language === "cs" ? "czk" : "eur";
     }
   }
 
