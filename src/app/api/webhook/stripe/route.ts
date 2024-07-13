@@ -10,11 +10,11 @@ import { sendSuccessPayEmail } from "@/lib/mail";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET_KEY!;
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// export const config = {
+//   api: {
+//     bodyParser: false,
+//   },
+// };
 
 export async function POST(req: Request) {
   const body = await req.text();
