@@ -12,6 +12,12 @@ body, html{
   scroll-behavior: smooth;
 }
 
+.pricing-blur{
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px) ;
+}
+
+
 #pages h1{@apply text-2xl font-medium tb:text-3xl xl:font-semibold  lg:text-4xl}
 #pages h2{@apply text-[22px] font-medium tb:text-2xl lg:text-[28px] }
 #pages h3{@apply underline underline-offset-4 capitalize text-lg font-medium sm:text-[20px] tb:text-[24px] xl:text-[26px] }

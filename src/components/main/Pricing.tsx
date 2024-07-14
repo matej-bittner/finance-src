@@ -42,7 +42,8 @@ const Pricing = () => {
               className="flex h-[400px] relative overflow-clip w-full max-w-[350px] flex-col gap-3 rounded-xl border-2 border-white shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-main-yellow py-3 max-xl:mx-auto tb:h-[450px] tb:gap-5 tb:py-4 lg:h-[500px] lg:max-w-[400px] lg:py-5 xl:h-[550px] xl:max-w-[450px] xl:py-6"
             >
               {i === 0 && (
-                <div className="absolute inset-0  backdrop-blur-[1px]  w-full h-full">
+                <div className="absolute inset-0 pricing-blur w-full h-full">
+                  {/*<div className="absolute inset-0  backdrop-blur-[1px]  w-full h-full">*/}
                   <div className="absolute bg-main-blue border-2 border-white text-white font-medium text-lg rotate-45 top-10 md:top-14 -right-32 md:-right-28 h-[60px] w-[400px] flex items-center justify-center ">
                     <p>{t("coming-soon")}</p>
                   </div>

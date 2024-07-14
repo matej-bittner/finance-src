@@ -17,6 +17,7 @@ import { getNewPasswordSchema } from "@/schemas";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import newPassword from "@/actions/new-password";
+import SubmitButton from "@/components/auth/SubmitButton";
 
 const NewPasswordForm = () => {
   const t = useTranslations("login-form");
@@ -82,13 +83,10 @@ const NewPasswordForm = () => {
             </div>
             <CardError message={error} />
             <CardSuccess message={success} />
-            <button
-              disabled={isPending}
-              type="submit"
-              className="text-white bg-black border-2 border-white rounded-lg text-xl py-2 my-1 tracking-wide"
-            >
-              {t("change-password")}
-            </button>
+            <SubmitButton
+              isPending={isPending}
+              buttonText={t("change-password")}
+            />
           </form>
         </Form>
       </Card>

@@ -7,6 +7,10 @@ import { getTranslations } from "next-intl/server";
 
 const Settings = async () => {
   const t = await getTranslations("settings-page");
+  const user = await currentUser();
+  if (!user) {
+    return null;
+  }
   return (
     <div id="settings" className=" flex flex-col w-full gap-2">
       <SettingsHeader />
@@ -15,7 +19,7 @@ const Settings = async () => {
           <h1 className="text-xl font-semibold underline text-center">
             {t("general")}
           </h1>
-          <ChangeSecurityInfoForm />
+          <ChangeSecurityInfoForm user={user} />
         </div>
       </div>
     </div>

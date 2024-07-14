@@ -16,6 +16,7 @@ import CardSuccess from "@/components/auth/CardSuccess";
 import { getResetSchema } from "@/schemas";
 import { useTranslations } from "next-intl";
 import { reset } from "@/actions/reset";
+import SubmitButton from "@/components/auth/SubmitButton";
 
 const ResetForm = () => {
   const t = useTranslations("login-form");
@@ -78,13 +79,7 @@ const ResetForm = () => {
             </div>
             <CardError message={error} />
             <CardSuccess message={success} />
-            <button
-              disabled={isPending}
-              type="submit"
-              className="text-white bg-black border-2 border-white rounded-lg text-xl py-2 my-1 tracking-wide"
-            >
-              {t("back-text1")}
-            </button>
+            <SubmitButton isPending={isPending} buttonText={t("back-text1")} />
           </form>
         </Form>
       </Card>

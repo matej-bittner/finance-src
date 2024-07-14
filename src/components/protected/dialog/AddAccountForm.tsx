@@ -29,22 +29,9 @@ import {
 import { createPaymentAccount } from "@/actions/create-payment-account";
 import { getAddAccountSchema } from "@/schemas";
 
-// const formSchema = z.object({
-//   number: z.string().optional(),
-//   name: z.string().min(1),
-//   balance: z.number().positive().min(1),
-//   payment: z.number(),
-//   currency: z.string().min(1),
-//   date: z.string(),
-//   frequency: z.string(),
-//   category: z.string().optional(),
-// });
 const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
   const [selectedType, setSelectedType] = useState(1);
   const [isPending, startTransition] = useTransition();
-  useEffect(() => {
-    form.reset(defaultValues);
-  }, [selectedType]);
 
   const router = useRouter();
   const { toast } = useToast();
@@ -102,6 +89,11 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
     });
   }
 
+  function changeType(type: number) {
+    setSelectedType(type);
+    form.reset(defaultValues);
+  }
+
   return (
     <Form {...form}>
       <form
@@ -116,7 +108,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
               <button
                 key={item.id}
                 type="button"
-                onClick={() => setSelectedType(item.id)}
+                onClick={() => changeType(item.id)}
                 className={`border-2 border-white rounded-md w-full pl-2 py-1 flex items-center text-left   ${selectedType === item.id && "bg-main-blue text-white"}`}
               >
                 {t1(item.title)}

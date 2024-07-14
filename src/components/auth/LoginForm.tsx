@@ -17,6 +17,8 @@ import { getLoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import { ClipLoader, PulseLoader } from "react-spinners";
+import SubmitButton from "@/components/auth/SubmitButton";
 
 const LoginForm = () => {
   const t = useTranslations("login-form");
@@ -108,13 +110,10 @@ const LoginForm = () => {
             </div>
             <CardError message={error || urlError} />
             <CardSuccess message={success} />
-            <button
-              disabled={isPending}
-              type="submit"
-              className="text-white bg-black border-2 border-white rounded-lg text-xl py-2 my-1 tracking-wide"
-            >
-              {t("submit-button")}
-            </button>
+            <SubmitButton
+              isPending={isPending}
+              buttonText={t("submit-button")}
+            />
           </form>
         </Form>
       </Card>

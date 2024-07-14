@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "email": "email dev --dir src/components/emails"
+    "email": "email dev --dir src/components/emails",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.2.0",
@@ -24,6 +25,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@react-email/components": "0.0.21",
     "@tanstack/react-table": "^8.17.3",
+    "@vercel/analytics": "^1.3.1",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -58,6 +60,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/uuid": "^9.0.8",
+    "autoprefixer": "^10.4.19",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",

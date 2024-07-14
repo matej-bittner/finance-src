@@ -55,7 +55,7 @@ const PotentialTable = () => {
   };
 
   return (
-    <div className="spacing-in-div ">
+    <div className="spacing-in-div  relative">
       <h1 className="text-center max-tb:whitespace-pre">
         {t(`title`).split(" ").length > 3
           ? `${t(`title`).split(" ").slice(0, 3).join(" ")}  \n ${t(`title`).split(" ").slice(3, t(`title`).split(" ").length).join(" ")}`
@@ -63,25 +63,37 @@ const PotentialTable = () => {
       </h1>
       <div className="flex w-full max-lg:flex-col sm:max-lg:gap-3 lg:justify-center ">
         {/*choose createGoal bar*/}
+
         <div
-          className={`left-0 flex w-fit gap-5 rounded-r-xl max-sm:absolute max-sm:h-[200px] max-sm:pl-3  sm:max-lg:mx-auto ${goal.open ? "max-sm:translate-x-0 bg-[#F0F0F0]" : "max-sm:translate-x-[-165px]"}`}
+          className={` left-0 flex w-fit gap-5 rounded-r-xl max-sm:absolute max-sm:h-[200px]  sm:max-lg:mx-auto ${goal.open && "max-sm:bg-[#F0F0F0] -left-4"}`}
         >
+          {/*  <div*/}
+          {/*  className={`bg-red-700 left-0 flex w-fit gap-5 rounded-r-xl max-sm:absolute max-sm:h-[200px] max-sm:pl-3  sm:max-lg:mx-auto ${goal.open ? "max-sm:translate-x-0 bg-[#F0F0F0]" : "max-sm:translate-x-[-165px]"}`}*/}
+          {/*>*/}
+
           {/*createGoal title sm+hidden*/}
-          <div className="flex flex-col items-end justify-between py-[6px] sm:hidden">
-            {potentialGoalsData.map((item, i) => {
-              return (
-                <p
-                  key={i}
-                  onClick={() => handleChange(i)}
-                  className={`py-[3.5px] text-sm ${goal.chosen === i ? "text-slate-700" : "text-black"}`}
-                >
-                  {item.title}
-                </p>
-              );
-            })}
-          </div>
+          {goal.open && (
+            <div className="flex flex-col items-end justify-between py-[6px] sm:hidden pl-3">
+              {potentialGoalsData.map((item, i) => {
+                return (
+                  <p
+                    key={i}
+                    onClick={() => handleChange(i)}
+                    className={`py-[3.5px] text-sm ${goal.chosen === i ? "text-slate-700" : "text-black"}`}
+                  >
+                    {item.title}
+                  </p>
+                );
+              })}
+            </div>
+          )}
+
           {/*icon sm+ icon and text*/}
-          <div className="flex h-full w-[34px] items-center rounded-xl bg-main-blue py-1 max-sm:flex-col max-sm:justify-between sm:h-[36px] sm:w-fit sm:gap-2 sm:rounded-2xl sm:px-1 lg:h-full lg:flex-col lg:items-start lg:justify-center lg:gap-1 lg:rounded-l-2xl lg:rounded-r-none lg:bg-main-yellow lg:pl-4 lg:pr-6 xl:gap-3 xl:pb-4 xl:pl-6 lg:border-white lg:border-y-2 lg:border-l-2">
+          <div
+            className="flex h-full w-[34px] items-center rounded-xl bg-main-blue py-1 max-sm:flex-col max-sm:justify-between
+          sm:h-[36px] sm:w-fit sm:gap-2 sm:rounded-2xl sm:px-1 lg:h-full lg:flex-col lg:items-start lg:justify-center lg:gap-1
+          lg:rounded-l-2xl lg:rounded-r-none lg:bg-main-yellow lg:pl-4 lg:pr-6 xl:gap-3 xl:pb-4 xl:pl-6 lg:border-white lg:border-y-2 lg:border-l-2"
+          >
             {potentialGoalsData.map((item, i) => {
               return (
                 <div
@@ -105,7 +117,7 @@ const PotentialTable = () => {
           </div>
         </div>
         {/*article*/}
-        <div className="min-h-[370px] w-[85%] space-y-2 rounded-md bg-main-yellow p-3 max-lg:ml-auto min-[370px]:max-w-[260px] min-[370px]:max-lg:mx-auto min-[460px]:min-h-[200px] min-[460px]:max-w-[90%] sm:max-w-[570px] sm:rounded-xl lg:w-full lg:rounded-l-none lg:rounded-r-2xl lg:pr-5 xl:h-[310px] xl:space-y-4 xl:py-5 border-white border-2 lg:border-l-0">
+        <div className="min-h-[370px] w-[85%] space-y-2 rounded-md bg-main-yellow p-3 max-lg:ml-auto min-[370px]:max-w-[260px] min-[370px]:max-lg:mx-auto min-[460px]:min-h-[200px] min-[460px]:max-w-[80%] sm:max-w-[570px] sm:rounded-xl lg:w-full lg:rounded-l-none lg:rounded-r-2xl lg:pr-5 xl:h-[310px] xl:space-y-4 xl:py-5 border-white border-2 lg:border-l-0">
           <h4 className="underline max-lg:text-center lg:pl-2">
             {potentialGoalsData[goal.chosen].title}
           </h4>

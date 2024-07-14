@@ -33,18 +33,6 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { getAddSubscriptionSchema, getAddTransactionSchema } from "@/schemas";
 
-// const formSchema = z.object({
-//   accountFrom: z.string(),
-//   accountTo: z.string(),
-//   name: z.string().min(1),
-//   amount: z.number().positive().min(1),
-//   currency: z.string().min(1),
-//   description: z.string().optional(),
-//   date: z.string().min(1),
-//   frequency: z.string(),
-//   category: z.string().optional(),
-//   endOfPayment: z.string().optional(),
-// });
 const AddTransactionForm = ({
   userAccounts,
   defaultCurrency,
@@ -54,10 +42,6 @@ const AddTransactionForm = ({
 }) => {
   const [isPending, startTransition] = useTransition();
   const [selectedType, setSelectedType] = useState(1);
-  useEffect(() => {
-    form.reset(defaultValues);
-  }, [selectedType]);
-
   const router = useRouter();
   const { toast } = useToast();
 
@@ -136,6 +120,11 @@ const AddTransactionForm = ({
     });
   }
 
+  function changeType(type: number) {
+    setSelectedType(type);
+    form.reset(defaultValues);
+  }
+
   return (
     <Form {...form}>
       <form
@@ -151,7 +140,7 @@ const AddTransactionForm = ({
                 key={item.id}
                 type="button"
                 disabled={isPending}
-                onClick={() => setSelectedType(item.id)}
+                onClick={() => changeType(item.id)}
                 className={`border-2 border-white rounded-md w-full pl-2 py-1 flex items-center text-left   ${selectedType === item.id && "bg-main-blue text-white"}`}
               >
                 {t1(item.title)}

@@ -16,6 +16,7 @@ import CardSuccess from "@/components/auth/CardSuccess";
 import { getRegisterSchema } from "@/schemas";
 import { register } from "@/actions/register";
 import { useLocale, useTranslations } from "next-intl";
+import SubmitButton from "@/components/auth/SubmitButton";
 
 const RegisterForm = () => {
   const t = useTranslations("register-form");
@@ -101,13 +102,10 @@ const RegisterForm = () => {
             </div>
             <CardError message={error} />
             <CardSuccess message={success} />
-            <button
-              disabled={isPending}
-              type="submit"
-              className="text-white bg-black border-2 border-white rounded-lg text-xl py-2 my-1 tracking-wide"
-            >
-              {t("submit-button")}
-            </button>
+            <SubmitButton
+              isPending={isPending}
+              buttonText={t("submit-button")}
+            />
           </form>
         </Form>
       </Card>

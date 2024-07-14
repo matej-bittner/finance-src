@@ -17,7 +17,7 @@ const Footer = () => {
             return (
               <a key={i} href={item.link}>
                 <Image
-                  src={`http://localhost:3000/icons/${item.icon}.svg`}
+                  src={`/icons/${item.icon}.svg`}
                   width="40"
                   height="40"
                   alt={item.icon}

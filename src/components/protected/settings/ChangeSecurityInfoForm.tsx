@@ -1,5 +1,5 @@
 "use client";
-import React, { startTransition, useTransition } from "react";
+import React, { startTransition, useEffect, useTransition } from "react";
 import { z } from "zod";
 import { removeEmptyStrings } from "@/helpers/generalFunctions";
 import { createGoal } from "@/actions/create-goal";
@@ -29,8 +29,7 @@ import {
 } from "@/components/ui/select";
 import { currencies, languages } from "@/constants";
 
-const ChangeSecurityInfoForm = () => {
-  const user = useCurrentUser();
+const ChangeSecurityInfoForm = ({ user }: { user: any }) => {
   const t = useTranslations("form-messages");
   const t1 = useTranslations("settings-page");
   const SettingsSchema = getSettingsSchema(t);

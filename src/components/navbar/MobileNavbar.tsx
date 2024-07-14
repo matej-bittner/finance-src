@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import LanguageSwitchButton from "@/components/navbar/LanguageSwitchButton";
 import { usePathname } from "next/navigation";
@@ -14,7 +14,7 @@ const MobileNavbar = ({ navLinksData }: MobileNavbarProps) => {
   const [openMobileNav, setOpenMobileNav] = useState(false);
 
   return (
-    <div className="min-[450px]:min-w-[125px] sm:hidden z-20">
+    <div className="min-[450px]:min-w-[125px] sm:hidden z-20 ">
       <Image
         src={`/icons/${openMobileNav ? "close" : "hamburger"}.svg`}
         alt="menu"

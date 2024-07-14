@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,8 +19,11 @@ interface DropdownNavProps {
 const DropdownNav = ({ dropdownNavData }: DropdownNavProps) => {
   const pathname = usePathname();
   const x = pathname.split("/").pop();
-  // const t = useTranslations("protected-nav-links");
+
   const [openDropdownNav, setOpenDropdownNav] = useState(false);
+  useEffect(() => {
+    setOpenDropdownNav(false);
+  }, [pathname]);
   return (
     <div className=" z-20 sm:hidden">
       <Image

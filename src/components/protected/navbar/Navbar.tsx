@@ -239,7 +239,7 @@ const Navbar = ({
         </button>
 
         <DropdownUserMenu />
-        <Link href="/settings" className="my-auto lg:pr-3">
+        <Link href="/settings" className="my-auto lg:pr-3 max-sm:hidden">
           <Image
             src="/icons/settings.svg"
             alt="settings"
