@@ -1,6 +1,5 @@
 {
   "Navigation": {
-    "appName": "Family Finances",
     "accountButton": "Můj Účet",
 
     "nav-links": {
@@ -24,7 +23,7 @@
     "title2": "jednoduše",
     "text1": "Jste frustrovaní aplikacemi na správu financí, které jsou přeplácané reklamou, postrádají základní funkce, nebo prostě nejsou vaším šálkem čaje?",
     "text2": "Hledáte už dlouho tu pravou rozpočtovou aplikaci, která vám splní všechny vaše přání? Vím přesně, o čem mluvíte! I já jsem strávil hodiny hledáním aplikace, která by mi pomohla s mými financemi, ale nic nebylo ono.",
-    "text3": "A tak jsem se rozhodl vytvořit [název], aplikaci na správu financí, která je přehledná, nabitá funkcemi a pomůže vám dosáhnout vašich finančních cílů."
+    "text3": "A tak jsem se rozhodl vytvořit Wallet Recapp, aplikaci na správu financí, která je přehledná, nabitá funkcemi a pomůže vám dosáhnout vašich finančních cílů."
   },
 
   "potential-goals": {
@@ -39,7 +38,7 @@
       "title": "Cíle",
       "slug": "goals",
       "icon": "goals",
-      "text": "Všichni máme nějaké cíle, i když se třeba ještě neprojevily. Naše aplikace vám pomáhá tyto cíle identifikovat, sledovat a dosahovat jich. Sledujte svůj pokrok a podle potřeby své cíle upravujte. Ať už je to nový telefon, nezapomenutelnou dovolenou nebo splacení dluhů, poskytujeme vám nástroje, které potřebujete. Plánujete šetřit na vysokoškolské stipendium, nové auto nebo horskou chatu? [Název aplikace] vám pomůže tyto sny proměnit v realitu a udrží vás na správné cestě každým krokem."
+      "text": "Všichni máme nějaké cíle, i když se třeba ještě neprojevily. Naše aplikace vám pomáhá tyto cíle identifikovat, sledovat a dosahovat jich. Sledujte svůj pokrok a podle potřeby své cíle upravujte. Ať už je to nový telefon, nezapomenutelnou dovolenou nebo splacení dluhů, poskytujeme vám nástroje, které potřebujete. Plánujete šetřit na vysokoškolské stipendium, nové auto nebo horskou chatu? Wallet Recapp vám pomůže tyto sny proměnit v realitu a udrží vás na správné cestě každým krokem."
     },
     "income-expense": {
       "title": "Příjmy a Výdaje",
@@ -215,7 +214,7 @@
     "18": "Nastavení změněno"
   },
   "dashboard-navigation": {
-    "appName": "Family Finances",
+    "appName": "Wallet Recapp",
     "accountButton": "Můj účet",
     "settings": "Nastavení",
     "logOut": "Odhlásit",

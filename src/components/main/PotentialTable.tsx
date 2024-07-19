@@ -65,7 +65,7 @@ const PotentialTable = () => {
         {/*choose createGoal bar*/}
 
         <div
-          className={` left-0 flex w-fit gap-5 rounded-r-xl max-sm:absolute max-sm:h-[200px]  sm:max-lg:mx-auto ${goal.open && "max-sm:bg-[#F0F0F0] -left-4"}`}
+          className={`  flex w-fit gap-5 rounded-r-xl max-sm:absolute max-sm:h-[200px]  sm:max-lg:mx-auto ${goal.open ? "max-sm:bg-[#F0F0F0] left-[-16px]" : "left-0"}`}
         >
           {/*  <div*/}
           {/*  className={`bg-red-700 left-0 flex w-fit gap-5 rounded-r-xl max-sm:absolute max-sm:h-[200px] max-sm:pl-3  sm:max-lg:mx-auto ${goal.open ? "max-sm:translate-x-0 bg-[#F0F0F0]" : "max-sm:translate-x-[-165px]"}`}*/}

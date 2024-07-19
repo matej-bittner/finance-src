@@ -453,83 +453,85 @@ export const userPeriodicPayments = async (transactionType?: number) => {
 };
 
 // TODO: set cron
-export const test = async () => {
+export const ManagePeriodicPayments = async () => {
   let todayDate = new Date();
   todayDate.setUTCHours(0, 0, 0, 0);
 
-  //find all periodicPayments that i need to update
-  const paymentsToUpdate = await db.periodicPayment.findMany({
-    where: {
-      toProcess: { equals: todayDate },
-      OR: [{ lastProcessed: { lt: todayDate } }, { lastProcessed: null }],
-      AND: [
-        {
-          OR: [{ endOfPayment: { gte: todayDate } }, { endOfPayment: null }],
-        },
-      ],
-    },
-  });
-
-  const paymentFrequencyUpdateData = paymentsToUpdate.map((payment) => ({
-    id: payment.id,
-    frequency: payment.frequency,
-  }));
-  for (const periodicPayment of paymentFrequencyUpdateData) {
-    // let date = new Date();
-    // date.setUTCHours(0, 0, 0, 0);
-    //
-    // if (periodicPayment.frequency === 7 || periodicPayment.frequency === 14) {
-    //   date.setDate(date.getDate() + periodicPayment.frequency); // Add days
-    // } else if (periodicPayment.frequency === 30) {
-    //   date.setMonth(date.getMonth() + 1); // Add 1 month
-    // } else if (periodicPayment.frequency === 60) {
-    //   date.setMonth(date.getMonth() + 2); // Add 2 months
-    // }
-    let date = convertFrequencyToDate(periodicPayment.frequency);
-
-    await db.periodicPayment.updateMany({
+  await db.$transaction(async (db) => {
+    //find all periodicPayments that i need to update
+    const paymentsToUpdate = await db.periodicPayment.findMany({
       where: {
-        id: periodicPayment.id,
-      },
-      data: { lastProcessed: todayDate, toProcess: date },
-    });
-  }
-
-  // filtering only necessary info for creating transaction
-  const transactionsData = paymentsToUpdate.map((payment) => ({
-    transactionType: 2,
-    name: payment.name,
-    description: payment.description,
-    amount: payment.amount,
-    currency: payment.currency,
-    date: todayDate,
-    accountFromId: payment.accountFromId,
-    category: payment.category,
-    userId: payment.userId,
-  }));
-
-  await db.transaction.createMany({
-    data: transactionsData,
-  });
-
-  const accountUpdates = transactionsData.map((transaction) => ({
-    id: transaction.accountFromId,
-    amount: transaction.amount,
-  }));
-
-  // decreasing balance by periodicPaymentAmmount
-  for (const account of accountUpdates) {
-    await db.paymentAccount.updateMany({
-      where: {
-        id: account.id,
-      },
-      data: {
-        balance: {
-          decrement: account.amount,
-        },
+        toProcess: { equals: todayDate },
+        OR: [{ lastProcessed: { lt: todayDate } }, { lastProcessed: null }],
+        AND: [
+          {
+            OR: [{ endOfPayment: { gte: todayDate } }, { endOfPayment: null }],
+          },
+        ],
       },
     });
-  }
+
+    const paymentFrequencyUpdateData = paymentsToUpdate.map((payment) => ({
+      id: payment.id,
+      frequency: payment.frequency,
+    }));
+    for (const periodicPayment of paymentFrequencyUpdateData) {
+      // let date = new Date();
+      // date.setUTCHours(0, 0, 0, 0);
+      //
+      // if (periodicPayment.frequency === 7 || periodicPayment.frequency === 14) {
+      //   date.setDate(date.getDate() + periodicPayment.frequency); // Add days
+      // } else if (periodicPayment.frequency === 30) {
+      //   date.setMonth(date.getMonth() + 1); // Add 1 month
+      // } else if (periodicPayment.frequency === 60) {
+      //   date.setMonth(date.getMonth() + 2); // Add 2 months
+      // }
+      let date = convertFrequencyToDate(periodicPayment.frequency);
+
+      await db.periodicPayment.updateMany({
+        where: {
+          id: periodicPayment.id,
+        },
+        data: { lastProcessed: todayDate, toProcess: date },
+      });
+    }
+
+    // filtering only necessary info for creating transaction
+    const transactionsData = paymentsToUpdate.map((payment) => ({
+      transactionType: 2,
+      name: payment.name,
+      description: payment.description,
+      amount: payment.amount,
+      currency: payment.currency,
+      date: todayDate,
+      accountFromId: payment.accountFromId,
+      category: payment.category,
+      userId: payment.userId,
+    }));
+
+    await db.transaction.createMany({
+      data: transactionsData,
+    });
+
+    const accountUpdates = transactionsData.map((transaction) => ({
+      id: transaction.accountFromId,
+      amount: transaction.amount,
+    }));
+
+    // decreasing balance by periodicPaymentAmmount
+    for (const account of accountUpdates) {
+      await db.paymentAccount.updateMany({
+        where: {
+          id: account.id,
+        },
+        data: {
+          balance: {
+            decrement: account.amount,
+          },
+        },
+      });
+    }
+  });
 
   return;
 };

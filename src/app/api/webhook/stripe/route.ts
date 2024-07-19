@@ -3,9 +3,7 @@ import { Stripe } from "stripe";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
-import { getLocale } from "next-intl/server";
 import { plans } from "@/constants";
-import { useLocale } from "next-intl";
 import { sendSuccessPayEmail } from "@/lib/mail";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET_KEY!;

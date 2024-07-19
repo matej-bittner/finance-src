@@ -24,7 +24,7 @@
     "title2": "effortlessly",
     "text1": "Are you tired of money management apps overflowing with ads, lacking essential features, or just not your cup of tea?",
     "text2": "If you've ever searched for a budgeting app that truly meets all your needs, you know the struggle is real. I spent countless hours searching for an app to help me take control of my finances, but nothing seemed to fit the bill.",
-    "text3": "That's when I decided to create [name], a financial management app designed to be clear, powerful, and help you achieve your financial goals."
+    "text3": "That's when I decided to create Wallet Recapp, a financial management app designed to be clear, powerful, and help you achieve your financial goals."
   },
 
   "potential-goals": {
@@ -39,7 +39,7 @@
       "title": "Goals",
       "slug": "goals",
       "icon": "goals",
-      "text": "We all have financial goals, even if they haven't surfaced yet! Our app helps you identify, track, and achieve them. See your progress in real-time and adjust your goals as needed. Whether it’s a new phone, an unforgettable vacation, or paying off debt, we provide the tools you need. Planning for a college fund, a new car, or a mountain cabin retreat? [App name] helps you turn those dreams into reality and keeps you on track every step of the way."
+      "text": "We all have financial goals, even if they haven't surfaced yet! Our app helps you identify, track, and achieve them. See your progress in real-time and adjust your goals as needed. Whether it’s a new phone, an unforgettable vacation, or paying off debt, we provide the tools you need. Planning for a college fund, a new car, or a mountain cabin retreat? Wallet Recapp helps you turn those dreams into reality and keeps you on track every step of the way."
     },
     "income-expense": {
       "title": "Income and Expenses",
@@ -210,7 +210,7 @@
   },
 
   "dashboard-navigation": {
-    "appName": "Family Finances",
+    "appName": "Wallet Recapp",
     "accountButton": "My Account",
     "settings": "Settings",
     "logOut": "LogOut",

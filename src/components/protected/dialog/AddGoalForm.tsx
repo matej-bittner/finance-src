@@ -34,15 +34,6 @@ import {
 } from "@/schemas";
 import { getTranslatedAddGoalSchema } from "@/schemas/translatedSchemas";
 
-// const formSchema = z.object({
-//   account: z.any(),
-//   name: z.string().min(1),
-//   amount: z.number().positive().min(1),
-//   date: z.string().min(1),
-//   color: z.string().min(1),
-//   icon: z.string().min(1),
-// });
-
 const AddGoalForm = ({
   defaultCurrency,
   userAccounts,
@@ -86,7 +77,6 @@ const AddGoalForm = ({
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
           title: data?.error || data?.success,
-          description: "Friday, February 10, 2023 at 5:57 PM",
         });
         if (data?.success) {
           router.refresh();

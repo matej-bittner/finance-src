@@ -79,6 +79,7 @@ const Navbar = ({
   let form;
   let title = "";
   let description = "";
+
   if (pathname.includes("goals")) {
     pageName = dropdownNavData[1].title;
     title = dropdownNavData[1].formTitle;
@@ -179,6 +180,7 @@ const Navbar = ({
       {/*Page Name*/}
       <div className="flex gap-2">
         <h1 className="sm:text-xl sm:font-medium md:text-2xl">{pageName}</h1>
+
         {form && (
           <Dialog>
             <DialogTrigger>

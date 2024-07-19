@@ -200,7 +200,7 @@ export function Combobox({
                         </p>
                       )}
                       <Link
-                        href="/"
+                        href="/dashboard/accounts"
                         className="font-medium text-center w-full hover:font-semibold transition"
                       >
                         {t("create-account")}

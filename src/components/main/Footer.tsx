@@ -5,9 +5,13 @@ import Image from "next/image";
 const Footer = () => {
   return (
     <footer className="h-fit bg-main-blue text-white flex flex-col items-center py-3 tb:pt-5 ">
-      <h2 className="text-2xl tb:text-3xl tb:pb-2 font-medium ">
-        Family Finance
-      </h2>
+      <Image
+        src="/images/logo.svg"
+        alt="logo"
+        width={114}
+        height={38}
+        className="w-[140px] sm:w-[160px] lg:w-[170px] xl:w-[190px] pb-2"
+      />
       <p className="text-lg">2024</p>
       <div className="flex flex-col items-center gap-3 py-4">
         <p>Contact Us</p>

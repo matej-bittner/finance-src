@@ -13,8 +13,8 @@ body, html{
 }
 
 .pricing-blur{
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px) ;
+  backdrop-filter: blur(1.5px);
+  -webkit-backdrop-filter: blur(1.5px) ;
 }
 
 

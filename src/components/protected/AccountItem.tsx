@@ -48,7 +48,6 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
       toast({
         variant: "destructive",
         title: "tento nelzse odstranit",
-        description: "Friday, February 10, 2023 at 5:57 PM",
       });
       return;
     }
@@ -57,7 +56,6 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
           title: data?.error || data?.success,
-          description: "Friday, February 10, 2023 at 5:57 PM",
         });
         if (data?.success) {
           router.refresh();
@@ -77,7 +75,6 @@ const AccountItem = ({ data }: { data: UserAccount }) => {
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
           title: data?.error || data?.success,
-          description: "Friday, February 10, 2023 at 5:57 PM",
         });
         if (data?.success) {
           router.refresh();

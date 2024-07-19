@@ -97,7 +97,6 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
           title: data?.error || data?.success,
-          description: "Friday, February 10, 2023 at 5:57 PM",
         });
         if (data?.success) {
           router.refresh();
@@ -135,7 +134,6 @@ const EditAccountForm = ({ data }: EditAccountFormProps) => {
         toast({
           variant: `${data?.error ? "destructive" : "default"}`,
           title: data?.error || data?.success,
-          description: "Friday, February 10, 2023 at 5:57 PM",
         });
         if (data?.success) {
           router.refresh();

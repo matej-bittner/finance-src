@@ -27,11 +27,14 @@ const Navbar = () => {
       <MobileNavbar navLinksData={navLinksData} />
       {/*logo+name*/}
       <div className="flex text-center max-lg:justify-center max-sm:flex-1 sm:min-w-[140px] lg:min-w-[220px]">
-        <Link
-          href="/"
-          className="text-lg font-semibold md:text-xl lg:text-2xl drop-shadow-md"
-        >
-          {t(`appName`)}
+        <Link href="/">
+          <Image
+            src="/images/logo.svg"
+            alt="logo"
+            width={114}
+            height={38}
+            className="w-[130px] sm:w-[140px] lg:w-[150px] xl:w-[170px]"
+          />
         </Link>
       </div>
       {/*navigation*/}
