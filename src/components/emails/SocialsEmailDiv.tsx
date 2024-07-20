@@ -13,7 +13,7 @@ const SocialsEmailDiv = () => {
           return (
             <a key={i} href={item.link} target="_blank">
               <Img
-                src={`${domain}/icons/${item.icon}.svg`}
+                src={`${domain}/icons/${item.icon}-black.svg`}
                 width="50"
                 height="50"
                 alt={item.icon}
