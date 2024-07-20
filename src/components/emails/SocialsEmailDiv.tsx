@@ -11,13 +11,13 @@ const SocialsEmailDiv = () => {
         {socialsData.map((item, i) => {
           if (item.address) return;
           return (
-            <a key={i} href={item.link}>
+            <a key={i} href={item.link} target="_blank">
               <Img
                 src={`${domain}/icons/${item.icon}.svg`}
                 width="50"
                 height="50"
                 alt={item.icon}
-                className="aspect-square invert"
+                className="aspect-square"
               />
             </a>
           );

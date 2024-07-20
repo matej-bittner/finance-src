@@ -157,18 +157,18 @@ export const socialsData = [
   {
     title: "Facebook",
     icon: "facebook",
-    link: "#",
+    link: "https://www.facebook.com/profile.php?id=61562829755166",
   },
   {
     title: "Instagram",
     icon: "instagram",
-    link: "#",
+    link: "https://www.instagram.com/walletrecap",
   },
-  {
-    title: "X",
-    icon: "x",
-    link: "#",
-  },
+  // {
+  //   title: "X",
+  //   icon: "x",
+  //   link: "#",
+  // },
   { title: "E-mail", icon: "", link: "", address: "info@walletrecap.com" },
 ];
 
