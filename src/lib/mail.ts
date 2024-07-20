@@ -8,13 +8,14 @@ import AccountChangeEmail from "@/components/emails/AccountChangeEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const domain = process.env.NEXT_PUBLIC_APP_URL;
+
 export const sendPasswordResetEmail = async (
   email: string,
   token: string,
   language: string,
 ) => {
-  // const resetLink = `http://localhost:3000/new-password?token=${token}`;
-  const link = `http://localhost:3000/${language}/new-password?token=${token}`;
+  const link = `${domain}/${language}/new-password?token=${token}`;
   const t = await getTranslations({
     namespace: "email.password-reset",
     locale: language,
@@ -31,7 +32,7 @@ export const sendPasswordResetEmail = async (
   };
 
   await resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "no-reply@walletrecap.com",
     to: email,
     subject: t("subject"),
     react: ResetEmailEmail(link, messages),
@@ -43,7 +44,7 @@ export const sendVerificationEmail = async (
   token: string,
   language: string,
 ) => {
-  const link = `http://localhost:3000/${language}/new-verification?token=${token}`;
+  const link = `${domain}/${language}/new-verification?token=${token}`;
   const t = await getTranslations({
     namespace: "email.verification-register",
     locale: language,
@@ -60,7 +61,7 @@ export const sendVerificationEmail = async (
   };
 
   await resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "no-reply@walletrecap.com",
     to: email,
     subject: t("subject"),
     react: VerificationEmail(link, messages),
@@ -68,7 +69,7 @@ export const sendVerificationEmail = async (
 };
 
 export const sendSuccessPayEmail = async (email: string, language: string) => {
-  const link = `http://localhost:3000/${language}/dashboard`;
+  const link = `${domain}/${language}/dashboard`;
   const t = await getTranslations({
     namespace: "email.subscription-payment",
     locale: language,
@@ -85,7 +86,7 @@ export const sendSuccessPayEmail = async (email: string, language: string) => {
   };
 
   await resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "no-reply@walletrecap.com",
     to: email,
     subject: t("subject"),
     react: PaymentSuccessfulEmail(link, messages),
@@ -97,7 +98,7 @@ export const sendChangeOnAccountEmail = async (
   token: string,
   language: string,
 ) => {
-  const link = `http://localhost:3000/${language}/new-verification?token=${token}`;
+  const link = `${domain}/${language}/new-verification?token=${token}`;
   const t = await getTranslations({
     namespace: "email.change-on-account",
     locale: language,
@@ -113,7 +114,7 @@ export const sendChangeOnAccountEmail = async (
   };
 
   await resend.emails.send({
-    from: "onboarding@resend.dev",
+    from: "no-reply@walletrecap.com",
     to: email,
     subject: t("subject"),
     react: AccountChangeEmail(link, messages),

@@ -1,8 +1,10 @@
 import React from "react";
 import { socialsData } from "../../constants/index";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 const Footer = () => {
+  const t = useTranslations("footer");
   return (
     <footer className="h-fit bg-main-blue text-white flex flex-col items-center py-3 tb:pt-5 ">
       <Image
@@ -14,7 +16,7 @@ const Footer = () => {
       />
       <p className="text-lg">2024</p>
       <div className="flex flex-col items-center gap-3 py-4">
-        <p>Contact Us</p>
+        <p>{t("contactUs")}</p>
         <div className="flex gap-6">
           {socialsData.map((item, i) => {
             if (item.address) return;
@@ -31,7 +33,7 @@ const Footer = () => {
             );
           })}
         </div>
-        <p>nates-bittner@gmail.com</p>
+        <p>info@walletrecap.com</p>
       </div>
     </footer>
   );

@@ -7,7 +7,7 @@ import Google from "next-auth/providers/google";
 
 export default {
   providers: [
-    Google,
+    // Google,
     Credentials({
       async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);

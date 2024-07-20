@@ -20,7 +20,7 @@ const EmailCard = ({ children }: { children: React.ReactNode }) => {
         </Head>
         <Body className="w-full flex flex-col size-full manrope p-0 m-0 min-h-[700px]">
           <div className="w-full bg-main-blue h-[60px] text-white flex items-center justify-center ">
-            <h1 className="text-2xl font-medium">Family Finance</h1>
+            <h1 className="text-2xl font-medium">Wallet Recap</h1>
           </div>
           {children}
         </Body>

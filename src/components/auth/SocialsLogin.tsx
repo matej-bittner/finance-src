@@ -5,11 +5,12 @@ import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 const SocialsLogin = () => {
-  const onClick = (provider: "google" | "github") => {
-    signIn(provider, {
-      callbackUrl: DEFAULT_LOGIN_REDIRECT,
-    });
-  };
+  // const onClick = (provider: "google" | "github") => {
+  //   signIn(provider, {
+  //     callbackUrl: DEFAULT_LOGIN_REDIRECT,
+  //   });
+  // };
+  const onClick = (provider: "google" | "github") => {};
   return (
     <div className="flex w-full gap-4 ">
       <button className="form-buttons">

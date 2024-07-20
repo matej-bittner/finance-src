@@ -53,7 +53,7 @@ const RegisterForm = () => {
         title={t("title")}
         backLink1="/login"
         backText1={t("back-text1")}
-        showSocials
+        // showSocials
       >
         <Form {...form}>
           <form

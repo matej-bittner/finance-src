@@ -169,7 +169,7 @@ export const socialsData = [
     icon: "x",
     link: "#",
   },
-  { title: "E-mail", icon: "", link: "", address: "finacialfreedom@gmail.com" },
+  { title: "E-mail", icon: "", link: "", address: "info@walletrecap.com" },
 ];
 
 export const currencies = [

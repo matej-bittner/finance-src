@@ -59,7 +59,7 @@ const Sidebar = () => {
         </div>
         {/*premium or starter*/}
         <div className="flex mt-auto flex-col gap-1 w-full items-center justify-center">
-          <p className="text-main-yellow text-sm">PREMIUM</p>
+          <p className="text-main-yellow text-sm">STARTER</p>
           <Image
             src="/icons/diamond.svg"
             alt="diamond"
