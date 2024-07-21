@@ -9,13 +9,12 @@ import Link from "next/link";
 const LogoutSelect = ({
   text,
   accountButton,
-  user,
 }: {
   text: string;
   accountButton: string;
-  user?: any;
 }) => {
-  useEffect(() => {}, [user]);
+  const user = useCurrentUser();
+
   const pathname = usePathname();
 
   if (!user) {

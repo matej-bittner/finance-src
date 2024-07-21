@@ -25,8 +25,6 @@ const Navbar = async () => {
     },
   ];
 
-  const user = await currentUser();
-
   return (
     <nav className="relative mx-auto flex size-full max-w-[1440px] items-center px-4 text-white md:px-6 lg:px-8">
       {/*mobile navigation*/}
@@ -58,11 +56,7 @@ const Navbar = async () => {
         })}
       </div>
       <div className="flex justify-end min-[450px]:min-w-[125px] sm:min-w-[140px] lg:min-w-[220px] drop-shadow-md sm:items-center sm:gap-2 min-[820px]:gap-3 ">
-        <LogoutSelect
-          text={t("select")}
-          accountButton={t(`accountButton`)}
-          user={user}
-        />
+        <LogoutSelect text={t("select")} accountButton={t(`accountButton`)} />
 
         {/*{user?.hasAccess === false ? (*/}
         {/*  <LogoutSelect text={t("select")} accountButton={t(`accountButton`)} />*/}
