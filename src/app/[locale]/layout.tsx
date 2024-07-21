@@ -17,7 +17,11 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   openGraph: {
-    images: "/opengraph-image.png",
+    title: "Wallet Recap",
+    description: "Manage your money - effortlessly.",
+    type: "website",
+    url: `${process.env.NEXT_PUBLIC_APP_URL}`,
+    siteName: "WalletRecap",
   },
 };
 
