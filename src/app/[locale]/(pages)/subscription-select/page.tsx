@@ -3,8 +3,10 @@ import SubscriptionSelector from "@/components/SubscriptionSelector";
 
 import { getTranslations } from "next-intl/server";
 import { currentUser } from "@/helpers/current-user";
+import { unstable_noStore as noStore } from "next/cache";
 
 const Page = async () => {
+  noStore();
   const t = await getTranslations("subscription-select");
   // const router = useRouter();
   const user = await currentUser();
