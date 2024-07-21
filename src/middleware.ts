@@ -8,6 +8,7 @@ import {
   publicRoutes,
   selectSubscriptionRoutes,
 } from "./routes";
+import { useLocale } from "next-intl";
 
 const locales = ["en", "cs"];
 
@@ -37,6 +38,11 @@ const authMiddleware = auth((req) => {
   }
 
   if (session && !session.user.hasAccess && !isSubscriptionPage) {
+    // const url = req.nextUrl.clone();
+    // const locale = req.nextUrl.pathname.split("/")[1];
+    // url.pathname = `/${locale}/subscription-select`;
+    // console.log(req.nextUrl);
+    // return NextResponse.rewrite(url);
     return NextResponse.redirect(new URL("/subscription-select", req.nextUrl));
   }
 

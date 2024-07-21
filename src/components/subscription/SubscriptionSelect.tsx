@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { plans } from "@/constants";
 import { useTranslations } from "next-intl";
 
-const SubscriptionSelector = ({ userEmail }: { userEmail: string }) => {
+const SubscriptionSelect = ({ userEmail }: { userEmail: string }) => {
   const t = useTranslations("subscription-select");
   const [selectedPlan, setSelectedPlan] = useState(0);
 
@@ -47,4 +47,4 @@ const SubscriptionSelector = ({ userEmail }: { userEmail: string }) => {
   );
 };
 
-export default SubscriptionSelector;
+export default SubscriptionSelect;
