@@ -1,7 +1,7 @@
 {
   "Navigation": {
-    "appName": "Family Finances",
     "accountButton": "My Account",
+    "select": "Select plan",
 
     "nav-links": {
       "about": {
@@ -24,7 +24,7 @@
     "title2": "effortlessly",
     "text1": "Are you tired of money management apps overflowing with ads, lacking essential features, or just not your cup of tea?",
     "text2": "If you've ever searched for a budgeting app that truly meets all your needs, you know the struggle is real. I spent countless hours searching for an app to help me take control of my finances, but nothing seemed to fit the bill.",
-    "text3": "That's when I decided to create Wallet Recap, a financial management app designed to be clear, powerful, and help you achieve your financial goals."
+    "text3": "That's when we decided to create Wallet Recap, a financial management app designed to be clear, powerful, and help you achieve your financial goals."
   },
 
   "potential-goals": {
@@ -294,8 +294,8 @@
   },
 
   "frequency": {
-    "7days": "7",
-    "14days": "14",
+    "7days": "7D",
+    "14days": "14D",
     "1month": "1M",
     "2months": "2M",
     "1year": "1Y",
@@ -425,7 +425,7 @@
   },
   "settings-page": {
     "email": "E-mail",
-    "password": "Password",
+    "password": "Current password",
     "new-password": "New password",
     "first-name": "First name",
     "save-changes": "Save changes",

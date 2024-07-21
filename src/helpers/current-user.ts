@@ -380,15 +380,21 @@ export const userTransactions = async (monthToQuery: string) => {
   if (month > new Date().getMonth() + 1) {
     year -= 1; // If the specified month is greater than the current month, it means we're looking at the previous year
   }
+
+  let endDate = undefined;
+  const todayMonth = new Date().getMonth();
+  if (todayMonth + 1 !== month) {
+    endDate = new Date(year, month, 0, 23, 59, 59); // Last day of the month, 23:59:59
+  }
   const startDate = new Date(year, month - 1, 1); // Months are 0-based in JavaScript Date
-  const endDate = new Date(year, month, 0, 23, 59, 59); // Last day of the month, 23:59:59
+  const createdAtQuery: Prisma.TransactionWhereInput["date"] = {};
+  createdAtQuery.gte = startDate;
+  if (endDate) createdAtQuery.lte = endDate;
+
   const allTransactions = await db.transaction.findMany({
     where: {
       userId: session?.user?.id,
-      date: {
-        gte: startDate,
-        lte: endDate,
-      },
+      date: createdAtQuery,
     },
     orderBy: [
       {

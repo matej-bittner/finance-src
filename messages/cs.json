@@ -1,7 +1,7 @@
 {
   "Navigation": {
     "accountButton": "Můj Účet",
-
+    "select": "Zvolit plán",
     "nav-links": {
       "about": {
         "title": "Blog",
@@ -19,11 +19,11 @@
   },
 
   "first-section": {
-    "title": "Správujte svoje finance,",
+    "title": "Spravujte svoje finance,",
     "title2": "jednoduše",
-    "text1": "Jste frustrovaní aplikacemi na správu financí, které jsou přeplácané reklamou, postrádají základní funkce, nebo prostě nejsou vaším šálkem čaje?",
-    "text2": "Hledáte už dlouho tu pravou rozpočtovou aplikaci, která vám splní všechny vaše přání? Vím přesně, o čem mluvíte! I já jsem strávil hodiny hledáním aplikace, která by mi pomohla s mými financemi, ale nic nebylo ono.",
-    "text3": "A tak jsem se rozhodl vytvořit Wallet Recap, aplikaci na správu financí, která je přehledná, nabitá funkcemi a pomůže vám dosáhnout vašich finančních cílů."
+    "text1": "Jste frustrovaní aplikacemi na správu financí, které jsou přeplácané reklamou, postrádají základní funkce, nebo Vám prostě nevyhovují?",
+    "text2": "Hledáte už dlouho tu pravou rozpočtovou aplikaci, která Vám splní všechny vaše přání? Vím přesně, o čem mluvíte! I já jsem strávil hodiny hledáním aplikace, která by mi pomohla s mými financemi, ale nic nebylo ono.",
+    "text3": "A tak jsme se rozhodli vytvořit Wallet Recap, aplikaci na správu financí, která je přehledná, nabitá funkcemi a pomůže Vám dosáhnout vašich finančních cílů."
   },
 
   "potential-goals": {
@@ -38,19 +38,19 @@
       "title": "Cíle",
       "slug": "goals",
       "icon": "goals",
-      "text": "Všichni máme nějaké cíle, i když se třeba ještě neprojevily. Naše aplikace vám pomáhá tyto cíle identifikovat, sledovat a dosahovat jich. Sledujte svůj pokrok a podle potřeby své cíle upravujte. Ať už je to nový telefon, nezapomenutelnou dovolenou nebo splacení dluhů, poskytujeme vám nástroje, které potřebujete. Plánujete šetřit na vysokoškolské stipendium, nové auto nebo horskou chatu? Wallet Recap vám pomůže tyto sny proměnit v realitu a udrží vás na správné cestě každým krokem."
+      "text": "Všichni máme nějaké cíle, i když se třeba ještě neprojevily. Naše aplikace Vám pomáhá tyto cíle identifikovat, sledovat a dosahovat jich. Sledujte svůj pokrok a podle potřeby své cíle upravujte. Ať už je to nový telefon, nezapomenutelnou dovolenou nebo splacení dluhů, poskytujeme Vám nástroje, které potřebujete. Plánujete šetřit na vysokoškolské stipendium, nové auto nebo horskou chatu? Wallet Recap Vám pomůže tyto sny proměnit v realitu a udrží vás na správné cestě každým krokem."
     },
     "income-expense": {
       "title": "Příjmy a Výdaje",
       "slug": "income-and-expenses",
       "icon": "wallet-money",
-      "text": "Udržujte přehled o všech svých výdajích a příjmech na jednom místě. Zobrazte si všechny vaše transakce z různých účtů na jediné stránce. Můžete přidávat, editovat a kategorizovat transakce. Často se stává, že lidé nevědí, za co a kolik peněz utrácejí, což není ideální. Pokud transakce budete mít o transakcích přehled,tak se vám to určitě nestane."
+      "text": "Udržujte přehled o všech svých výdajích a příjmech na jednom místě. Zobrazte si všechny vaše transakce z různých účtů na jediné stránce. Můžete přidávat, editovat a kategorizovat transakce. Často se stává, že lidé nevědí, za co a kolik peněz utrácejí, což není ideální. Pokud transakce budete mít o transakcích přehled,tak se Vám to určitě nestane."
     },
     "subscriptions": {
       "title": "Předplatné",
       "slug": "subscriptions",
       "icon": "ticket-expired",
-      "text": "Často se stává, že zapomínáme,co vše si předplácíme. Proto jsme vytvořili vlastní záložku pro předplatné, která vám pomůže sledovat vše, co si aktuálně předplácíte. Možná objevíte služby, které již nepotřebujete, a přesto na ně každý měsíc platíte, aniž byste si to uvědomili."
+      "text": "Lidé zapomínají, zvlášť když jde o menší částku peněz, která se z účtu sthává automaticky. Proto jsme vytvořili vlastní záložku pro předplatné, která Vám pomůže sledovat vše, co si aktuálně předplácíte. Možná objevíte služby, které již nepotřebujete, a přesto za ně každý měsíc platíte, aniž byste si to uvědomili."
     },
     "statistics": {
       "title": "Statistiky",
@@ -62,7 +62,7 @@
       "title": "Mobilní Aplikace",
       "slug": "mobile-app",
       "icon": "mobile",
-      "text": "Víme, že mít mobilní aplikaci je užitečné, ale momentálně věnujeme většinu pozornosti našemu webovému rozhraní. Proto jsme se rozhodli ho upravit tak, aby bylo příjemné pro užívání i na mobilních telefonech. Nemusíte se tedy bát, že by vám webová aplikace na menších obrazovkách dělala v prohlížeči problémy."
+      "text": "Víme, že mít mobilní aplikaci je užitečné, ale momentálně věnujeme většinu pozornosti našemu webovému rozhraní. Proto jsme se rozhodli ho upravit tak, aby bylo příjemné pro užívání i na mobilních telefonech. Nemusíte se tedy bát, že by Vám webová aplikace na menších obrazovkách dělala v prohlížeči problémy."
     }
   },
 
@@ -100,7 +100,7 @@
   },
   "demo-section": {
     "title": "Demo",
-    "text": "Toto demo video je zde, aby vám pomohlo! Naleznete v něm vše potřebné k tomu, abyste mohli začít s naší aplikací. Pamatujte však, že neustále přidáváme nové funkce. Přestože toto video nemusí pokrýt naprosto všechny dostupné možnosti, vybaví vás základními znalostmi k tomu, abyste ještě dnes převzali kontrolu nad svými financemi."
+    "text": "Toto demo video je zde, aby Vám pomohlo! Naleznete v něm vše potřebné k tomu, abyste mohli začít s naší aplikací. Pamatujte však, že neustále přidáváme nové funkce. Přestože toto video nemusí pokrýt naprosto všechny dostupné možnosti, vybaví vás základními znalostmi k tomu, abyste ještě dnes převzali kontrolu nad svými financemi."
   },
 
   "blog-page": {
@@ -121,7 +121,7 @@
       },
       "item4": {
         "title": "Premiu plán",
-        "text": "Až bude aplikace plně připravená, bude spuštěn druhý plán, který umožní mít přehled nad rodinnými účty, odemkneme vylepšené statistiky a druhé zobrazení, právě pro účty, kterých nebudete přímý vlastník"
+        "text": "Až bude aplikace plně připravena, bude spuštěn druhý plán, který umožní mít přehled nad rodinnými účty, odemkneme vylepšené statistiky a druhé zobrazení, právě pro účty, kterých nebudete přímý vlastník"
       },
       "item5": {
         "title": "Mobilní aplikace",
@@ -142,10 +142,10 @@
 
     "title": "Startovací",
     "text1": "Aplikace slouží k propojení veškerých transakcí, žádným způsobem se ale nepropojuje přímo s bankovními účty, investičními účty, nebo jakýmkoliv jiným účtem. Veškeré informace si musíte zadat ručně.",
-    "text2": "Plán obsahuje přehled účtů, včetně úvěrů a investic. Pokud si platíte předplatné (Netflix, Spotify, časopis Český rybář,..), můžete si nastavit, aby se Vám částka automaticky odečítala z účtu, to stejné i s trvalými platby a splátkami úvěru",
-    "text3": "Můžete si vytvořit cíle, které chcete splnit a připojit k ním výše uvedené účty",
-    "text4": "V záložce “transakce” uvidíte veškeré platby, můžete je přidávat, odebírat i editovat. Pokud potřebujete platbu dohledat, můžete si filtrovat dle měsíce. ",
-    "text5": "Účty také mohou být v měnách - CZK/EUR/USD (na přidání dalších pracujeme)"
+    "text2": "Plán obsahuje přehled účtů, včetně úvěrů a investic. Pokud si platíte předplatné (Netflix, Spotify, časopis Český rybář,..), můžete si nastavit, aby se Vám částka automaticky odečítala z účtu, to stejné i s trvalými platby a splátkami úvěru.",
+    "text3": "Můžete si vytvořit cíle, které chcete splnit a připojit k ním výše uvedené účty.",
+    "text4": "V záložce “transakce” uvidíte veškeré platby, můžete je přidávat, odebírat i editovat. Pokud potřebujete platbu dohledat, můžete si filtrovat dle měsíce.",
+    "text5": "Účty také mohou být v měnách - CZK/EUR/USD (na přidání dalších pracujeme)."
   },
   "login-form": {
     "title": "Vítejte zpět",
@@ -299,8 +299,8 @@
     "no-result": "Žádné výsledky"
   },
   "frequency": {
-    "7days": "7",
-    "14days": "14",
+    "7days": "7D",
+    "14days": "14D",
     "1month": "1M",
     "2months": "2M",
     "1year": "1R",
@@ -426,7 +426,7 @@
   },
   "settings-page": {
     "email": "E-mail",
-    "password": "Heslo",
+    "password": "Aktuální heslo",
     "new-password": "Nové heslo",
     "first-name": "Křestní jméno",
     "save-changes": "Uložit změny",

@@ -146,7 +146,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
               name="name"
               render={({ field }) => (
                 <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
-                  <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
+                  <FormLabel className="dialog-labels">{t(`name`)}*</FormLabel>
                   <FormControl>
                     <input
                       type="text"
@@ -168,7 +168,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                 render={({ field }) => (
                   <FormItem className="flex flex-col max-[450px]:flex-1 space-y-0">
                     <FormLabel className="dialog-labels">
-                      {t(`balance`)}
+                      {t(`balance`)}*
                     </FormLabel>
                     <FormControl>
                       <input
@@ -192,7 +192,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-0">
                     <FormLabel className="dialog-labels">
-                      {t(`currency`)}
+                      {t(`currency`)}*
                     </FormLabel>
                     <FormControl>
                       <Select
@@ -233,7 +233,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                   render={({ field }) => (
                     <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
                       <FormLabel className="dialog-labels">
-                        {t(`loan-payment`)}
+                        {t(`loan-payment`)}*
                       </FormLabel>
                       <FormControl>
                         <input
@@ -259,7 +259,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                     render={({ field }) => (
                       <FormItem className="flex flex-col max-[450px]:flex-1 space-y-0">
                         <FormLabel className="dialog-labels">
-                          {t(`next-payment`)}
+                          {t(`next-payment`)}*
                         </FormLabel>
                         <FormControl>
                           <input
@@ -281,7 +281,7 @@ const AddAccountForm = ({ defaultCurrency }: { defaultCurrency?: string }) => {
                     render={({ field }) => (
                       <FormItem className="flex flex-col space-y-0">
                         <FormLabel className="dialog-labels">
-                          {t(`frequency`)}
+                          {t(`frequency`)}*
                         </FormLabel>
                         <FormControl>
                           <Select

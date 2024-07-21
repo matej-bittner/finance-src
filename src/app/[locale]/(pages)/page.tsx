@@ -9,7 +9,7 @@ const Page = () => {
   const t = useTranslations("demo-section");
 
   return (
-    <section className="w-full space-y-4 py-5 tb:space-y-6 tb:py-6">
+    <section className="w-full space-y-4 py-5 tb:space-y-6 tb:py-6 min-h-screen">
       <div className="limited-width spacing-between-divs overflow-clip pb-1 lg:pb-2">
         {/*manage your money*/}
         <FirstSection />

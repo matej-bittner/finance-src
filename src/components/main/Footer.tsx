@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 const Footer = () => {
   const t = useTranslations("footer");
   return (
-    <footer className="h-fit bg-main-blue text-white flex flex-col items-center py-3 tb:pt-5 ">
+    <footer className="h-fit bg-main-blue text-white flex flex-col items-center py-3 tb:pt-5 border-t-white border-t-2">
       <Image
         src="/images/logo.svg"
         alt="logo"
@@ -21,7 +21,7 @@ const Footer = () => {
           {socialsData.map((item, i) => {
             if (item.address) return;
             return (
-              <a key={i} href={item.link}>
+              <a key={i} href={item.link} target="_blank">
                 <Image
                   src={`/icons/${item.icon}.svg`}
                   width="40"

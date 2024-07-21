@@ -152,7 +152,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-0">
                     <FormLabel className="dialog-labels">
-                      {t(`to-account`)}
+                      {t(`to-account`)}*
                     </FormLabel>
                     <FormControl>
                       <input
@@ -174,7 +174,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
               render={({ field }) => (
                 <FormItem className="flex flex-col space-y-0">
                   <FormLabel className="dialog-labels">
-                    {t(`from-account`)}
+                    {t(`from-account`)}*
                   </FormLabel>
                   <FormControl>
                     <input
@@ -197,7 +197,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
               name="name"
               render={({ field }) => (
                 <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
-                  <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
+                  <FormLabel className="dialog-labels">{t(`name`)}*</FormLabel>
                   <FormControl>
                     <input
                       type="text"
@@ -219,7 +219,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                 render={({ field }) => (
                   <FormItem className="flex flex-col max-[450px]:flex-1 space-y-0">
                     <FormLabel className="dialog-labels">
-                      {t(`amount`)}
+                      {t(`amount`)}*
                     </FormLabel>
                     <FormControl>
                       <input
@@ -243,7 +243,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-0">
                     <FormLabel className="dialog-labels">
-                      {t(`currency`)}
+                      {t(`currency`)}*
                     </FormLabel>
                     <FormControl>
                       <input
@@ -300,6 +300,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                         data.transactionType !== 5
                           ? t(`date`)
                           : t(`first-payment`)}
+                        *
                       </FormLabel>
                       <FormControl>
                         <input
@@ -360,7 +361,7 @@ const EditTransactionForm = ({ data }: EditTransactionFormProps) => {
                     render={({ field }) => (
                       <FormItem className="flex flex-col space-y-0">
                         <FormLabel className="dialog-labels">
-                          {t(`frequency`)}
+                          {t(`frequency`)}*
                         </FormLabel>
                         <FormControl>
                           <Select

@@ -131,7 +131,7 @@ const EditGoalForm = ({
             render={({ field }) => (
               <FormItem className="flex flex-col space-y-0">
                 <FormLabel className="dialog-labels">
-                  {t(`connected-accounts`)}
+                  {t(`connected-accounts`)}*
                 </FormLabel>
                 <FormControl>
                   <Combobox
@@ -158,7 +158,7 @@ const EditGoalForm = ({
               name="name"
               render={({ field }) => (
                 <FormItem className="flex flex-col flex-1 space-y-0">
-                  <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
+                  <FormLabel className="dialog-labels">{t(`name`)}*</FormLabel>
                   <FormControl>
                     <input
                       type="text"
@@ -178,7 +178,9 @@ const EditGoalForm = ({
               name="amount"
               render={({ field }) => (
                 <FormItem className="flex flex-col  space-y-0">
-                  <FormLabel className="dialog-labels">{t(`amount`)}</FormLabel>
+                  <FormLabel className="dialog-labels">
+                    {t(`amount`)}*
+                  </FormLabel>
                   <FormControl>
                     <input
                       type="number"
@@ -203,7 +205,7 @@ const EditGoalForm = ({
               render={({ field }) => (
                 <FormItem className="flex flex-col max-w-[200px] space-y-0">
                   <FormLabel className="dialog-labels">
-                    {t(`goal-finish-date`)}
+                    {t(`goal-finish-date`)}*
                   </FormLabel>
                   <FormControl>
                     <input

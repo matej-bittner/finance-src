@@ -143,7 +143,7 @@ const AddSubscriptionForm = ({
           render={({ field }) => (
             <FormItem className="flex flex-col space-y-0">
               <FormLabel className="dialog-labels">
-                {t(`from-account`)}
+                {t(`from-account`)}*
               </FormLabel>
               <FormControl>
                 <Combobox
@@ -179,7 +179,7 @@ const AddSubscriptionForm = ({
             name="name"
             render={({ field }) => (
               <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
-                <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
+                <FormLabel className="dialog-labels">{t(`name`)}*</FormLabel>
                 <FormControl>
                   <input
                     type="text"
@@ -200,7 +200,9 @@ const AddSubscriptionForm = ({
               name="amount"
               render={({ field }) => (
                 <FormItem className="flex flex-col max-[450px]:flex-1 space-y-0">
-                  <FormLabel className="dialog-labels">{t(`amount`)}</FormLabel>
+                  <FormLabel className="dialog-labels">
+                    {t(`amount`)}*
+                  </FormLabel>
                   <FormControl>
                     <input
                       type="number"
@@ -221,7 +223,7 @@ const AddSubscriptionForm = ({
               render={({ field }) => (
                 <FormItem className="flex flex-col space-y-0">
                   <FormLabel className="dialog-labels">
-                    {t(`currency`)}
+                    {t(`currency`)}*
                   </FormLabel>
                   <FormControl>
                     <input
@@ -294,7 +296,7 @@ const AddSubscriptionForm = ({
                 render={({ field }) => (
                   <FormItem className="flex flex-col min-[280px]:max-w-[200px] space-y-0">
                     <FormLabel className="dialog-labels">
-                      {t(`first-payment`)}
+                      {t(`first-payment`)}*
                     </FormLabel>
                     <FormControl>
                       {/*<input*/}
@@ -355,7 +357,7 @@ const AddSubscriptionForm = ({
               render={({ field }) => (
                 <FormItem className="flex flex-col space-y-0">
                   <FormLabel className="dialog-labels">
-                    {t(`frequency`)}
+                    {t(`frequency`)}*
                   </FormLabel>
                   <FormControl>
                     <Select

@@ -156,7 +156,7 @@ const AddTransactionForm = ({
               render={({ field }) => (
                 <FormItem className="flex flex-col space-y-0">
                   <FormLabel className="dialog-labels">
-                    {t(`to-account`)}
+                    {t(`to-account`)}*
                   </FormLabel>
                   <FormControl>
                     <Combobox
@@ -191,7 +191,7 @@ const AddTransactionForm = ({
               render={({ field }) => (
                 <FormItem className="flex flex-col space-y-0">
                   <FormLabel className="dialog-labels">
-                    {t(`from-account`)}
+                    {t(`from-account`)}*
                   </FormLabel>
                   <FormControl>
                     <Combobox
@@ -228,7 +228,7 @@ const AddTransactionForm = ({
               name="name"
               render={({ field }) => (
                 <FormItem className="flex flex-col min-[450px]:flex-1 space-y-0">
-                  <FormLabel className="dialog-labels">{t(`name`)}</FormLabel>
+                  <FormLabel className="dialog-labels">{t(`name`)}*</FormLabel>
                   <FormControl>
                     <input
                       type="text"
@@ -250,7 +250,7 @@ const AddTransactionForm = ({
                 render={({ field }) => (
                   <FormItem className="flex flex-col max-[450px]:flex-1 space-y-0">
                     <FormLabel className="dialog-labels">
-                      {t(`amount`)}
+                      {t(`amount`)}*
                     </FormLabel>
                     <FormControl>
                       <input
@@ -274,7 +274,7 @@ const AddTransactionForm = ({
                 render={({ field }) => (
                   <FormItem className="flex flex-col space-y-0">
                     <FormLabel className="dialog-labels">
-                      {t(`currency`)}
+                      {t(`currency`)}*
                     </FormLabel>
                     <FormControl>
                       <input
@@ -346,7 +346,7 @@ const AddTransactionForm = ({
                   render={({ field }) => (
                     <FormItem className="flex flex-col min-[280px]:max-w-[200px] space-y-0">
                       <FormLabel className="dialog-labels">
-                        {selectedType !== 4 ? t(`date`) : t(`first-payment`)}
+                        {selectedType !== 4 ? t(`date`) : t(`first-payment`)}*
                       </FormLabel>
                       <FormControl>
                         {/*{...field}*/}
@@ -413,7 +413,7 @@ const AddTransactionForm = ({
                     render={({ field }) => (
                       <FormItem className="flex flex-col space-y-0">
                         <FormLabel className="dialog-labels">
-                          {t(`frequency`)}
+                          {t(`frequency`)}*
                         </FormLabel>
                         <FormControl>
                           <Select
