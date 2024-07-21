@@ -1,15 +1,18 @@
+"use client";
 import React from "react";
 import SubscriptionSelector from "@/components/SubscriptionSelector";
 
 import { getTranslations } from "next-intl/server";
 import { currentUser } from "@/helpers/current-user";
-import { unstable_noStore as noStore } from "next/cache";
+import { useTranslations } from "next-intl";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+// import { unstable_noStore as noStore } from "next/cache";
 
-const Page = async () => {
-  noStore();
-  const t = await getTranslations("subscription-select");
+const Page = () => {
+  // noStore();
+  const t = useTranslations("subscription-select");
   // const router = useRouter();
-  const user = await currentUser();
+  const user = useCurrentUser();
 
   if (!user?.email) return null;
 
