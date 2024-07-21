@@ -7,7 +7,7 @@ const SocialsEmailDiv = () => {
 
   return (
     <div className="flex flex-col py-10 gap-2">
-      <div className="flex gap-9 ">
+      <div className="flex gap-9 items-center">
         {socialsData.map((item, i) => {
           if (item.address) return;
           return (

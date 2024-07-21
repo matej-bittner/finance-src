@@ -14,6 +14,7 @@ export const plans = [
         ? "price_1PbodmLy1KHXEetojHh6lTdn"
         : "price_1Peh1cLy1KHXEetob0IekXBA",
     duration: "yearly",
+    price: 80,
   },
   {
     link:
@@ -25,6 +26,7 @@ export const plans = [
         ? "price_1PbodKLy1KHXEetoMwxPTsvU"
         : "price_1PegqvLy1KHXEetosMvdUyEq",
     duration: "monthly",
+    price: 8,
   },
 ];
 

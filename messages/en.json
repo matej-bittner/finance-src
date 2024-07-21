@@ -132,6 +132,7 @@
     "monthly": "Monthly",
     "yearly": "Yearly",
     "save": "save",
+    "save2": "compared to monthly payment",
     "about-title": "About Plan",
     "title": "Starter",
     "text1": "The application is designed to connect all transactions, but it does not directly link to bank accounts, investment accounts, or any other accounts. You need to enter all information manually.",

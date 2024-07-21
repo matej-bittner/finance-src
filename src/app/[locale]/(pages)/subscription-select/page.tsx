@@ -1,15 +1,13 @@
-"use client";
-import React, { useEffect } from "react";
+import React from "react";
 import SubscriptionSelector from "@/components/SubscriptionSelector";
 
-import { useTranslations } from "next-intl";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
-import { useRouter } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+import { currentUser } from "@/helpers/current-user";
 
-const Page = () => {
-  const t = useTranslations("subscription-select");
+const Page = async () => {
+  const t = await getTranslations("subscription-select");
   // const router = useRouter();
-  const user = useCurrentUser();
+  const user = await currentUser();
 
   if (!user?.email) return null;
 
@@ -37,11 +35,3 @@ const Page = () => {
 };
 
 export default Page;
-//
-// <a
-//   target="_blank"
-//   href={asd[0].link + "?prefilled_email=" + user?.email}
-//   className="px-2 py-2 font-medium text-white bg-black rounded-md mt-10 ml-10"
-// >
-//   Pay
-// </a>

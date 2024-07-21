@@ -26,8 +26,14 @@ const SubscriptionSelector = ({ userEmail }: { userEmail: string }) => {
         <p className="font-semibold text-lg">
           {t(plans[selectedPlan].duration)}
         </p>
-        {plans[selectedPlan].duration === "yearly" && <p>{t("save")} 20%</p>}
-        <p className="font-medium text-lg">550 Kč</p>
+        {plans[selectedPlan].duration === "yearly" && (
+          <p className="text-center">
+            {t("save")} <span className="font-medium">16%</span> {t("save2")}{" "}
+          </p>
+        )}
+        <p className="font-medium text-xl py-2 md:text-2xl">
+          {plans[selectedPlan].price} EUR
+        </p>
       </div>
       <a
         target="_blank"

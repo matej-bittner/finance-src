@@ -1,21 +1,22 @@
-"use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Select, SelectContent, SelectTrigger } from "@/components/ui/select";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 
-const SettingsHeader = () => {
-  const t = useTranslations("settings-page");
+import { getTranslations } from "next-intl/server";
+import { currentUser } from "@/helpers/current-user";
+
+const SettingsHeader = async () => {
+  const t = await getTranslations("settings-page");
   const customerPortalLink =
     process.env.NODE_ENV === "development"
       ? "https://billing.stripe.com/p/login/test_eVaaEH2h86GF7K07ss"
       : "https://billing.stripe.com/p/login/00geXm6sj8SsfgQfYY";
-  const user = useCurrentUser();
+  const user = await currentUser();
+
   if (!user) {
     return null;
-    //logout
   }
+
   return (
     <div className="flex">
       <Select>

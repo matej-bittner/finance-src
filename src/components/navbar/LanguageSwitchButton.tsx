@@ -25,6 +25,7 @@ const LanguageSwitchButton = () => {
         Cookies.set("preferredLanguage", nextLocale);
       }
       router.push(newPathname);
+      router.refresh();
     });
   };
   return (
