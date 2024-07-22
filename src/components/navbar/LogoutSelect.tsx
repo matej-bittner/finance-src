@@ -2,20 +2,18 @@
 import React, { useEffect } from "react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { router } from "next/client";
 
 const LogoutSelect = ({
   text,
   accountButton,
+  user,
 }: {
   text: string;
   accountButton: string;
+  user: any;
 }) => {
-  const user = useCurrentUser();
-
   const pathname = usePathname();
 
   if (!user) {

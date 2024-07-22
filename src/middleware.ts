@@ -38,22 +38,16 @@ const authMiddleware = auth((req) => {
   }
 
   if (session && !session.user.hasAccess && !isSubscriptionPage) {
-    // const url = req.nextUrl.clone();
-    // const locale = req.nextUrl.pathname.split("/")[1];
-    // url.pathname = `/${locale}/subscription-select`;
-    // console.log(req.nextUrl);
-    // return NextResponse.rewrite(url);
     return NextResponse.redirect(new URL("/subscription-select", req.nextUrl));
   }
 
   if (session && session.user.hasAccess && isSubscriptionPage) {
     return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.nextUrl));
-    // return NextResponse.redirect(new URL("/", req.nextUrl));
   }
+
   // Redirect to home page if authenticated and trying to access auth pages
   if (session && isAuthPage) {
     return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.nextUrl));
-    // return NextResponse.redirect(new URL("/", req.nextUrl));
   }
 
   return intlMiddleware(req);

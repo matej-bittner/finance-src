@@ -6,11 +6,11 @@ import SubscriptionSelect from "@/components/subscription/SubscriptionSelect";
 import { useSession } from "next-auth/react";
 
 const WholePage = ({ userEmail }: { userEmail: string }) => {
+  const { update } = useSession();
   useEffect(() => {
     update();
   }, []);
 
-  const { update } = useSession();
   const t = useTranslations("subscription-select");
 
   return (

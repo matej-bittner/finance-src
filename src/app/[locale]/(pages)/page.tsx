@@ -5,11 +5,12 @@ import Socials from "@/components/main/Socials";
 import { useTranslations } from "next-intl";
 import FirstSection from "@/components/main/FirstSection";
 import Pricing from "@/components/main/Pricing";
+import { YouTubeEmbed } from "@next/third-parties/google";
 const Page = () => {
   const t = useTranslations("demo-section");
 
   return (
-    <section className="w-full space-y-4 py-5 tb:space-y-6 tb:py-6 min-h-screen">
+    <section className="w-full space-y-4 py-5 tb:space-y-6 tb:py-6 min-h-screen ">
       <div className="limited-width spacing-between-divs overflow-clip pb-1 lg:pb-2">
         {/*manage your money*/}
         <FirstSection />
@@ -39,7 +40,16 @@ const Page = () => {
                 height={28}
               />
             ))}
-            <div className="m-3 aspect-video w-[calc(100%-24px)] bg-black/10 min-[550px]:m-4 min-[550px]:w-[calc(100%-32px)]"></div>
+            <div
+              id="video-wrapper"
+              className="m-3 aspect-video w-[calc(100%-24px)] bg-red-700 min-[550px]:m-4 min-[550px]:w-[calc(100%-32px)] "
+              // className="m-3 aspect-video w-[calc(100%-24px)] bg-red-700 min-[550px]:m-4 min-[550px]:w-[calc(100%-32px)] "
+            >
+              <YouTubeEmbed
+                videoid="WEAc4NK3FVs"
+                params="rel=0&modestbranding=1"
+              />
+            </div>
           </div>
         </div>
       </div>

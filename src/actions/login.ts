@@ -9,6 +9,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { getTranslations } from "next-intl/server";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
+import { cookies } from "next/headers";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const te = await getTranslations("action-errors");
@@ -45,15 +46,30 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   }
 
   let redirectUrl = DEFAULT_LOGIN_REDIRECT;
+  if (!existingUser.hasAccess) {
+    redirectUrl = "/subscription-select";
+  }
 
   const supportedLanguages = ["en", "cs"]; // Replace with your supported languages
-
   if (
     existingUser?.mainLanguage &&
     supportedLanguages.includes(existingUser.mainLanguage)
   ) {
-    redirectUrl = `/${existingUser.mainLanguage}${DEFAULT_LOGIN_REDIRECT}`; // Construct URL with locale prefix
+    cookies().set("preferredLanguage", existingUser.mainLanguage);
+
+    if (!existingUser.hasAccess) {
+      redirectUrl = `/${existingUser.mainLanguage}/subscription-select`; // Construct URL with locale prefix
+    } else {
+      redirectUrl = `/${existingUser.mainLanguage}${DEFAULT_LOGIN_REDIRECT}`; // Construct URL with locale prefix
+    }
   }
+
+  // if (
+  //   existingUser?.mainLanguage &&
+  //   supportedLanguages.includes(existingUser.mainLanguage)
+  // ) {
+  //   redirectUrl = `/${existingUser.mainLanguage}${DEFAULT_LOGIN_REDIRECT}`; // Construct URL with locale prefix
+  // }
 
   try {
     await signIn("credentials", {

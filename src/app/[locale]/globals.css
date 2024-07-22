@@ -49,7 +49,26 @@ body, html{
 /*#protected #dashboard .box {@apply rounded-xl min-[450px]:rounded-2xl px-3 py-2 bg-main-gray min-[450px]:py-3 min-[450px]:px-4 }*/
 .box {@apply rounded-xl min-[450px]:rounded-2xl px-3 py-2 bg-main-gray min-[450px]:py-3 min-[450px]:px-4 }
  .settings-select-link {@apply relative flex w-full cursor-default select-none items-center rounded-sm p-2 hover:bg-main-bg hover:text-accent-foreground font-medium text-sm}
-  @layer base {
+
+
+
+#video-wrapper {
+  position: relative;
+
+}
+
+
+
+#video-wrapper lite-youtube {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+
+}
+
+@layer base {
     :root {
       --background: 0 0% 100%;
       --foreground: 222.2 84% 4.9%;
