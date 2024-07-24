@@ -11,15 +11,16 @@ const SocialsEmailDiv = () => {
         {socialsData.map((item, i) => {
           if (item.address) return;
           return (
-            <a key={i} href={item.link} target="_blank">
-              <Img
-                src={`${domain}/icons/${item.icon}-black.svg`}
-                width="50"
-                height="50"
-                alt={item.icon}
-                className="aspect-square"
-              />
-            </a>
+            // <a key={i} href={item.link} target="_blank">
+            <Img
+              key={i}
+              src={`${domain}/icons/${item.icon}-black.svg`}
+              width="50"
+              height="50"
+              alt={item.icon}
+              className="aspect-square"
+            />
+            // </a>
           );
         })}
       </div>

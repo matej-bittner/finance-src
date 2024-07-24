@@ -18,15 +18,16 @@ const Socials = () => {
             {socialsData.map((item, i) => {
               if (item.address) return;
               return (
-                <a key={i} href={item.link} target="_blank">
-                  <Image
-                    src={`/icons/${item.icon}.svg`}
-                    width={28}
-                    height={28}
-                    alt={item.icon}
-                    className="aspect-square md:w-[32px]"
-                  />
-                </a>
+                // <a key={i} href={item.link} target="_blank">
+                <Image
+                  key={i}
+                  src={`/icons/${item.icon}.svg`}
+                  width={28}
+                  height={28}
+                  alt={item.icon}
+                  className="aspect-square md:w-[32px]"
+                />
+                // </a>
               );
             })}
           </div>
