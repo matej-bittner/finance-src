@@ -16,7 +16,7 @@ const LogoutSelect = ({
 }) => {
   const pathname = usePathname();
 
-  if (!user) {
+  if (!user || user.hasAccess) {
     return (
       <Link
         href="/login"
@@ -43,7 +43,6 @@ const LogoutSelect = ({
   if (user && !user?.hasAccess) {
     displaySelectPLan = !pathname.includes("subscription-select");
   }
-
   return (
     <div>
       {!displaySelectPLan ? (
