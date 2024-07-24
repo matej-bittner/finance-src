@@ -8,9 +8,8 @@ import { currentUser } from "@/helpers/current-user";
 const SettingsHeader = async () => {
   const t = await getTranslations("settings-page");
   const customerPortalLink =
-    process.env.NODE_ENV === "development"
-      ? "https://billing.stripe.com/p/login/test_eVaaEH2h86GF7K07ss"
-      : "https://billing.stripe.com/p/login/00geXm6sj8SsfgQfYY";
+    "https://billing.stripe.com/p/login/test_eVaaEH2h86GF7K07ss";
+
   const user = await currentUser();
 
   if (!user) {
