@@ -5,26 +5,18 @@ export const languages = [
 
 export const plans = [
   {
-    link:
-      process.env.NODE_ENV === "development"
-        ? "https://buy.stripe.com/test_6oE4gJcFf8T0cDu28a"
-        : "https://buy.stripe.com/4gw6s28Ds4oHgUg8wx",
-    priceId:
-      process.env.NODE_ENV === "development"
-        ? "price_1PbodmLy1KHXEetojHh6lTdn"
-        : "price_1Peh1cLy1KHXEetob0IekXBA",
+    link: "https://buy.stripe.com/test_6oE4gJcFf8T0cDu28a",
+
+    priceId: "price_1PbodmLy1KHXEetojHh6lTdn",
+
     duration: "yearly",
     price: 80,
   },
   {
-    link:
-      process.env.NODE_ENV === "development"
-        ? "https://buy.stripe.com/test_14k28BbBbgls5b2eUX"
-        : "https://buy.stripe.com/6oE8Aa06W6wP6fC3cc",
-    priceId:
-      process.env.NODE_ENV === "development"
-        ? "price_1PbodKLy1KHXEetoMwxPTsvU"
-        : "price_1PegqvLy1KHXEetosMvdUyEq",
+    link: "https://buy.stripe.com/test_14k28BbBbgls5b2eUX",
+
+    priceId: "price_1PbodKLy1KHXEetoMwxPTsvU",
+
     duration: "monthly",
     price: 8,
   },
